@@ -1,0 +1,351 @@
+
+[general_fishing]
+
+	[general_fishing.power_orbs]
+		toggle_flux_timer = true
+		toggle_flux_tracker = true
+		"●_flux_expired_chat_message" = "([tableflip]) Power Orb Expired!"
+		"●_flux_sound_volume" = 1.0
+		alert_when_mana_goes_below_a_percentage = false
+		alert_flux_expired_on_screen = true
+		"●_flux_timer_message" = "&d&lPower Orb: &e([time])"
+		"●_mana_percentage" = 0.5
+		"●_flux_expired_title_message" = "&dPower Orb Expired!"
+		toggle_flux_sound = true
+		toggle_flux_expired_messages = false
+		"●_mana_low_title_message" = "&b&lLow Mana!"
+		"●_flux_expired_sound" = "mob.irongolem.death"
+		"●_flux_message_chat" = 0
+		"●_flux_sound_pitch" = 40
+
+	[general_fishing.other_settings]
+		hide_ui_if_not_fishing = true
+		"hide_creature/dh_messages" = true
+		count_worms_anyways = false
+		hide_ui_if_not_relevant_-_general = false
+		hide_ui_if_not_relevant = true
+		hide_ui_if_not_present = true
+
+	[general_fishing.creature_counting]
+		"●_creature_number_title_alert" = 60
+		"●_sea_creature_sound_volume" = 1.0
+		"●_sea_creature_ui_text" = "&9&lCreatures: &e([number]) &8(&e([time])&8)"
+		"●_sea_creature_number_sound" = 60
+		"●_sea_creature_message_chat" = 0
+		alert_sea_creature_count_on_screen = true
+		sea_creature_counter_ui = true
+		toggle_sea_creature_count_sound = true
+		toggle_sea_creature_counter = true
+		sea_creatures_per_hour_ui = true
+		toggle_sea_creature_party_messages = true
+		"●_sea_creature_sound_pitch" = 100
+		"●_sea_creature_party_message" = "Reached ([number]) sea creatures in ([time])"
+		"●_sea_creature_ui_message" = "&9&lCreatures: &e([number]) &8(&e([time])&8)"
+		"●_sea_creature_number_message_alert" = 40
+		"●_sea_creature_count_sound" = "random.orb"
+		"●_sea_creatures_per_hour_ui_text" = "&8&lSc/h: &e&l([sch]) (([amount]) in ([time]))"
+		"●_sea_creature_title_message_subtitle" = "&e([number]) sea creatures in ([time])!"
+		"●_sea_creature_title_message" = "&4&lKill Creatures!"
+		"●_sc/hr_time_to_reset" = 30
+
+	[general_fishing.bobbin_features]
+		toggle_bobber_counter_ui = true
+		toggle_bobber_counter = true
+		"●_bobber_counter_message" = "&a&lBobbers: &e([number])"
+
+	[general_fishing.double_hook]
+		"●_double_hook_message_chat" = 3
+		toggle_double_hook_messages = true
+		"●_double_hook_message" = "<°)))>< x2.|Woot Woot|Dubel Hook|*ฅ^.ﻌ.^ฅ* ~ Double!|That'solotl Sea Creatures! ꒰˶ᵔᵕᵔ˶꒱|([dog]) ~ Woof Woof|Fish duping, shrimple as that :shrug:"
+		"●_toggle_random_messages" = true
+
+[pets]
+
+	[pets.pet_level_up]
+		toggle_pet_level_up_titles = true
+		"●_pet_level_title_message" = "&6&l([pet]) level ([level])"
+		"●_pet_level_subtitle_message" = ""
+		"●_pet_level_title_alert" = 100
+
+	[pets.pet_display]
+		toggle_pet_display = true
+		"●_cosmetic_text" = "&8[&6([level])&4✦&8] "
+		"●_pet_display_message" = "&7[Lvl ([level])] ([cosmetic])&6([pet])"
+
+[deployables]
+
+	[deployables.overall_messages]
+		deployable_chat_message = "([tableflip]) ([deployable]) Expired!"
+
+	[deployables.power_orbs]
+		toggle_power_orb_expired_messages = false
+		"●_power_orb_expired_sound" = "mob.irongolem.death"
+		toggle_power_orb_tracker = true
+		"●_power_orb_sound_volume" = 1.0
+		"●_power_orb_sound_pitch" = 100
+		"●_power_orb_expired_chat_message" = "([tableflip]) Power Orb Expired!"
+		"●_power_orb_message_chat" = 0
+		"●_power_orb_timer_message" = "&d&lPower Orb: &e([time])"
+		toggle_power_orb_sound = true
+		toggle_power_orb_timer = true
+		alert_power_orb_expired_on_screen = true
+		"●_power_orb_expired_title_message" = "&dPower Orb Expired!"
+
+	[deployables.flares]
+		toggle_flare_sound = true
+		"●_flare_expired_sound" = "mob.irongolem.death"
+		toggle_flare_timer = true
+		toggle_flare_tracker = true
+		"●_flare_sound_pitch" = 100
+		"●_flare_message_chat" = 4
+		"●_flare_expired_chat_message" = "([tableflip]) Flare Expired!"
+		"●_flare_sound_volume" = 1.0
+		toggle_flare_expired_messages = false
+		"●_flare_expired_title_message" = "&6Flare Expired!"
+		alert_flare_expired_on_screen = true
+
+	[deployables.all_deployables]
+		toggle_deployable_sound = true
+		"●_deployable_expired_sound" = "mob.irongolem.death"
+		"●_deployable_sound_pitch" = 100
+		deployable_chat_message = "([tableflip]) ([deployable]) Expired!"
+		"●_deployable_sound_volume" = 1.0
+		hide_ui_if_not_present = false
+
+	[deployables.corruption_totem]
+		"●_totem_expired_sound" = "random.orb"
+		toggle_corruption_totem_sound = false
+		"●_totem_message_chat" = 0
+		"●_totem_expired_chat_message" = "([tableflip]) Corruption Totem Expired!"
+		"●_totem_sound_volume" = 1.0
+		"●_totem_sound_pitch" = 100
+		toggle_corruption_totem_timer = true
+		"●_totem_timer_message" = "&5&lTotem: &e([time])"
+		toggle_corruption_totem_tracker = true
+		"●_totem_expired_title_message" = "&5Corruption Totem Expired!"
+		alert_totem_expired_on_screen = true
+		toggle_corruption_totem_expire_messages = false
+
+[crimson_fishing]
+
+	[crimson_fishing.boss_bar]
+		"●_toggle_plhlegblast_health_bar" = true
+		"●_boss_health_bar_length" = 201
+		"●_toggle_thunder_health_bar" = true
+		"●_toggle_jawbus_health_bar" = true
+		toggle_boss_health_bar = true
+
+	[crimson_fishing.fisherman_tracking]
+		"●_render_box_on_coords_on_warn" = true
+		"●_warn_sound_volume" = 0.1
+		"●_sound_on_warn" = true
+		"●_warn_upon_thunder_death" = false
+		toggle_fisherman_tracking = false
+		"●_warn_upon_jawbus_death" = true
+		"●_player_coords_on_warn" = true
+		"●_warn_cooldown" = 60
+
+	[crimson_fishing.mythic_creatures_lootsharing]
+		"●_thunder_lootshare_range" = false
+		"●_plhlegblast_lootshare_range" = true
+		toggle_mythic_creature_lootshare_range = true
+		"●_jawbus_lootshare_range" = true
+
+	[crimson_fishing.other_settings]
+		hide_ui_if_not_relevant_-_crimson = false
+		hide_ui_if_not_relevant = false
+
+	[crimson_fishing.mythic_creatures_ui]
+		plhlegblast_ui = true
+		"●_thunder_ui_text" = "&b&lThunder: &e&l([count]) (([average])) &7&l([time])"
+		"●_jawbus_ui_text" = "&c&lJawbus: &e&l([count]) (([average])) &7&l([time])"
+		thunder_ui = true
+		jawbus_ui = true
+		"●_plhlegblast_ui_text" = "&4&lPlhlegblast: &e&l([count]) (([average])) &7&l([time])"
+
+	[crimson_fishing.vanquisher]
+		vanquisher_ui = true
+		"●_vanquisher_ui_text" = "&5&lVanquisher: &e&l([count]) (([average])) &7&l([time])"
+		"●_vanquisher_message_chat" = 3
+		toggle_vanquisher_party_messages = true
+		"●_vanquisher_message" = "Vanquisher (([number]) sc kills, ([time]))"
+
+	[crimson_fishing.mythic_creatures_messages]
+		"●_plhlegblast" = "([hooray]) ([double])Plhlegblast (([number]) catches, ([time]))"
+		"●_mythic_creature_message_chat" = 3
+		"●_thunder" = "([mixface]) ([double])Thunder (([number]) catches, ([time]))"
+		toggle_mythic_creature_party_messages = true
+		"●_jawbus" = "([surprised]) ([double])Lord Jawbus (([number]) catches, ([time]))"
+
+	[crimson_fishing.mythic_creatures_detection]
+		"●_mythic_creature_detection_title" = "&4&l([mob]) detected!"
+		"●_thunder_detection" = true
+		"●_mythic_detection_sound_volume" = 1.0
+		"●_plhlegblast_detection" = true
+		"●_jawbus_detection" = true
+		toggle_mythic_creature_detection = true
+		"●_sound_on_detection" = true
+
+[other]
+
+	[other.detection_rate]
+		detection_rate = 1
+		crimson_bardetection_rate = 10
+		crimson_fishing_detection_rate = 3
+		general_fishing_detection_rate = 3
+
+	[other.fun_messaging]
+		add_characters_to_messages = "shrug,¯\\_(ツ)_/¯|kiss,٩(*❛⊰❛)～❤|flowersmile,(◕‿◕✿)|disapointed,(ㆆ _ ㆆ)|tableflip,(╯°o°)╯︵ ┻━┻|tablefliprage,(ノಠ益ಠ)ノ彡┻━┻|eyes,(ಠ_ಠ)|dog,▼・ᴥ・▼|hooray,\\ (•◡•) /|meh,(¬_¬)|mad,ಠ╭╮ಠ|wink,◕‿↼|surprised,(╯°o°)╯|mixface,┌( ಠ_ಠ)┘"
+
+	[other.render_box]
+		render_box_duration = 60
+
+	[other.death]
+		"hide_ui_for_phoenix/spirit_mask_if_not_using" = false
+		"hide_phoenix/spirit_mask_ui_if_not_using" = true
+		toggle_phoenix_pet_used_title = true
+		phoenix_mask_status_ui = true
+		toggle_spirit_mask_used_title = true
+		"●_phoenix/spirit_mask_ui_text" = "&c&lPhoenix: ([timeP])([lineskip])&f&lSpirit Mask: ([timeS])"
+		"phoenix/spirit_mask_status_ui" = true
+		spirit_mask_status_ui = true
+
+	[other.chat]
+		messages_chat = 3
+
+	[other.title_times]
+		title_duration = 40
+		title_fade_out = 10
+		title_fade_in = 10
+
+	[other.power_orbs]
+		"●_mana_percentage" = 0.3
+		"●_mana_low_title_message" = "&b&lMana low!"
+		alert_when_mana_goes_below_a_percentage = true
+
+	[other.fishing_rod_timer]
+		"●_rod_timer_ui_text" = " &c&l([time])|&a&lClick!"
+		toggle_rendering_fishing_rod_timer_on_screen = true
+
+	[other.other_settings]
+		lobby_tracking = true
+
+	[other.rendering]
+		toggle_cool_item_rendering = true
+		toggle_cool_item_rendering_background = false
+		render_box_duration = 60
+		toggle_chat_coords = true
+
+[trophy_fishing]
+
+	[trophy_fishing.sulphur_block]
+		show_sulphur_range_on_right_click = true
+
+	[trophy_fishing.other_settings]
+		hide_ui_if_not_relevant_-_trophy_fishing = true
+
+	[trophy_fishing.golden_fish]
+		golden_fish_timer = true
+
+[player_stats]
+
+	[player_stats.mana]
+		"●_mana_percentage" = 0.1
+		"●_mana_low_title_message" = "&b&lMana low!"
+		alert_when_mana_goes_below_a_percentage = true
+
+[rare_drops]
+
+	[rare_drops.radioactive_vial]
+		toggle_radioactive_vial_message = true
+		"●_coop_chat" = true
+		"●_guild_chat" = true
+		"●_party_chat" = true
+		"●_radioactive_vial_text" = "test"
+		toggle_radioactive_vial_ui = true
+		"●_vial_dropped_message" = "RARE DROP! Radioactive Vial (+([mf])% :star: Magic Find (([number]) Jawbus Kills, ([time]))"
+		"●_all_chat" = true
+
+	[rare_drops.other_drops]
+		toggle_random_drops_message = true
+		"●_toggle_air_drop" = true
+		toggle_random_drop_message = true
+
+[crystal_hollows_fishing]
+
+	[crystal_hollows_fishing.worm_fishing]
+		"●_worm_number_title_alert" = 60
+		"●_worm_number_sound" = 60
+		"●_worm_sound_volume" = 1.0
+		toggle_worm_party_messages = true
+		"●_worm_number_message_alert" = 60
+		"●_worm_sound_pitch" = 100
+		toggle_worm_counter = true
+		hide_worm_nametag = true
+		toggle_worm_count_sound = true
+		"●_worm_cap_title_message" = "&cWorm cap reached!"
+		"●_worm_sound" = "random.orb"
+		"●_cap_message_chat" = 0
+		alert_worm_count_on_screen = true
+		"●_worm_cap_title_message_subtitle" = "&c([number]) worms in ([time])!"
+		"●_worm_party_message" = "Worm cap reached! ([number]) worms in ([time])"
+
+	[crystal_hollows_fishing.corruption_totem]
+		"●_totem_expired_sound" = "random.orb"
+		toggle_corruption_totem_sound = false
+		"●_totem_message_chat" = 0
+		"●_totem_expired_chat_message" = "([tableflip]) Corruption Totem Expired!"
+		"●_totem_sound_volume" = 1.0
+		"●_totem_sound_pitch" = 100
+		toggle_corruption_totem_timer = true
+		"●_totem_timer_message" = "&5&lTotem: &e([time])"
+		toggle_corruption_totem_tracker = true
+		"●_totem_expired_title_message" = "&5Corruption Totem Expired!"
+		alert_totem_expired_on_screen = true
+		toggle_corruption_totem_expire_messages = false
+
+[party_commands]
+
+	[party_commands.party_commands]
+		"●_leader_only_new_member_help" = true
+		command_prefix = "!"
+		new_member_help_command = false
+		allinvite = true
+		help = true
+		transfer = true
+		toggle_party_commands = true
+		command_blacklist = ""
+		invite = true
+		togglewarp = true
+		command_cooldown = 3
+		coords = true
+		warp = true
+
+[chat_commands]
+
+	[chat_commands.general_commands]
+		command_prefix = "!"
+		command_blacklist = ""
+		command_cooldown = 1
+
+	[chat_commands.info_commands]
+		jawbusinfo = true
+		thunderinfo = true
+		vialinfo = true
+
+	[chat_commands.party_commands]
+		"warp_on_im_muted!" = false
+		"●_leader_only_new_member_help" = false
+		command_prefix = "!"
+		new_member_help_command = false
+		allinvite = false
+		help = false
+		transfer = false
+		toggle_party_commands = true
+		command_blacklist = ""
+		invite = false
+		togglewarp = false
+		command_cooldown = 1
+		coords = false
+		warp = false
+

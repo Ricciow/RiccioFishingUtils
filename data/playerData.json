@@ -1,0 +1,161 @@
+{
+    "PARTY": {
+        "logOff": 1734186508334,
+        "inParty": false,
+        "isLeader": false
+    },
+    "SETTINGS": {
+        "WarnBait": true,
+        "BaitBag": true,
+        "Inventory": true
+    },
+    "WORM": {
+        "Timer": 1717558536780,
+        "TTimer": 1717558536780
+    },
+    "GUI": {
+        "CrimsonBossBar": [
+            162,
+            59,
+            1,
+            8,
+            8
+        ],
+        "SeaCreatures": [
+            0,
+            5,
+            1,
+            107,
+            10
+        ],
+        "Bobbers": [
+            0,
+            15,
+            1,
+            64,
+            10
+        ],
+        "creatureHour": [
+            135,
+            0,
+            1,
+            101,
+            10
+        ],
+        "Power Orb": [
+            0,
+            25,
+            1,
+            109,
+            10
+        ],
+        "plhlegblast": [
+            135,
+            10,
+            1,
+            314,
+            10
+        ],
+        "jawbus": [
+            135,
+            20,
+            1,
+            199,
+            10
+        ],
+        "thunder": [
+            135,
+            30,
+            1,
+            192,
+            10
+        ],
+        "vanquisher": [
+            135,
+            40,
+            1,
+            230,
+            10
+        ],
+        "Pet": [
+            488,
+            190,
+            1,
+            102,
+            10
+        ],
+        "Totem": [
+            135,
+            50,
+            1,
+            93,
+            10
+        ],
+        "PhoenixSpirit": [
+            0,
+            35,
+            1,
+            108,
+            20
+        ],
+        "Vial": [
+            1,
+            82,
+            0.5000000000000001,
+            128.5,
+            5
+        ],
+        "Phoenix": [
+            0,
+            35,
+            1,
+            89,
+            10
+        ],
+        "SpiritMask": [
+            0,
+            45,
+            1,
+            108,
+            10
+        ],
+        "Toggle": true,
+        "TogglePets": false,
+        "Flare": [
+            0,
+            55,
+            1,
+            101,
+            10
+        ],
+        "FishingRod": [
+            287,
+            140,
+            2.4000000000000012,
+            72,
+            24
+        ],
+        "GoldenFish": [
+            3,
+            217,
+            1,
+            108,
+            30
+        ]
+    },
+    "GENERALFISHING": {
+        "Sound": false,
+        "SeaTimer": 1728787752346
+    },
+    "FISHING": {
+        "SeaTimer": 564004800000,
+        "SeaTTimer": 1715180892063,
+        "Tbottle": 1732740618652
+    },
+    "PETS": {
+        "EquippedPet": "&6Flying Fish",
+        "PetLevel": 100,
+        "CosmeticLevel": 109,
+        "Skinned": false
+    }
+}
