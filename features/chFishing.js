@@ -2,7 +2,7 @@ import settings from "../utils/settings";
 import { playerData } from "../data/data";
 import { readableTime, funniFaces, generateRandomString, sendMsg} from "../utils/functions";
 import { Chats , Bobber, ArmorStand} from "../data/constants";
-import { createText } from "../utils/gui";
+import guiManager from "../gui/guiManager";
 
 //CRYSTAL HOLLOWS
 
@@ -119,23 +119,29 @@ register('step', () =>{
             }
         }
     }
-}).setFps(settings.chPollingrate);
-
-register('renderoverlay', () =>{
-    if(playerData.GUI["Toggle"]){
-        if (settings.totemTimerToggle && settings.totemToggle) {
-            if(!settings.deployableHideToggle) {
-                createText(funniFaces(("&5&lTotem: &e([time])").replace("([time])", `${totemTime}`)), 'Totem', 3, 10);
-            }
-            else if (totemTime != "No Totem") {
-                createText(funniFaces(("&5&lTotem: &e([time])").replace("([time])", `${totemTime}`)), 'Totem', 3, 10);
-            }
-            else {
-                createText("", 'Totem', 3, 10, false, funniFaces(("&5&lTotem: &e([time])").replace("([time])", `${totemTime}`)));
-            }
+    if (settings.totemTimerToggle && settings.totemToggle) {
+        //Totem Render
+        //TODO: Modify this thing whenever i add a function for this on the library
+        let totemData = guiManager.getElement("TotemTimer").data
+        totemData.Data["(1)"] = totemTime
+        if(!settings.deployableHideToggle) {
+            //Hide if not relevant OFF
+            totemData.Hidden = false
+            guiManager.updateElementData("TotemTimer", totemData)
+        }
+        else if (totemTime != "No Totem") {
+            //Hide if not relevant ON, if there is a totem
+            totemData.Hidden = false
+            guiManager.updateElementData("TotemTimer", totemData)
+        }
+        else {
+            //Hide if not relevant ON, if there isnt a totem
+            totemData.Hidden = true
+            guiManager.updateElementData("TotemTimer", totemData)
         }
     }
-});
+
+}).setFps(settings.chPollingrate);
 
 register('step', () => {
     if (PlayWormSound && !playerData.GENERALFISHING["Sound"]){

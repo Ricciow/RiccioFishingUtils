@@ -18,7 +18,6 @@ export let playerData = new PogObject('RiccioFishingUtils', {
     "GUI": {
         "Toggle": true,
         "TogglePets": false,
-        "SeaCreatures": [3, 20, 1, 8 ,8]
     },
     "GENERALFISHING": {
         "Sound": false

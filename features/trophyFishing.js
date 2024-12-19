@@ -1,8 +1,7 @@
 import settings from "../utils/settings";
 import RenderLib from "../../RenderLib"
-import { createText } from "../utils/gui";
-import { readableTime } from "../utils/functions";
 import { seaCreatureData , playerData} from "../data/data";
+import guiManager from "../gui/guiManager";
 
 let x = 0;
 let y = 0;
@@ -69,6 +68,60 @@ register("step", () => {
                 }
             }
         }
+
+        //Golden Fish Render
+        //TODO: Modify this thing whenever i add a function for this on the library
+        let GoldenFishData = guiManager.getElement("GoldenFishTimer").data
+        if(seaCreatureData.GOLDEN["Cooking"] && !Golding) {
+            time = 480000 + seaCreatureData.GOLDEN["StartTime"];
+            timeCast = 180000 + seaCreatureData.GOLDEN["LastCast"];
+
+            logicalTime = time - Date.now()
+            logicalTimeCast = timeCast - Date.now()
+
+            if(logicalTime > 0) {
+                GoldenFishData.Times["(1)"] = time
+            }
+            else {
+                GoldenFishData.Times["(1)"] = ["&c&lSpawnable Now"]
+            }
+
+            if (!Player.getPlayer().field_71104_cf && logicalTimeCast > 30000) {
+                GoldenFishData.Times["(2)"] = timeCast
+            }
+            else if(logicalTimeCast <= 30000) {
+                GoldenFishData.Times["(2)"] = ["&c&lCast NOW!"]
+            }
+            else {
+                GoldenFishData.Times["(2)"] = ["&a&lCasting"]
+            }
+            
+        }
+        
+        if(Golding) {
+            GoldenFishData.Times["(1)"] = ["&c&lGo get NOW!"]
+            GoldenFishData.Times["(2)"] = ["3m 0s"]
+        }
+        else if(!seaCreatureData.GOLDEN["Cooking"]) {
+            GoldenFishData.Times["(1)"] = ["8m 0s"]
+            GoldenFishData.Times["(2)"] = ["3m 0s"]
+        }
+
+        if(!settings.trophyHideUIToggle) {
+            //Hide if not relevant OFF
+            GoldenFishData.Hidden = false
+            guiManager.updateElementData("GoldenFishTimer", GoldenFishData)
+        }
+        else if(!seaCreatureData.GOLDEN["Cooking"] && 180000-(Date.now()-seaCreatureData.GOLDEN["LastCast"]) > 0 && (Player.asPlayerMP()?.getDimension() == -1)) {
+            //Hide if not relevant ON, you are Fishing, You are in the crimson isle
+            GoldenFishData.Hidden = false
+            guiManager.updateElementData("GoldenFishTimer", GoldenFishData)
+        }
+        else {
+            //Hide if not relevant ON, you arent fishing in ci
+            GoldenFishData.Hidden = true
+            guiManager.updateElementData("GoldenFishTimer", GoldenFishData)
+        }
     } 
 }).setFps(3)
 
@@ -91,84 +144,3 @@ register("worldunload", () => {
     Golding = false
     seaCreatureData.GOLDEN["Cooking"] = false;
 });
-
-
-register("renderoverlay", () => {
-    if(playerData.GUI["Toggle"]){
-        if(!settings.trophyHideUIToggle) {
-            if(settings.goldenTimerToggle) {
-                if(seaCreatureData.GOLDEN["Cooking"] && !Golding) {
-                    time = 480000 - (Date.now() - seaCreatureData.GOLDEN["StartTime"]);
-                    timeCast = 180000-(Date.now()-seaCreatureData.GOLDEN["LastCast"]);
-                    if(time > 0) {
-                        if (!Player.getPlayer().field_71104_cf && timeCast > 30000) {
-                            createText(`&e&lGolden Fish\n&6Next Spawn: &e${readableTime(time)}\n&6Cast until: &e${readableTime(timeCast)}`, "GoldenFish", 3, 200);
-                        }
-                        else if(timeCast <= 30000) {
-                            createText(`&e&lGolden Fish\n&6Next Spawn: &e${readableTime(time)}\n&6Cast until: &c&lCast NOW!`, "GoldenFish", 3, 200);
-                        }
-                        else {
-                            createText(`&e&lGolden Fish\n&6Next Spawn: &e${readableTime(time)}\n&a&lCasting`, "GoldenFish", 3, 200);
-                        }
-                    }
-                    else {
-                        if (!Player.getPlayer().field_71104_cf && timeCast > 30000) {
-                            createText(`&e&lGolden Fish\n&c&lSpawnable Now\n&6Cast until: &e${readableTime(timeCast)}`, "GoldenFish", 3, 200);
-                        }
-                        else if(timeCast <= 30000) {
-                            createText(`&e&lGolden Fish\n&c&lSpawnable Now\n&6Cast until: &c&lCast NOW!`, "GoldenFish", 3, 200);
-                        }
-                        else {
-                            createText(`&e&lGolden Fish\n&c&lSpawnable Now\n&a&lCasting`, "GoldenFish", 3, 200);
-                        }
-                    }
-                }
-                else if(Golding) {
-                    createText(`&e&lGolden Fish\n&c&lGo get NOW!\n&6Cast until: &e${readableTime(180000)}`, "GoldenFish", 3, 200);
-                }
-                else if(!seaCreatureData.GOLDEN["Cooking"]) {
-                    createText(`&e&lGolden Fish\n&6Next Spawn: &e${readableTime(480000)}\n&6Cast until: &e${readableTime(180000)}`, "GoldenFish", 3, 200);
-                }
-            }
-        }
-        else {
-            if(settings.goldenTimerToggle) {
-                if(seaCreatureData.GOLDEN["Cooking"] && !Golding) {
-                    time = 480000 - (Date.now() - seaCreatureData.GOLDEN["StartTime"]);
-                    timeCast = 180000-(Date.now()-seaCreatureData.GOLDEN["LastCast"]);
-                    if(time > 0) {
-                        if (!Player.getPlayer().field_71104_cf && timeCast > 30000) {
-                            createText(`&e&lGolden Fish\n&6Next Spawn: &e${readableTime(time)}\n&6Cast until: &e${readableTime(timeCast)}`, "GoldenFish", 3, 200);
-                        }
-                        else if(timeCast <= 30000) {
-                            createText(`&e&lGolden Fish\n&6Next Spawn: &e${readableTime(time)}\n&6Cast until: &c&lCast NOW!`, "GoldenFish", 3, 200);
-                        }
-                        else {
-                            createText(`&e&lGolden Fish\n&6Next Spawn: &e${readableTime(time)}\n&a&lCasting`, "GoldenFish", 3, 200);
-                        }
-                    }
-                    else {
-                        if (!Player.getPlayer().field_71104_cf && timeCast > 30000) {
-                            createText(`&e&lGolden Fish\n&c&lSpawnable Now\n&6Cast until: &e${readableTime(timeCast)}`, "GoldenFish", 3, 200);
-                        }
-                        else if(timeCast <= 30000) {
-                            createText(`&e&lGolden Fish\n&c&lSpawnable Now\n&6Cast until: &c&lCast NOW!`, "GoldenFish", 3, 200);
-                        }
-                        else {
-                            createText(`&e&lGolden Fish\n&c&lSpawnable Now\n&a&lCasting`, "GoldenFish", 3, 200);
-                        }
-                    }
-                }
-                else if(Golding) {
-                    createText(`&e&lGolden Fish\n&c&lGo get NOW!\n&6Cast until: &e${readableTime(180000)}`, "GoldenFish", 3, 200);
-                }
-                else if(!seaCreatureData.GOLDEN["Cooking"] && 180000-(Date.now()-seaCreatureData.GOLDEN["LastCast"]) > 0) {
-                    createText(`&e&lGolden Fish\n&6Next Spawn: &e${readableTime(480000)}\n&6Cast until: &e${readableTime(180000)}`, "GoldenFish", 3, 200);
-                }
-                else {
-                    createText("", "GoldenFish", 3, 200, false, `&e&lGolden Fish\n&6Next Spawn: &e${readableTime(480000)}\n&6Cast until: &e${readableTime(180000)}`);
-                }
-            }
-        }
-    }
-})

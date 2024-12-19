@@ -1,8 +1,8 @@
 import { readableTime, removeRankTag , funniFaces} from "../utils/functions";
 import settings from "../utils/settings";
-import { createText } from "../utils/gui";
 import { playerData } from "../data/data";
 import { colorsRegex } from "../data/constants";
+import guiManager from "../gui/guiManager";
 
 register('command', () => {
     text = '\n';
@@ -93,82 +93,6 @@ register("chat", () => {
     spiritMaskUseTime = Date.now()
 }).setCriteria("Second Wind Activated! Your Spirit Mask saved your life!");
 
-register("renderoverlay", () => {
-    if(playerData.GUI["Toggle"]){
-        if(!settings.deathItemStatusUIToggle) {
-            if(settings.deathItemPhoenixStatusToggle){
-                psText = funniFaces("&c&lPhoenix: ([timeP])");
-                if(Date.now() - phoenixUseTime > 60000) {
-                    psText = psText.replace('([timeP])','&a&lActive');
-                }
-                else{
-                    psText = psText.replace('([timeP])',`&4&l${readableTime(Math.abs(phoenixUseTime + 60000 - Date.now()))}`);
-                }
-                createText(psText, 'Phoenix', 3, 40);
-            }
-            if(settings.deathItemSpiritMaskStatusToggle) {
-                smText = funniFaces("&f&lSpirit Mask: ([timeS])");
-                if(Date.now() - spiritMaskUseTime > 30000) {
-                    smText = smText.replace('([timeS])','&a&lActive');
-                }
-                else{
-                    smText = smText.replace('([timeS])',`&4&l${readableTime(Math.abs(spiritMaskUseTime + 30000 - Date.now()))}`);
-                }
-                createText(smText, 'SpiritMask', 3, 50);
-            }
-        }
-        else {
-            if(settings.deathItemPhoenixStatusToggle){ //Phoenix
-                if(playerData.PETS['EquippedPet'].includes("Phoenix")) {
-                    psText = funniFaces("&c&lPhoenix: ([timeP])");
-                    if(Date.now() - phoenixUseTime > 60000) {
-                        psText = psText.replace('([timeP])','&a&lActive');
-                    }
-                    else{
-                        psText = psText.replace('([timeP])',`&4&l${readableTime(Math.abs(phoenixUseTime + 60000 - Date.now()))}`);
-                    }
-                    createText(psText, 'Phoenix', 3, 40);
-                }
-                else {
-                    psText = funniFaces("&c&lPhoenix: ([timeP])");
-                    if(Date.now() - phoenixUseTime > 60000) {
-                        psText = psText.replace('([timeP])','&a&lActive');
-                    }
-                    else{
-                        psText = psText.replace('([timeP])',`&4&l${readableTime(Math.abs(phoenixUseTime + 60000 - Date.now()))}`);
-                    }
-                    createText("", 'Phoenix', 3, 40, false, psText);
-                }                
-            }
-            if(settings.deathItemSpiritMaskStatusToggle) {
-                if(Player.asPlayerMP() != null){
-                    if(Player.asPlayerMP().getItemInSlot(4) != null) {
-                        if(Player.asPlayerMP().getItemInSlot(4).getName().includes("Spirit Mask")) {
-                            smText = funniFaces("&f&lSpirit Mask: ([timeS])");
-                            if(Date.now() - spiritMaskUseTime > 30000) {
-                                smText = smText.replace('([timeS])','&a&lActive');
-                            }
-                            else{
-                                smText = smText.replace('([timeS])',`&4&l${readableTime(Math.abs(spiritMaskUseTime + 30000 - Date.now()))}`);
-                            }
-                            createText(smText, 'SpiritMask', 3, 50);
-                        }
-                        else {
-                            smText = funniFaces("&f&lSpirit Mask: ([timeS])");
-                            if(Date.now() - spiritMaskUseTime > 30000) {
-                                smText = smText.replace('([timeS])','&a&lActive');
-                            }
-                            else{
-                                smText = smText.replace('([timeS])',`&4&l${readableTime(Math.abs(spiritMaskUseTime + 30000 - Date.now()))}`);
-                            }
-                            createText("", 'SpiritMask', 3, 50, false, smText);
-                        }
-                    }
-                }
-            }
-        }
-    }
-});
 const patchnotes = `- Added /rfuaddvial count, which adds a vial to /vials\n- Added /rfusetvialcount count, which sets the count to a number\n- Made vial drops get copied to clipboard\n- Hid the vanilla fishing rod timer when the setting is on\n- Fixed sc counter timer being weird on worms with count worms anyways off\n- Added inventory full debrief\n- Added thunder bottle full title/message\n- Made pet display show pet levels when equipping them manually\n- Made pet display also now show rarity correctly\n- Removed pet display customization :(\n- Added inventory attributes/enchants display for lava fishing items\n- Added /rfuunrendercoords command\n- Made coords unrender automatically when leaving island\n- Added rendering coords if someone sends them on chat\n- Removed a test message on /stream\n- Added !allinv and !ai alias to !allinvite\n- Merged totem/power orb/flare expired sounds\n- Added jawbusinfo, thunderinfo and vialinfo chat command\n- Made chat commands blacklist case insensitive\n- Added a click to party person message in guild chat and when getting booped\n- Added an actual setting for the random dh messages, was too confusing before...\n- Added a timer to vanquisher/thunder invulnerability\n- Added settings to most UIs to toggle them off if they're not relevant.\n- Added more checks to the pet leveling up on the display so it displays accurately\n- Added an option to hide worms nametags in crystal hollows\n- Added checks so !warp doesn't warp when on a private island or on a low player count nether lobby (8 or less)\n- Added golden fish timer\n- Added a space in the Y of the /coords command so it works better with other mods\n- Added you've been here messages when joining a repeated lobby\n- Added a setting to hide creature messages/dh messages\n- Added drop messages for drops you don't usually see (also drop air for the funni)\n- Added an option to make the im muted message warp party.\n- Removed pet level up subtitle :(\n- Reformatted /rfubossstats and now shows last time caught\n-V0.1.1\n- Improved performance\n-Fixed a bug where worm health would not be displayed at all\n- Made Cast until more sensical`;
 
 register("command", () => {
@@ -178,10 +102,6 @@ register("command", () => {
 register("command", () => {
     ChatLib.say(`x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
 }).setName("coords");
-
-register("command", (a) => {
-    ChatLib.chat(Renderer.getStringWidth(a));
-}).setName("dummy");
 
 let Looking = false;
 let attempt = 0;
@@ -229,6 +149,50 @@ register("step", () => {
                 SentMsg = true;
             }
             if(Server != "") ServerJoin[Server] = Date.now();
+        }
+    }
+
+    if (settings.deathItemPhoenixStatusToggle) {
+        //Phoenix Render
+        //TODO: Modify this thing whenever i add a function for this on the library
+        let phoenixData = guiManager.getElement("PhoenixTimer").data
+        phoenixData.Times["(1)"] = (Date.now() - phoenixUseTime > 60000) ? ["&a&lActive"] : (phoenixUseTime + 60000)
+        if(!settings.deathItemStatusUIToggle) {
+            //Hide if not relevant OFF
+            phoenixData.Hidden = false
+            guiManager.updateElementData("PhoenixTimer", phoenixData)
+        }
+        else if (playerData.PETS['EquippedPet'].includes("Phoenix")) {
+            //Hide if not relevant ON, if you have phoenix equiped
+            phoenixData.Hidden = false
+            guiManager.updateElementData("PhoenixTimer", phoenixData)
+        }
+        else {
+            //Hide if not relevant ON, if you dont have phoenix equiped
+            phoenixData.Hidden = true
+            guiManager.updateElementData("PhoenixTimer", phoenixData)
+        }
+    }
+
+    if (settings.deathItemSpiritMaskStatusToggle) {
+        //Spirit Mask Render
+        //TODO: Modify this thing whenever i add a function for this on the library
+        let spiritMaskData = guiManager.getElement("SpiritMaskTimer").data
+        spiritMaskData.Times["(1)"] = (Date.now() - spiritMaskUseTime > 30000) ? ["&a&lActive"] : (spiritMaskUseTime + 30000)
+        if(!settings.deathItemStatusUIToggle) {
+            //Hide if not relevant OFF
+            spiritMaskData.Hidden = false
+            guiManager.updateElementData("SpiritMaskTimer", spiritMaskData)
+        }
+        else if (Player.asPlayerMP()?.getItemInSlot(4)?.getName()?.includes("Spirit Mask")) {
+            //Hide if not relevant ON, if you have phoenix equiped
+            spiritMaskData.Hidden = false
+            guiManager.updateElementData("SpiritMaskTimer", spiritMaskData)
+        }
+        else {
+            //Hide if not relevant ON, if you dont have phoenix equiped
+            spiritMaskData.Hidden = true
+            guiManager.updateElementData("SpiritMaskTimer", spiritMaskData)
         }
     }
 }).setFps(3)

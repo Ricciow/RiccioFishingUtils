@@ -1,9 +1,42 @@
 import settings from "../utils/settings";
 import { seaCreatureData, playerData} from "../data/data";
-import { createBossBars , createText} from "../utils/gui";
 import { CrimsonCreatures, CrimsonMessages, Chats, MythicDetectSound, colorsRegex, VialRegex} from "../data/constants";
 import { makeRegexFromList ,getAverageFromList, funniFaces, readableTime, sendMsg, getRandomInt, getVialAverage} from "../utils/functions";
 import RenderLib from "../../RenderLib";
+import guiManager from "../gui/guiManager";
+
+const BasePlhegblast = {
+    "Name":"§lPlhlegblast",
+    "HPLabel": "§l100M/100M❤",
+    "HPPercentage": 93,
+    "ColorScheme": {
+        "Text": [0.7, 0, 0, 1],
+        "BgBar": [0, 0, 0, 1],
+        "FgBar": [0.7, 0, 0, 1]
+    }
+}
+
+const BaseJawbus = {
+    "Name":"§lJawbus",
+    "HPLabel": "§l100M/100M❤",
+    "HPPercentage": 80,
+    "ColorScheme": {
+        "Text": [1, 0, 0, 1],
+        "BgBar": [0, 0, 0, 1],
+        "FgBar": [1, 0, 0, 1]
+    }
+}
+
+const BaseThunder = {
+    "Name":"§lThunder",
+    "HPLabel": "§l100M/100M❤",
+    "HPPercentage": 37,
+    "ColorScheme": {
+        "Text": [0.4, 1, 1, 1],
+        "BgBar": [0, 0, 0, 1],
+        "FgBar": [0.4, 1, 1, 1]
+    }
+}
 
 let jawbusHealthStrTemp = '100M/100M';
 let jawbusHealthTemp = 100;
@@ -55,8 +88,12 @@ register("step", () => {
                                 jawbusHealthTemp = parseFloat(jawbusHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000000;
                             }
                             jawbusMaxHealthTemp = parseFloat(jawbusHealthStrTemp.replace(/M|❤/, "").split("/")[1]);
-                            jawbusHealthStrTemp = "&c&l"+jawbusHealthStrTemp.split(" ")[0];
-                            bossCount.push(["&c&lJawbus", jawbusHealthTemp, jawbusMaxHealthTemp, 47, 1, jawbusHealthStrTemp, 5, -1, Renderer.color(0,0,0,255), Renderer.color(115,33,33,255), Renderer.color(219,0,0,255), settings.BossHealthBarLength, mob.x, mob.y, mob.z]);
+                            jawbusHealthStrTemp = "§l"+jawbusHealthStrTemp.split(" ")[0];
+                            let newJawbus = Object.assign(BaseJawbus, {
+                                "HPLabel" : jawbusHealthStrTemp,
+                                "HPPercentage" : jawbusHealthTemp/jawbusMaxHealthTemp
+                            })
+                            bossCount.push(newJawbus);
                         }
                     }
                     if(settings.thunderHealthBarToggle) {
@@ -73,8 +110,12 @@ register("step", () => {
                                 thunderHealthTemp = parseFloat(thunderHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000000;
                             }
                             thunderMaxHealthTemp = parseFloat(thunderHealthStrTemp.replace(/M|❤/, "").split("/")[1]);
-                            thunderHealthStrTemp = "&b&l"+thunderHealthStrTemp.split(" ")[0];
-                            bossCount.push(["&b&lThunder", thunderHealthTemp, thunderMaxHealthTemp, 55, 1, thunderHealthStrTemp, 5, -1, Renderer.color(0,0,0,255), Renderer.color(17, 91, 92,255), Renderer.color(32, 229, 232,255), settings.BossHealthBarLength+6, mob.x, mob.y, mob.z]);
+                            thunderHealthStrTemp = "§l"+thunderHealthStrTemp.split(" ")[0];
+                            let newThunder = Object.assign(BaseThunder, {
+                                "HPLabel" : thunderHealthStrTemp,
+                                "HPPercentage" : (thunderHealthTemp/thunderMaxHealthTemp)*100
+                            })
+                            bossCount.push(newThunder);
                         }
                     }
                     if(settings.plhlegblastHealthBarToggle) {
@@ -91,8 +132,12 @@ register("step", () => {
                                 plhlegblastHealthTemp = parseFloat(plhlegblastHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000000;
                             }
                             plhlegblastMaxHealthTemp = parseFloat(plhlegblastHealthStrTemp.replace(/M|❤/, "").split("/")[1]);
-                            plhlegblastHealthStrTemp = "&c&l"+plhlegblastHealthStrTemp;
-                            bossCount.push(["&c&lPlhlegblast", plhlegblastHealthTemp, plhlegblastMaxHealthTemp, 70, 1, plhlegblastHealthStrTemp, 5, -1, Renderer.color(0,0,0,255), Renderer.color(115,33,33,255), Renderer.color(219,0,0,255), settings.BossHealthBarLength-23, mob.x, mob.y, mob.z]);
+                            plhlegblastHealthStrTemp = "§l"+plhlegblastHealthStrTemp;
+                            let newPlhlegblast = Object.assign(BaseThunder, {
+                                "HPLabel" : plhlegblastHealthStrTemp,
+                                "HPPercentage" : (plhlegblastHealthTemp/plhlegblastMaxHealthTemp)*100
+                            })
+                            bossCount.push(newThunder);
                         }
                     }
                     if (mythicRegex.test(mob_name)){
@@ -185,16 +230,142 @@ register("step", () => {
             }
         }
     }
-}).setFps(settings.chBossPollingrate);
+    
+    if(settings.plhlegblastUIToggle) {
+        //Plhlegblast render
+        //TODO: Modify this thing whenever i add a function for this on the library
+        let PlhlegblastData = guiManager.getElement("PlhlegblastTimer").data
 
-let y = 0;
-register("renderoverlay", () => {
-    if(playerData.GUI["Toggle"]){
-        if(settings.bossHealthBarToggle) {
-            createBossBars(bossCount, "CrimsonBossBar", 310, 20, 7, settings.BossHealthBarLength);
+        PlhlegblastData.Times["(1)"] = [seaCreatureData.CRIMSON['PlhlegblastCount']-1]
+        PlhlegblastData.Times["(2)"] = [getAverageFromList(seaCreatureData.CRIMSON['PlhlegblastAllCount'])]
+        PlhlegblastData.Times["(3)"] = seaCreatureData.CRIMSON['PlhlegblastTime']
+
+        if(!settings.crimsonHideUIToggle) {
+            //Hide if not relevant OFF
+            PlhlegblastData.Hidden = false
+            guiManager.updateElementData("PlhlegblastTimer", PlhlegblastData)
+        }
+        else if((Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime && (Player.asPlayerMP()?.getDimension() == -1)) && (-357 > Player.getX() && Player.getX() > -398 && 72 < Player.getY() && Player.getY() < 100 && -683 > Player.getZ() && Player.getZ() > -722)) {
+            //Hide if not relevant ON, you are Fishing, You are inside Phlegblast pond
+            PlhlegblastData.Hidden = false
+            guiManager.updateElementData("PlhlegblastTimer", PlhlegblastData)
+        }
+        else {
+            //Hide if not relevant ON, you arent fishing in the pond
+            PlhlegblastData.Hidden = true
+            guiManager.updateElementData("PlhlegblastTimer", PlhlegblastData)
         }
     }
-});
+
+    if(settings.jawbusUIToggle) {
+        //Jawbus render
+        //TODO: Modify this thing whenever i add a function for this on the library
+        let JawbusData = guiManager.getElement("JawbusTimer").data
+
+        JawbusData.Times["(1)"] = [seaCreatureData.CRIMSON['JawbusCount']-1]
+        JawbusData.Times["(2)"] = [getAverageFromList(seaCreatureData.CRIMSON['JawbusAllCount'])]
+        JawbusData.Times["(3)"] = seaCreatureData.CRIMSON['JawbusTime']
+
+        if(!settings.crimsonHideUIToggle) {
+            //Hide if not relevant OFF
+            JawbusData.Hidden = false
+            guiManager.updateElementData("JawbusTimer", JawbusData)
+        }
+        else if((Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime && (Player.asPlayerMP()?.getDimension() == -1))) {
+            //Hide if not relevant ON, you are Fishing, You are in the crimson isle
+            JawbusData.Hidden = false
+            guiManager.updateElementData("JawbusTimer", JawbusData)
+        }
+        else {
+            //Hide if not relevant ON, you arent fishing in ci
+            JawbusData.Hidden = true
+            guiManager.updateElementData("JawbusTimer", JawbusData)
+        }
+    }
+
+    if(settings.thunderUIToggle) {
+        //Thunder render
+        //TODO: Modify this thing whenever i add a function for this on the library
+        let ThunderData = guiManager.getElement("ThunderTimer").data
+
+        ThunderData.Times["(1)"] = [seaCreatureData.CRIMSON['ThunderCount']-1]
+        ThunderData.Times["(2)"] = [getAverageFromList(seaCreatureData.CRIMSON['ThunderAllCount'])]
+        ThunderData.Times["(3)"] = seaCreatureData.CRIMSON['ThunderTime']
+
+        if(!settings.crimsonHideUIToggle) {
+            //Hide if not relevant OFF
+            ThunderData.Hidden = false
+            guiManager.updateElementData("ThunderTimer", ThunderData)
+        }
+        else if((Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime && (Player.asPlayerMP()?.getDimension() == -1))) {
+            //Hide if not relevant ON, you are Fishing, You are in the crimson isle
+            ThunderData.Hidden = false
+            guiManager.updateElementData("ThunderTimer", ThunderData)
+        }
+        else {
+            //Hide if not relevant ON, you arent fishing in ci
+            ThunderData.Hidden = true
+            guiManager.updateElementData("ThunderTimer", ThunderData)
+        }
+    }
+
+    if(settings.vanquisherUIToggle) {
+        //Vanquisher render
+        //TODO: Modify this thing whenever i add a function for this on the library
+        let VanquisherData = guiManager.getElement("VanquisherTimer").data
+
+        VanquisherData.Times["(1)"] = [seaCreatureData.CRIMSON['VanquisherCount']-1]
+        VanquisherData.Times["(2)"] = [getAverageFromList(seaCreatureData.CRIMSON['VanquisherAllCount'])]
+        VanquisherData.Times["(3)"] = seaCreatureData.CRIMSON['VanquisherTime']
+
+        if(!settings.crimsonHideUIToggle) {
+            //Hide if not relevant OFF
+            VanquisherData.Hidden = false
+            guiManager.updateElementData("VanquisherTimer", VanquisherData)
+        }
+        else if((Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime && (Player.asPlayerMP()?.getDimension() == -1))) {
+            //Hide if not relevant ON, you are Fishing, You are in the crimson isle
+            VanquisherData.Hidden = false
+            guiManager.updateElementData("VanquisherTimer", VanquisherData)
+        }
+        else {
+            //Hide if not relevant ON, you arent fishing in ci
+            VanquisherData.Hidden = true
+            guiManager.updateElementData("VanquisherTimer", VanquisherData)
+        }
+    }
+    
+    if(settings.vialUIToggle) {
+        //Vial render
+        //TODO: Modify this thing whenever i add a function for this on the library
+        let VialData = guiManager.getElement("JawbusVialTimer").data
+
+        VialData.Times["(1)"] = [seaCreatureData.DROPS["RadioactiveVial"]]
+        VialData.Times["(2)"] = [getVialAverage()]
+        VialData.Times["(3)"] = seaCreatureData.DROPS["RadioactiveVialTime"]
+
+        if(!settings.crimsonHideUIToggle) {
+            //Hide if not relevant OFF
+            VialData.Hidden = false
+            guiManager.updateElementData("JawbusVialTimer", VialData)
+        }
+        else if((Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime && (Player.asPlayerMP()?.getDimension() == -1))) {
+            //Hide if not relevant ON, you are Fishing, You are in the crimson isle
+            VialData.Hidden = false
+            guiManager.updateElementData("JawbusVialTimer", VialData)
+        }
+        else {
+            //Hide if not relevant ON, you arent fishing in ci
+            VialData.Hidden = true
+            guiManager.updateElementData("JawbusVialTimer", VialData)
+        }
+    }
+
+    if(settings.bossHealthBarToggle) {
+        guiManager.updateElementData("BossBar", bossCount)
+    }
+
+}).setFps(settings.chBossPollingrate);
 
 const crimsonMsg = makeRegexFromList(CrimsonMessages, true);
 const crimsonCreatures = makeRegexFromList(CrimsonCreatures);
@@ -357,7 +528,7 @@ register("chat", (message, event) => {
 
 
 register('chat', () => {
-    if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime) {
+    if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.PlhlegblastResetTime) {
         vanqmsg = `${funniFaces(settings.vanquisherMessage)}`;
         vanqmsg = vanqmsg.replace("([number])", `${seaCreatureData.CRIMSON['VanquisherCount']}`).replace("([time])", `${readableTime(Date.now()-seaCreatureData.CRIMSON['VanquisherTime'])}`).replace("([coords])", `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
         sendMsg(vanqmsg);
@@ -371,71 +542,6 @@ register('chat', () => {
     }
     seaCreatureData.CRIMSON['VanquisherTime'] = Date.now();
 }).setCriteria("A Vanquisher is spawning nearby!")
-
-register('renderoverlay', () => {
-    if(playerData.GUI["Toggle"]){
-        if(!settings.crimsonHideUIToggle) {
-            if (settings.plhlegblastUIToggle){
-                createText(funniFaces('&4&lPlhlegblast: &e&l([count]) (([average])) &7&l([time])').replace("([count])", `${seaCreatureData.CRIMSON['PlhlegblastCount']-1}`).replace("([average])", `${getAverageFromList(seaCreatureData.CRIMSON['PlhlegblastAllCount'])}`).replace("([time])", readableTime(Date.now()-seaCreatureData.CRIMSON['PlhlegblastTime'])), 'plhlegblast', 120, 20);
-            }
-            if (settings.jawbusUIToggle) {
-                createText(funniFaces('&c&lJawbus: &e&l([count]) (([average])) &7&l([time])').replace("([count])", `${seaCreatureData.CRIMSON['JawbusCount']-1}`).replace("([average])", `${getAverageFromList(seaCreatureData.CRIMSON['JawbusAllCount'])}`).replace("([time])", readableTime(Date.now()-seaCreatureData.CRIMSON['JawbusTime'])), 'jawbus', 120, 30);
-            }
-            if(settings.thunderUIToggle) {
-                createText(funniFaces('&b&lThunder: &e&l([count]) (([average])) &7&l([time])').replace("([count])", `${seaCreatureData.CRIMSON['ThunderCount']-1}`).replace("([average])", `${getAverageFromList(seaCreatureData.CRIMSON['ThunderAllCount'])}`).replace("([time])", readableTime(Date.now()-seaCreatureData.CRIMSON['ThunderTime'])), 'thunder', 120, 40);    
-            }
-            if(settings.vanquisherUIToggle) {
-                createText(funniFaces('&5&lVanquisher: &e&l([count]) (([average])) &7&l([time])').replace("([count])", `${seaCreatureData.CRIMSON['VanquisherCount']}`).replace("([average])", `${getAverageFromList(seaCreatureData.CRIMSON['VanquisherAllCount'])}`).replace("([time])", readableTime(Date.now()-seaCreatureData.CRIMSON['VanquisherTime'])), 'vanquisher', 120, 50);
-            }
-            if(settings.vialUIToggle) {
-                createText(`&cJawbus &6since &aVial&6: &f${seaCreatureData.DROPS["RadioactiveVial"]} (${getVialAverage()}) &e${readableTime(Date.now()-seaCreatureData.DROPS["RadioactiveVialTime"])}`, "Vial", 120, 60);
-            } 
-        }
-        else {
-            if(Player.asPlayerMP() != null){
-                if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime && (Player.asPlayerMP().getDimension() == -1)) {
-                    if (settings.plhlegblastUIToggle){
-                        if(-357 > Player.getX() && Player.getX() > -398 && 72 < Player.getY() && Player.getY() < 100 && -683 > Player.getZ() && Player.getZ() > -722){
-                            createText(funniFaces('&4&lPlhlegblast: &e&l([count]) (([average])) &7&l([time])').replace("([count])", `${seaCreatureData.CRIMSON['PlhlegblastCount']-1}`).replace("([average])", `${getAverageFromList(seaCreatureData.CRIMSON['PlhlegblastAllCount'])}`).replace("([time])", readableTime(Date.now()-seaCreatureData.CRIMSON['PlhlegblastTime'])), 'plhlegblast', 120, 20);
-                        }
-                        else {
-                            createText("", 'plhlegblast', 120, 20, false, funniFaces('&4&lPlhlegblast: &e&l([count]) (([average])) &7&l([time])').replace("([count])", `${seaCreatureData.CRIMSON['PlhlegblastCount']-1}`).replace("([average])", `${getAverageFromList(seaCreatureData.CRIMSON['PlhlegblastAllCount'])}`).replace("([time])", readableTime(Date.now()-seaCreatureData.CRIMSON['PlhlegblastTime'])));
-                        }
-                    }
-                    if (settings.jawbusUIToggle) {
-                        createText(funniFaces('&c&lJawbus: &e&l([count]) (([average])) &7&l([time])').replace("([count])", `${seaCreatureData.CRIMSON['JawbusCount']-1}`).replace("([average])", `${getAverageFromList(seaCreatureData.CRIMSON['JawbusAllCount'])}`).replace("([time])", readableTime(Date.now()-seaCreatureData.CRIMSON['JawbusTime'])), 'jawbus', 120, 30);
-                    }
-                    if(settings.thunderUIToggle) {
-                        createText(funniFaces('&b&lThunder: &e&l([count]) (([average])) &7&l([time])').replace("([count])", `${seaCreatureData.CRIMSON['ThunderCount']-1}`).replace("([average])", `${getAverageFromList(seaCreatureData.CRIMSON['ThunderAllCount'])}`).replace("([time])", readableTime(Date.now()-seaCreatureData.CRIMSON['ThunderTime'])), 'thunder', 120, 40);    
-                    }
-                    if(settings.vanquisherUIToggle) {
-                        createText(funniFaces('&5&lVanquisher: &e&l([count]) (([average])) &7&l([time])').replace("([count])", `${seaCreatureData.CRIMSON['VanquisherCount']}`).replace("([average])", `${getAverageFromList(seaCreatureData.CRIMSON['VanquisherAllCount'])}`).replace("([time])", readableTime(Date.now()-seaCreatureData.CRIMSON['VanquisherTime'])), 'vanquisher', 120, 50);
-                    }
-                    if(settings.vialUIToggle) {
-                        createText(`&cJawbus &6since &aVial&6: &f${seaCreatureData.DROPS["RadioactiveVial"]} (${getVialAverage()}) &e${readableTime(Date.now()-seaCreatureData.DROPS["RadioactiveVialTime"])}`, "Vial", 120, 60);
-                    } 
-                }
-                else {
-                    if (settings.plhlegblastUIToggle){
-                        createText("", 'plhlegblast', 120, 20, false, funniFaces('&4&lPlhlegblast: &e&l([count]) (([average])) &7&l([time])').replace("([count])", `${seaCreatureData.CRIMSON['PlhlegblastCount']-1}`).replace("([average])", `${getAverageFromList(seaCreatureData.CRIMSON['PlhlegblastAllCount'])}`).replace("([time])", readableTime(Date.now()-seaCreatureData.CRIMSON['PlhlegblastTime'])));
-                    }
-                    if (settings.jawbusUIToggle) {
-                        createText("", 'jawbus', 120, 30, false, funniFaces('&c&lJawbus: &e&l([count]) (([average])) &7&l([time])').replace("([count])", `${seaCreatureData.CRIMSON['JawbusCount']-1}`).replace("([average])", `${getAverageFromList(seaCreatureData.CRIMSON['JawbusAllCount'])}`).replace("([time])", readableTime(Date.now()-seaCreatureData.CRIMSON['JawbusTime'])));
-                    }
-                    if(settings.thunderUIToggle) {
-                        createText("", 'thunder', 120, 40, false, funniFaces('&b&lThunder: &e&l([count]) (([average])) &7&l([time])').replace("([count])", `${seaCreatureData.CRIMSON['ThunderCount']-1}`).replace("([average])", `${getAverageFromList(seaCreatureData.CRIMSON['ThunderAllCount'])}`).replace("([time])", readableTime(Date.now()-seaCreatureData.CRIMSON['ThunderTime'])));    
-                    }
-                    if(settings.vanquisherUIToggle) {
-                        createText("", 'vanquisher', 120, 50, false, funniFaces('&5&lVanquisher: &e&l([count]) (([average])) &7&l([time])').replace("([count])", `${seaCreatureData.CRIMSON['VanquisherCount']}`).replace("([average])", `${getAverageFromList(seaCreatureData.CRIMSON['VanquisherAllCount'])}`).replace("([time])", readableTime(Date.now()-seaCreatureData.CRIMSON['VanquisherTime'])));
-                    }
-                    if(settings.vialUIToggle) {
-                        createText("", "Vial", 120, 60, false, `&cJawbus &6since &aVial&6: &f${seaCreatureData.DROPS["RadioactiveVial"]} (${getVialAverage()}) &e${readableTime(Date.now()-seaCreatureData.DROPS["RadioactiveVialTime"])}`);
-                    } 
-                }
-            }
-        }
-    }
-});
 
 register('command', () => {
     seaCreatureData.CRIMSON['PlhlegblastAllCount'] = [];

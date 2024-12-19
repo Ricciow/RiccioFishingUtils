@@ -2,7 +2,7 @@ import settings from "../utils/settings";
 import { playerData , seaCreatureData} from "../data/data";
 import { readableTime, funniFaces, makeRegexFromList, readableTime, sendMsg, getRandomInt, readableQuantity} from "../utils/functions";
 import { Chats , seaCreatures, seaCreaturesNW, Bobber, seaCreatureMessages, colorsRegex, ArmorStand, Firework} from "../data/constants";
-import { createText } from "../utils/gui";
+import guiManager from "../gui/guiManager";
 
 let SeaCreatures = 0;
 let SeaCreaturesNW = 0;
@@ -17,6 +17,8 @@ let fluxActive = false;
 let fluxSent = true;
 let fluxTime = 'No Orb';
 let fluxCoords = [];
+//Bobbers
+let BobberCount = 0
 register('step', () => {
     if (settings.seaCreatureCounterToggle || settings.fluxToggle) {
         SeaCreatures = 0;
@@ -74,6 +76,27 @@ register('step', () => {
             }
         }
     }
+    if (settings.fluxTimerToggle && settings.fluxToggle) {
+        //Power Orb Render
+        //TODO: Modify this thing whenever i add a function for this on the library
+        let fluxData = guiManager.getElement("PowerOrbTimer").data
+        fluxData.Data["(1)"] = fluxTime
+        if(!settings.deployableHideToggle) {
+            //Hide if not relevant OFF
+            fluxData.Hidden = false
+            guiManager.updateElementData("PowerOrbTimer", fluxData)
+        }
+        else if (fluxTime != "No flux") {
+            //Hide if not relevant ON, if there is an Orb
+            fluxData.Hidden = false
+            guiManager.updateElementData("PowerOrbTimer", fluxData)
+        }
+        else {
+            //Hide if not relevant ON, if there isnt an Orb
+            fluxData.Hidden = true
+            guiManager.updateElementData("PowerOrbTimer", fluxData)
+        }
+    }
     if (settings.seaCreatureCounterToggle){
         now = Date.now()
         if (settings.seaCreatureMessageToggle) {
@@ -114,114 +137,98 @@ register('step', () => {
             playerData.GENERALFISHING["Sound"] = false;
         }
     }
-    if (settings.bobberUIToggle){
-        updateBobbinBobbers();
-    }
-}).setFps(settings.seaCreaturePollingrate);
-
-let BobberCount = 0
-function updateBobbinBobbers() {
-    BobberCount = 0;
-    let playercoords = [Player.getX(), Player.getY(), Player.getZ()];
-    World.getAllEntitiesOfType(Bobber).forEach(bobber => {
-        let coords = [bobber.getX(), bobber.getY(), bobber.getZ()];
-        for (index = 0; index < 3; index++) {
-            if (Math.abs(coords[index] - playercoords[index]) > 30){
-                return;
+    //
+    if (settings.seaCreatureCounterToggle) {
+        if(settings.seaCreatureCounterUiToggle) {
+            //Sea creature counter render
+            //TODO: Modify this thing whenever i add a function for this on the library
+            let seaCreatureDataUI = guiManager.getElement("SeaCreatureCount").data
+            seaCreatureDataUI.Times["(1)"] = [SeaCreatures]
+            seaCreatureDataUI.Times["(2)"] = ((SeaCreatures > 0 && ((Date.now() - StartTime) > 1000)) ? StartTime : ['0s'])
+            if(!settings.generalHideUIToggle) {
+                //Hide if not relevant OFF
+                seaCreatureDataUI.Hidden = false
+                guiManager.updateElementData("SeaCreatureCount", seaCreatureDataUI)
             }
-        };
-        BobberCount += 1;
-    });
-    return BobberCount;
-}
-
-register('renderoverlay', () =>{
-    if(playerData.GUI["Toggle"]){
-        if(!settings.generalHideUIToggle) {
-            if (settings.seaCreatureCounterToggle && settings.seaCreatureCounterUiToggle) {
-                if(SeaCreatures > 0) {
-                    if (Date.now() - StartTime > 1000){
-                        createText(funniFaces('&9&lCreatures: &e([number]) &8(&e([time])&8)'.replace("([number])", `${SeaCreatures}`)).replace("([time])", `${readableTime(Date.now() - StartTime)}`), 'SeaCreatures', 3, 20);
-                    }
-                    else {
-                        createText(funniFaces('&9&lCreatures: &e([number]) &8(&e([time])&8)'.replace("([number])", `${SeaCreatures}`)).replace("([time])", `0s`), 'SeaCreatures', 3, 20);
-                    }
-                }
-                else{
-                    createText(funniFaces('&9&lCreatures: &e([number]) &8(&e([time])&8)'.replace("([number])", `${SeaCreatures}`)).replace("([time])", `0s`), 'SeaCreatures', 3, 20);
-                }
-            }
-            if (settings.bobberUIToggle){
-                createText(funniFaces(('&a&lBobbers: &e([number])').replace("([number])", `${BobberCount}`)), 'Bobbers', 3, 30);
-            }
-            if (settings.seacreatureHourUIToggle) {
-                if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime) {
-                    createText(funniFaces("&8&lSc/h: &e&l([sch]) (([amount]) in ([time]))").replace("([sch])", `${Math.floor((3600000/(Date.now()-seaCreatureData.CATCHES["FirstCatch"]))*seaCreatureData.CATCHES["ThisCatches"])}`).replace("([amount])", `${seaCreatureData.CATCHES["ThisCatches"]}`).replace("([time])", `${readableTime(Date.now()-seaCreatureData.CATCHES["FirstCatch"])}`), 'creatureHour', 240, 10);
-                }
-                else{
-                    createText(funniFaces("&8&lSc/h: &e&l([sch]) (([amount]) in ([time]))").replace("([sch])", "0").replace("([amount])", "0").replace("([time])", "0s"), 'creatureHour', 240, 10);
-                }
-            }
-        }
-        else {
-            if (settings.seaCreatureCounterToggle && settings.seaCreatureCounterUiToggle) {
-                if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime) {
-                    if(SeaCreatures > 0) {
-                        if (Date.now() - StartTime > 1000){
-                            createText(funniFaces('&9&lCreatures: &e([number]) &8(&e([time])&8)'.replace("([number])", `${SeaCreatures}`)).replace("([time])", `${readableTime(Date.now() - StartTime)}`), 'SeaCreatures', 3, 20);
-                        }
-                        else {
-                            createText(funniFaces('&9&lCreatures: &e([number]) &8(&e([time])&8)'.replace("([number])", `${SeaCreatures}`)).replace("([time])", `0s`), 'SeaCreatures', 3, 20);
-                        }
-                    }
-                    else{
-                        createText(funniFaces('&9&lCreatures: &e([number]) &8(&e([time])&8)'.replace("([number])", `${SeaCreatures}`)).replace("([time])", `0s`), 'SeaCreatures', 3, 20);
-                    }
-                }
-                else {
-                    if(SeaCreatures > 0) {
-                        if (Date.now() - StartTime > 1000){
-                            createText(funniFaces('&9&lCreatures: &e([number]) &8(&e([time])&8)'.replace("([number])", `${SeaCreatures}`)).replace("([time])", `${readableTime(Date.now() - StartTime)}`), 'SeaCreatures', 3, 20);
-                        }
-                        else {
-                            createText(funniFaces('&9&lCreatures: &e([number]) &8(&e([time])&8)'.replace("([number])", `${SeaCreatures}`)).replace("([time])", `0s`), 'SeaCreatures', 3, 20);
-                        }
-                    }
-                    else{
-                        createText("", 'SeaCreatures', 3, 20, false, funniFaces('&9&lCreatures: &e([number]) &8(&e([time])&8)'.replace("([number])", `${SeaCreatures}`)).replace("([time])", `0s`));
-                    }
-                }
-            }
-            if (settings.bobberUIToggle){
-                if(BobberCount > 0 || (Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime)) {
-                    createText(funniFaces(('&a&lBobbers: &e([number])').replace("([number])", `${BobberCount}`)), 'Bobbers', 3, 30);
-                }
-                else {
-                    createText("", 'Bobbers', 3, 30, false, funniFaces(('&a&lBobbers: &e([number])').replace("([number])", `${BobberCount}`)));
-                }
-            }
-            if (settings.seacreatureHourUIToggle) {
-                if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime) {
-                    createText(funniFaces("&8&lSc/h: &e&l([sch]) (([amount]) in ([time]))").replace("([sch])", `${Math.floor((3600000/(Date.now()-seaCreatureData.CATCHES["FirstCatch"]))*seaCreatureData.CATCHES["ThisCatches"])}`).replace("([amount])", `${seaCreatureData.CATCHES["ThisCatches"]}`).replace("([time])", `${readableTime(Date.now()-seaCreatureData.CATCHES["FirstCatch"])}`), 'creatureHour', 240, 10);
-                }
-                else{
-                    createText("", 'creatureHour', 240, 10, false, funniFaces("&8&lSc/h: &e&l([sch]) (([amount]) in ([time]))").replace("([sch])", "0").replace("([amount])", "0").replace("([time])", "0s"));
-                }
-            }
-        }
-        if (settings.fluxTimerToggle && settings.fluxToggle) {
-            if(!settings.deployableHideToggle) {
-                createText(funniFaces(("&d&lPower Orb: &e([time])").replace("([time])", `${fluxTime}`)), 'Power Orb', 3, 60);
-            }
-            else if (fluxTime != 'No Orb') {
-                createText(funniFaces(("&d&lPower Orb: &e([time])").replace("([time])", `${fluxTime}`)), 'Power Orb', 3, 60);
+            else if (SeaCreatures > 0 || (Date.now() - seaCreatureDataUI.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime)) {
+                //Hide if not relevant ON, you are Fishing
+                seaCreatureDataUI.Hidden = false
+                guiManager.updateElementData("SeaCreatureCount", seaCreatureDataUI)
             }
             else {
-                createText("", 'Power Orb', 3, 60, false, funniFaces(("&d&lPower Orb: &e([time])").replace("([time])", `${fluxTime}`)));
+                //Hide if not relevant ON, you arent fishing
+                seaCreatureDataUI.Hidden = true
+                guiManager.updateElementData("SeaCreatureCount", seaCreatureDataUI)
+            }
+        }
+        if(settings.seacreatureHourUIToggle) {
+            //Sea creature per hour render
+            //TODO: Modify this thing whenever i add a function for this on the library
+            let seaCreatureHourData = guiManager.getElement("SeaCreatureHour").data
+            if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime) {
+                seaCreatureHourData.Times["(1)"] = [Math.floor((3600000/(Date.now()-seaCreatureData.CATCHES["FirstCatch"]))*seaCreatureData.CATCHES["ThisCatches"])]
+                seaCreatureHourData.Times["(2)"] = [seaCreatureData.CATCHES["ThisCatches"]]
+                seaCreatureHourData.Times["(3)"] = seaCreatureData.CATCHES["FirstCatch"]
+            }
+            else {
+                seaCreatureHourData.Times["(1)"] = ["0"]
+                seaCreatureHourData.Times["(2)"] = ["0"]
+                seaCreatureHourData.Times["(3)"] = ["0s"]
+            }
+            if(!settings.generalHideUIToggle) {
+                //Hide if not relevant OFF
+                seaCreatureHourData.Hidden = false
+                guiManager.updateElementData("SeaCreatureHour", seaCreatureHourData)
+            }
+            else if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime) {
+                //Hide if not relevant ON, you are Fishing
+                seaCreatureHourData.Hidden = false
+                guiManager.updateElementData("SeaCreatureHour", seaCreatureHourData)
+            }
+            else {
+                //Hide if not relevant ON, you arent fishing
+                seaCreatureHourData.Hidden = true
+                guiManager.updateElementData("SeaCreatureHour", seaCreatureHourData)
             }
         }
     }
-});
+
+
+
+    if (settings.bobberUIToggle){
+        BobberCount = 0;
+        let playercoords = [Player.getX(), Player.getY(), Player.getZ()];
+        World.getAllEntitiesOfType(Bobber).forEach(bobber => {
+            let coords = [bobber.getX(), bobber.getY(), bobber.getZ()];
+            for (index = 0; index < 3; index++) {
+                if (Math.abs(coords[index] - playercoords[index]) > 30){
+                    return;
+                }
+            };
+            BobberCount += 1;
+        });
+
+        //Bobbin Render
+        //TODO: Modify this thing whenever i add a function for this on the library
+        let BobberData = guiManager.getElement("BobberCount").data
+        BobberData.Data["(1)"] = BobberCount
+        if(!settings.generalHideUIToggle) {
+            //Hide if not relevant OFF
+            BobberData.Hidden = false
+            guiManager.updateElementData("BobberCount", BobberData)
+        }
+        else if (BobberCount > 0 || (Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime)) {
+            //Hide if not relevant ON, you are Fishing
+            BobberData.Hidden = false
+            guiManager.updateElementData("BobberCount", BobberData)
+        }
+        else {
+            //Hide if not relevant ON, you arent fishing
+            BobberData.Hidden = true
+            guiManager.updateElementData("BobberCount", BobberData)
+        }
+    }
+}).setFps(settings.seaCreaturePollingrate);
 
 register('command', () => {
     seaCreatureData.CATCHES["LastCatch"] = 0;
@@ -347,10 +354,10 @@ let Flare = false;
 let FlareSent = true;
 let FlareTimeInt = 0;
 let FlareTimeUUID = '';
-let FlareTime = "No Flare";
+let flareTime = "No Flare";
 let Bonus = 0;
 let FlareCoords = [];
-const timerRegex = /^\d\.\d$/;
+const timerRegex = /^(\d\.\d)|(!!!)$/;
 let Timer = ''
 let FoundFireWork = false;
 register('step', () => {
@@ -372,10 +379,10 @@ register('step', () => {
                     }
                     FlareTimeInt = 180000-mob.getTicksExisted()/20*1000;
                     if (FlareTimeInt > 0) {
-                        FlareTime = readableTime(FlareTimeInt);
+                        flareTime = readableTime(FlareTimeInt);
                     }
                     else {
-                        FlareTime = 'Ending Soon'
+                        flareTime = 'Ending Soon'
                     }
                     foundflare = true;
                 } 
@@ -394,10 +401,10 @@ register('step', () => {
                     }
                     FlareTimeInt = 180000-mob.getTicksExisted()/20*1000;
                     if (FlareTimeInt > 0) {
-                        FlareTime = readableTime(FlareTimeInt);
+                        flareTime = readableTime(FlareTimeInt);
                     }
                     else {
-                        FlareTime = 'Ending Soon'
+                        flareTime = 'Ending Soon'
                     }
                     foundflare = true;
                 }
@@ -416,10 +423,10 @@ register('step', () => {
                     }
                     FlareTimeInt = 180000-mob.getTicksExisted()/20*1000;
                     if (FlareTimeInt > 0) {
-                        FlareTime = readableTime(FlareTimeInt);
+                        flareTime = readableTime(FlareTimeInt);
                     }
                     else {
-                        FlareTime = 'Ending Soon'
+                        flareTime = 'Ending Soon'
                     }
                     foundflare = true;
                 }
@@ -427,7 +434,7 @@ register('step', () => {
         });
         if(!foundflare) {
             Flare = false;
-            FlareTime = "No Flare";
+            flareTime = "No Flare";
             FlareTimeInt = 0;
             FlareTimeUUID = '';
             Bonus = 0;
@@ -463,6 +470,28 @@ register('step', () => {
             }
         }
     }
+    if (settings.flareTimerToggle && settings.flareToggle) {
+        //Flare Render
+        //TODO: Modify this thing whenever i add a function for this on the library
+        let flareData = guiManager.getElement("FlareTimer").data
+        flareData.Data["(1)"] = flareTime
+        flareData.Data["(2)"] = (Bonus > 0 ? `&b${Bonus*100}%` : "")
+        if(!settings.deployableHideToggle) {
+            //Hide if not relevant OFF
+            flareData.Hidden = false
+            guiManager.updateElementData("FlareTimer", flareData)
+        }
+        else if(flareTime != "No Flare"){
+            //Hide if not relevant ON, if there is a flare
+            flareData.Hidden = false
+            guiManager.updateElementData("FlareTimer", flareData)
+        }
+        else {
+            //Hide if not relevant ON, if there isnt a flare
+            flareData.Hidden = true
+            guiManager.updateElementData("FlareTimer", flareData)
+        }
+    }
     if(settings.rodTimerToggle) {
         foundTimer = false
         World.getAllEntitiesOfType(ArmorStand).forEach(mob => {
@@ -472,14 +501,25 @@ register('step', () => {
                 Timer = Mob;
                 foundTimer = true;
             }
-            else if((/^!!!$/).test(Mob)) {
-                Timer = Mob;
-                foundTimer = true;
-            }
         });
         if(!foundTimer) {
             Timer = '';
         }
+
+        //Rod Timer Render
+        //TODO: Modify this thing whenever i add a function for this on the library
+        let rodTimerData = guiManager.getElement("RodTimer").data
+        let rodTexts = settings.rodTimerUI.split("|");
+        if(Timer == '!!!') {
+            rodTimerData.Text = funniFaces((rodTexts[1]).replace("([time])", ` `))
+        }
+        else if((/\d\.\d/).test(Timer)){
+            rodTimerData.Text = funniFaces((rodTexts[0]).replace("([time])", `${Timer}`));
+        }
+        else {
+            rodTimerData.Text = ""
+        }
+        guiManager.updateElementData("RodTimer", rodTimerData)
     }
 }).setFps(15);
 
@@ -498,7 +538,7 @@ register("renderEntity", (entity, pos, partialTick, event) => {
 register('chat', () => {
     if(settings.flareToggle) {
         Flare = false;
-        FlareTime = "No Flare";
+        flareTime = "No Flare";
         FlareSent = true;
         if (settings.flareMessageToggle) {
             sendMsg(funniFaces(settings.deployableMessage.replace("([deployable])", "Flare")));
@@ -512,44 +552,6 @@ register('chat', () => {
         }
     }
 }).setCriteria("Your flare disappeared because you were too far away!");
-
-register('renderoverlay', () =>{
-    if(playerData.GUI["Toggle"]){
-        if (settings.flareTimerToggle && settings.flareToggle) {
-            if(!settings.deployableHideToggle) {
-                if (Bonus > 0){
-                    createText(funniFaces(("&6&lFlare: &e([time]) &b([bonus])").replace("([time])", `${FlareTime}`).replace("([bonus])", `+${Bonus*100}%`)), 'Flare', 3, 80);
-                }
-                else {
-                    createText(funniFaces(("&6&lFlare: &e([time]) &b&l([bonus])").replace("([time])", `${FlareTime}`).replace("([bonus])", ` `)), 'Flare', 3, 80);
-                }
-            }
-            else if(FlareTime != "No Flare"){
-                if (Bonus > 0){
-                    createText(funniFaces(("&6&lFlare: &e([time]) &b([bonus])").replace("([time])", `${FlareTime}`).replace("([bonus])", `+${Bonus*100}%`)), 'Flare', 3, 80);
-                }
-                else {
-                    createText(funniFaces(("&6&lFlare: &e([time]) &b&l([bonus])").replace("([time])", `${FlareTime}`).replace("([bonus])", ` `)), 'Flare', 3, 80);
-                }
-            }
-            else {
-                createText("", 'Flare', 3, 80, false, funniFaces(("&6&lFlare: &e([time]) &b&l([bonus])").replace("([time])", `${FlareTime}`).replace("([bonus])", ` `)));
-            }
-        }
-        if(settings.rodTimerToggle) {
-            Texts = settings.rodTimerUI.split("|");
-            if(Timer == '!!!') {
-                createText(funniFaces((Texts[1]).replace("([time])", ` `)), 'FishingRod', 3, 90, false, 'RodTimer');
-            }
-            else if((/\d\.\d/).test(Timer)){
-                createText(funniFaces((Texts[0]).replace("([time])", `${Timer}`)), 'FishingRod', 3, 90, false, 'RodTimer');
-            }
-            else {
-                createText("", 'FishingRod', 3, 90, false, Texts[1]);
-            }
-        }
-    }
-});
 
 register("chat", () => {
     playerData.SETTINGS["BaitBag"] = true;

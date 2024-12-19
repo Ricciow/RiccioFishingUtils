@@ -1,8 +1,8 @@
 import { playerData } from "../data/data"
 import { funniFaces } from "../utils/functions";
-import { createText } from "../utils/gui";
 import { colorsRegex } from "../data/constants";
 import settings from "../utils/settings";
+import guiManager from "../gui/guiManager";
 
 const gdragskinRegex = /Lvl \d{1,3}] \[\d+✦/g
 const petnameRegex = / §.+$/
@@ -100,27 +100,16 @@ register('guimouseclick', (x,y,button,gui,event) => {
     }
 });
 
-register('renderoverlay', () => {
-    if(playerData.GUI["TogglePets"]){
-        if(playerData.GUI["Toggle"]){
-            if (settings.petDisplayToggle) {
-                if (playerData.PETS['Skinned']) {
-                    createText(funniFaces(("&7[Lvl ([level])] ([cosmetic])&6([pet])").replace("([level])", `${playerData.PETS['PetLevel']}`).replace("([pet])", `${playerData.PETS['EquippedPet']}`).replace("([cosmetic])", `${('&8[&6([level])&4✦&8] ').replace("([level])", playerData.PETS['CosmeticLevel'])}`)), "Pet", 120, 10);
-                }
-                else {
-                    createText(funniFaces(("&7[Lvl ([level])] ([cosmetic])&6([pet])").replace("([level])", `${playerData.PETS['PetLevel']}`).replace("([pet])", `${playerData.PETS['EquippedPet']}`).replace("([cosmetic])", "")), "Pet", 120, 10);
-                }
-            }
-        }
+register('step', () => {
+    if (settings.petDisplayToggle) {
+        //Pets Render
+        //TODO: Modify this thing whenever i add a function for this on the library
+        let petData = guiManager.getElement("PetDisplay").data
+
+        petData.Data["(1)"] = playerData.PETS['PetLevel']
+        petData.Data["(2)"] = playerData.PETS['Skinned'] ? `&8[&6${playerData.PETS['CosmeticLevel']}&4✦&8] ` : ""
+        petData.Data["(3)"] = playerData.PETS['EquippedPet']
+
+        guiManager.updateElementData("PetDisplay", petData)
     }
-    else {
-        if (settings.petDisplayToggle) {
-            if (playerData.PETS['Skinned']) {
-                createText(funniFaces(("&7[Lvl ([level])] ([cosmetic])&6([pet])").replace("([level])", `${playerData.PETS['PetLevel']}`).replace("([pet])", `${playerData.PETS['EquippedPet']}`).replace("([cosmetic])", `${('&8[&6([level])&4✦&8] ').replace("([level])", playerData.PETS['CosmeticLevel'])}`)), "Pet", 120, 10);
-            }
-            else {
-                createText(funniFaces(("&7[Lvl ([level])] ([cosmetic])&6([pet])").replace("([level])", `${playerData.PETS['PetLevel']}`).replace("([pet])", `${playerData.PETS['EquippedPet']}`).replace("([cosmetic])", "")), "Pet", 120, 10);
-            }
-        } 
-    }
-});
+}).setFps(5)

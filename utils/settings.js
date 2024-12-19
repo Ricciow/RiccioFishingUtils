@@ -1416,3 +1416,5 @@ class Settings {
 }
 
 export default new Settings();
+
+import "./newsettings/onClose.js"
