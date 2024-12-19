@@ -1,7 +1,7 @@
 {
     "PARTY": {
         "logOff": 1734580275174,
-        "inParty": true,
+        "inParty": false,
         "isLeader": false
     },
     "SETTINGS": {
@@ -14,134 +14,9 @@
         "TTimer": 1718469979404
     },
     "GUI": {
-        "CrimsonBossBar": [
-            174,
-            95,
-            1.2000000000000002,
-            8,
-            8
-        ],
-        "SeaCreatures": [
-            0,
-            5,
-            1,
-            107,
-            10
-        ],
-        "Bobbers": [
-            0,
-            15,
-            1,
-            64,
-            10
-        ],
-        "creatureHour": [
-            135,
-            0,
-            1,
-            101,
-            10
-        ],
-        "Power Orb": [
-            0,
-            25,
-            1,
-            90,
-            10
-        ],
-        "plhlegblast": [
-            135,
-            10,
-            1,
-            295,
-            10
-        ],
-        "jawbus": [
-            135,
-            20,
-            1,
-            245,
-            10
-        ],
-        "thunder": [
-            135,
-            30,
-            1,
-            238,
-            10
-        ],
-        "vanquisher": [
-            135,
-            40,
-            1,
-            269,
-            10
-        ],
-        "Pet": [
-            642,
-            260,
-            1,
-            102,
-            10
-        ],
-        "Totem": [
-            135,
-            50,
-            1,
-            88,
-            10
-        ],
-        "PhoenixSpirit": [
-            0,
-            35,
-            1,
-            108,
-            20
-        ],
-        "Vial": [
-            0,
-            90,
-            0.5000000000000001,
-            142,
-            5
-        ],
-        "Phoenix": [
-            0,
-            35,
-            1,
-            89,
-            10
-        ],
-        "SpiritMask": [
-            0,
-            45,
-            1,
-            108,
-            10
-        ],
+        "Updated": true,
         "Toggle": true,
-        "TogglePets": false,
-        "Flare": [
-            0,
-            55,
-            1,
-            113,
-            10
-        ],
-        "FishingRod": [
-            394,
-            203,
-            2.4000000000000012,
-            72,
-            24
-        ],
-        "GoldenFish": [
-            3,
-            281,
-            1,
-            96,
-            30
-        ]
+        "TogglePets": false
     },
     "GENERALFISHING": {
         "Sound": false
@@ -152,9 +27,9 @@
         "Tbottle": 1730422705466
     },
     "PETS": {
-        "EquippedPet": "&6Golden Dragon",
-        "PetLevel": 200,
+        "EquippedPet": "&dFlying Fish",
+        "PetLevel": 100,
         "CosmeticLevel": 109,
-        "Skinned": true
+        "Skinned": false
     }
 }

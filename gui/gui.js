@@ -220,25 +220,23 @@ const oldToNewMap = {
     "GoldenFish": "GoldenFishTimer"
 }
 
-
-if(playerData.GUI) {
-    /**
-     * 0 - X
-     * 1 - Y
-     * 2 - Scale
-     * 3 - Width
-     * 4 - Height
-     */
+if(!playerData.GUI.Updated) {
+    let oldToggle = playerData.GUI.Toggle
+    let oldTogglePets = playerData.GUI.TogglePets
     Object.keys(playerData.GUI).forEach((key) => {
         let data = playerData.GUI[key]
         let newKey = oldToNewMap[key]
-        console.log(data)
-        console.log(key, newKey)
-        console.log(Manager.getElement(newKey))
         if(newKey) {
             Manager.updateElement(newKey, undefined, data[0], data[1], data[3]/data[2], data[4]/data[2], data[2])
         }
     })
+    playerData["GUI"] = {
+        Updated : true,
+        Toggle : oldToggle,
+        TogglePets : oldTogglePets
+    }
+
+    playerData.save()
 }
 
 updateUI()
