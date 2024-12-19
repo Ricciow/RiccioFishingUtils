@@ -310,7 +310,7 @@ register("step", () => {
         //Vanquisher render
         let VanquisherData = guiManager.getElementData("VanquisherTimer")
 
-        VanquisherData.Times["(1)"] = [seaCreatureData.CRIMSON['VanquisherCount']-1]
+        VanquisherData.Times["(1)"] = [seaCreatureData.CRIMSON['VanquisherCount']]
         VanquisherData.Times["(2)"] = [getAverageFromList(seaCreatureData.CRIMSON['VanquisherAllCount'])]
         VanquisherData.Times["(3)"] = seaCreatureData.CRIMSON['VanquisherTime']
 
