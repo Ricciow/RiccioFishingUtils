@@ -11,20 +11,8 @@ import {
     @TextProperty,
     @Vigilant,
 } from 'Vigilance/index';
-
-// The only parameter that is required is the first, which should be the Module name.
-// The other 2 parameters are optional.
-// The 2nd parameter is the title of the settings window, seen in the top left above the
-// category list.
-// The 3rd parameter is an object that determines the sorting order of the categories.
-
 @Vigilant('RiccioFishingUtils', 'RiccioFishingUtils V0.1.1', {
     getCategoryComparator: () => (a, b) => {
-        // By default, categories, subcategories, and properties are sorted alphabetically.
-        // You can override this behavior by returning a negative number if a should be sorted before b,
-        // or a positive number if b should be sorted before a.
-
-        // In this case, we can put Not general to be above general.
         const categories = ['General Fishing', 'Crimson Fishing', 'Crystal Hollows Fishing', 'Trophy Fishing' , 'Chat Commands', 'Pets', 'Rare Drops' , 'Player Stats','Deployables','Other'];
 
         return categories.indexOf(a.name) - categories.indexOf(b.name);
@@ -731,10 +719,10 @@ class Settings {
         description: 'Change the length of the health bar',
         category: 'Crimson Fishing',
         subcategory: 'Boss Bar',
-        min: 100,
-        max: 500
+        min: 200,
+        max: 600
     })
-    BossHealthBarLength = 100;
+    BossHealthBarLength = 200;
 
     @CheckboxProperty({
         name: '● Toggle jawbus health bar',

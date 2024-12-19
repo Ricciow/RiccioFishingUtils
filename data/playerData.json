@@ -15,8 +15,8 @@
     },
     "GUI": {
         "Updated": true,
-        "Toggle": true,
-        "TogglePets": false
+        "Toggle": false,
+        "TogglePets": true
     },
     "GENERALFISHING": {
         "Sound": false
@@ -27,8 +27,8 @@
         "Tbottle": 1730422705466
     },
     "PETS": {
-        "EquippedPet": "&dFlying Fish",
-        "PetLevel": 100,
+        "EquippedPet": "&6Ammonite",
+        "PetLevel": 98,
         "CosmeticLevel": 109,
         "Skinned": false
     }

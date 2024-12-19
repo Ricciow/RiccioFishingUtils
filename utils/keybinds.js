@@ -1,4 +1,7 @@
 import { playerData } from "../data/data"
+import { Keybind } from "../../KeybindFix"
+import { updateUI } from "./newsettings/onClose";
+
 const toggleKeybind = new KeyBind("Toggle UI", Keyboard.KEY_NONE, "RiccioFishingUtils")
 
 toggleKeybind.registerKeyDown(ToggleDown);
@@ -15,6 +18,7 @@ function ToggleDown() {
         else {
             ChatLib.chat(Msg);
         }
+        updateUI()
     }
     down = true;
 }
@@ -31,4 +35,5 @@ register("command", () => {
     else {
         ChatLib.chat(`&5[&b&lRFU&5] &f&lPet gui toggle turned &4&lOFF`);
     }
+    updateUI()
 }).setName('rfutogglepetonkeybind')

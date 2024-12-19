@@ -2,9 +2,9 @@
     "BossBar": {
         "type": "BossBar",
         "enabled": true,
-        "x": 219,
-        "y": 100,
-        "width": 300,
+        "x": 182,
+        "y": 85,
+        "width": true,
         "height": 6.666666666666666,
         "scale": 1.3,
         "scalingMode": "X",
@@ -250,7 +250,7 @@
             "Placeholder": "&4&lJawbus: &e&l0 (0) &7&l0s",
             "Times": {
                 "(1)": [
-                    422
+                    489
                 ],
                 "(2)": [
                     457
@@ -274,12 +274,12 @@
             "Placeholder": "&b&lThunder: &e&l0 (0) &7&l0s",
             "Times": {
                 "(1)": [
-                    144
+                    9
                 ],
                 "(2)": [
                     96
                 ],
-                "(3)": 1733458105410
+                "(3)": 1734629302625
             }
         }
     },
@@ -298,12 +298,12 @@
             "Placeholder": "&5&lVanquisher: &e&l0 (0) &7&l0s",
             "Times": {
                 "(1)": [
-                    586
+                    714
                 ],
                 "(2)": [
                     403
                 ],
-                "(3)": 1733457354190
+                "(3)": 1734629293081
             }
         }
     },
@@ -345,9 +345,9 @@
             "Hidden": false,
             "Placeholder": "&7[Lvl 100] &6Flying Fish",
             "Data": {
-                "(1)": 100,
+                "(1)": 98,
                 "(2)": "",
-                "(3)": "&dFlying Fish"
+                "(3)": "&6Ammonite"
             }
         }
     }

@@ -1,5 +1,6 @@
 import { playerData } from "../data/data"
 import { updateUI } from "../utils/newsettings/onClose"
+import settings from "../utils/settings"
 import Manager from "./guiManager"
 
 const ScalingModes = {
@@ -235,7 +236,9 @@ if(!playerData.GUI.Updated) {
         Toggle : oldToggle,
         TogglePets : oldTogglePets
     }
-
+    if(settings.BossHealthBarLength < 200) {
+        settings.BossHealthBarLength += 100
+    }
     playerData.save()
 }
 
