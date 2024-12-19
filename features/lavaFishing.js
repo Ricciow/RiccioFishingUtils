@@ -91,7 +91,7 @@ register("step", () => {
                             jawbusHealthStrTemp = "§l"+jawbusHealthStrTemp.split(" ")[0];
                             let newJawbus = Object.assign(BaseJawbus, {
                                 "HPLabel" : jawbusHealthStrTemp,
-                                "HPPercentage" : jawbusHealthTemp/jawbusMaxHealthTemp
+                                "HPPercentage" : (jawbusHealthTemp/jawbusMaxHealthTemp)*100
                             })
                             bossCount.push(newJawbus);
                         }
