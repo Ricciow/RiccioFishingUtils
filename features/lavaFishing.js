@@ -523,7 +523,7 @@ register("chat", (message, event) => {
 
 
 register('chat', () => {
-    if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.PlhlegblastResetTime) {
+    if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime) {
         vanqmsg = `${funniFaces(settings.vanquisherMessage)}`;
         vanqmsg = vanqmsg.replace("([number])", `${seaCreatureData.CRIMSON['VanquisherCount']}`).replace("([time])", `${readableTime(Date.now()-seaCreatureData.CRIMSON['VanquisherTime'])}`).replace("([coords])", `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
         sendMsg(vanqmsg);
