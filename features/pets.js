@@ -103,8 +103,7 @@ register('guimouseclick', (x,y,button,gui,event) => {
 register('step', () => {
     if (settings.petDisplayToggle) {
         //Pets Render
-        //TODO: Modify this thing whenever i add a function for this on the library
-        let petData = guiManager.getElement("PetDisplay").data
+        let petData = guiManager.getElementData("PetDisplay")
 
         petData.Data["(1)"] = playerData.PETS['PetLevel']
         petData.Data["(2)"] = playerData.PETS['Skinned'] ? `&8[&6${playerData.PETS['CosmeticLevel']}&4✦&8] ` : ""

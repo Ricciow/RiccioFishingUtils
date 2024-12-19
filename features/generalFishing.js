@@ -78,8 +78,7 @@ register('step', () => {
     }
     if (settings.fluxTimerToggle && settings.fluxToggle) {
         //Power Orb Render
-        //TODO: Modify this thing whenever i add a function for this on the library
-        let fluxData = guiManager.getElement("PowerOrbTimer").data
+        let fluxData = guiManager.getElementData("PowerOrbTimer")
         fluxData.Data["(1)"] = fluxTime
         if(!settings.deployableHideToggle) {
             //Hide if not relevant OFF
@@ -141,8 +140,7 @@ register('step', () => {
     if (settings.seaCreatureCounterToggle) {
         if(settings.seaCreatureCounterUiToggle) {
             //Sea creature counter render
-            //TODO: Modify this thing whenever i add a function for this on the library
-            let seaCreatureDataUI = guiManager.getElement("SeaCreatureCount").data
+            let seaCreatureDataUI = guiManager.getElementData("SeaCreatureCount")
             seaCreatureDataUI.Times["(1)"] = [SeaCreatures]
             seaCreatureDataUI.Times["(2)"] = ((SeaCreatures > 0 && ((Date.now() - StartTime) > 1000)) ? StartTime : ['0s'])
             if(!settings.generalHideUIToggle) {
@@ -163,8 +161,7 @@ register('step', () => {
         }
         if(settings.seacreatureHourUIToggle) {
             //Sea creature per hour render
-            //TODO: Modify this thing whenever i add a function for this on the library
-            let seaCreatureHourData = guiManager.getElement("SeaCreatureHour").data
+            let seaCreatureHourData = guiManager.getElementData("SeaCreatureHour")
             if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime) {
                 seaCreatureHourData.Times["(1)"] = [Math.floor((3600000/(Date.now()-seaCreatureData.CATCHES["FirstCatch"]))*seaCreatureData.CATCHES["ThisCatches"])]
                 seaCreatureHourData.Times["(2)"] = [seaCreatureData.CATCHES["ThisCatches"]]
@@ -209,8 +206,7 @@ register('step', () => {
         });
 
         //Bobbin Render
-        //TODO: Modify this thing whenever i add a function for this on the library
-        let BobberData = guiManager.getElement("BobberCount").data
+        let BobberData = guiManager.getElementData("BobberCount")
         BobberData.Data["(1)"] = BobberCount
         if(!settings.generalHideUIToggle) {
             //Hide if not relevant OFF
@@ -472,8 +468,7 @@ register('step', () => {
     }
     if (settings.flareTimerToggle && settings.flareToggle) {
         //Flare Render
-        //TODO: Modify this thing whenever i add a function for this on the library
-        let flareData = guiManager.getElement("FlareTimer").data
+        let flareData = guiManager.getElementData("FlareTimer")
         flareData.Data["(1)"] = flareTime
         flareData.Data["(2)"] = (Bonus > 0 ? `&b${Bonus*100}%` : "")
         if(!settings.deployableHideToggle) {
@@ -507,8 +502,7 @@ register('step', () => {
         }
 
         //Rod Timer Render
-        //TODO: Modify this thing whenever i add a function for this on the library
-        let rodTimerData = guiManager.getElement("RodTimer").data
+        let rodTimerData = guiManager.getElementData("RodTimer")
         let rodTexts = settings.rodTimerUI.split("|");
         if(Timer == '!!!') {
             rodTimerData.Text = funniFaces((rodTexts[1]).replace("([time])", ` `))

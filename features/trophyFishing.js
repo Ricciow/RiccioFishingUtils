@@ -70,8 +70,7 @@ register("step", () => {
         }
 
         //Golden Fish Render
-        //TODO: Modify this thing whenever i add a function for this on the library
-        let GoldenFishData = guiManager.getElement("GoldenFishTimer").data
+        let GoldenFishData = guiManager.getElementData("GoldenFishTimer")
         if(seaCreatureData.GOLDEN["Cooking"] && !Golding) {
             time = 480000 + seaCreatureData.GOLDEN["StartTime"];
             timeCast = 180000 + seaCreatureData.GOLDEN["LastCast"];

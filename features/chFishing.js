@@ -121,8 +121,7 @@ register('step', () =>{
     }
     if (settings.totemTimerToggle && settings.totemToggle) {
         //Totem Render
-        //TODO: Modify this thing whenever i add a function for this on the library
-        let totemData = guiManager.getElement("TotemTimer").data
+        let totemData = guiManager.getElementData("TotemTimer")
         totemData.Data["(1)"] = totemTime
         if(!settings.deployableHideToggle) {
             //Hide if not relevant OFF

@@ -154,8 +154,7 @@ register("step", () => {
 
     if (settings.deathItemPhoenixStatusToggle) {
         //Phoenix Render
-        //TODO: Modify this thing whenever i add a function for this on the library
-        let phoenixData = guiManager.getElement("PhoenixTimer").data
+        let phoenixData = guiManager.getElementData("PhoenixTimer")
         phoenixData.Times["(1)"] = (Date.now() - phoenixUseTime > 60000) ? ["&a&lActive"] : (phoenixUseTime + 60000)
         if(!settings.deathItemStatusUIToggle) {
             //Hide if not relevant OFF
@@ -176,8 +175,7 @@ register("step", () => {
 
     if (settings.deathItemSpiritMaskStatusToggle) {
         //Spirit Mask Render
-        //TODO: Modify this thing whenever i add a function for this on the library
-        let spiritMaskData = guiManager.getElement("SpiritMaskTimer").data
+        let spiritMaskData = guiManager.getElementData("SpiritMaskTimer")
         spiritMaskData.Times["(1)"] = (Date.now() - spiritMaskUseTime > 30000) ? ["&a&lActive"] : (spiritMaskUseTime + 30000)
         if(!settings.deathItemStatusUIToggle) {
             //Hide if not relevant OFF

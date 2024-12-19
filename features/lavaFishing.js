@@ -233,8 +233,7 @@ register("step", () => {
     
     if(settings.plhlegblastUIToggle) {
         //Plhlegblast render
-        //TODO: Modify this thing whenever i add a function for this on the library
-        let PlhlegblastData = guiManager.getElement("PlhlegblastTimer").data
+        let PlhlegblastData = guiManager.getElementData("PlhlegblastTimer")
 
         PlhlegblastData.Times["(1)"] = [seaCreatureData.CRIMSON['PlhlegblastCount']-1]
         PlhlegblastData.Times["(2)"] = [getAverageFromList(seaCreatureData.CRIMSON['PlhlegblastAllCount'])]
@@ -259,8 +258,7 @@ register("step", () => {
 
     if(settings.jawbusUIToggle) {
         //Jawbus render
-        //TODO: Modify this thing whenever i add a function for this on the library
-        let JawbusData = guiManager.getElement("JawbusTimer").data
+        let JawbusData = guiManager.getElementData("JawbusTimer")
 
         JawbusData.Times["(1)"] = [seaCreatureData.CRIMSON['JawbusCount']-1]
         JawbusData.Times["(2)"] = [getAverageFromList(seaCreatureData.CRIMSON['JawbusAllCount'])]
@@ -285,8 +283,7 @@ register("step", () => {
 
     if(settings.thunderUIToggle) {
         //Thunder render
-        //TODO: Modify this thing whenever i add a function for this on the library
-        let ThunderData = guiManager.getElement("ThunderTimer").data
+        let ThunderData = guiManager.getElementData("ThunderTimer")
 
         ThunderData.Times["(1)"] = [seaCreatureData.CRIMSON['ThunderCount']-1]
         ThunderData.Times["(2)"] = [getAverageFromList(seaCreatureData.CRIMSON['ThunderAllCount'])]
@@ -311,8 +308,7 @@ register("step", () => {
 
     if(settings.vanquisherUIToggle) {
         //Vanquisher render
-        //TODO: Modify this thing whenever i add a function for this on the library
-        let VanquisherData = guiManager.getElement("VanquisherTimer").data
+        let VanquisherData = guiManager.getElementData("VanquisherTimer")
 
         VanquisherData.Times["(1)"] = [seaCreatureData.CRIMSON['VanquisherCount']-1]
         VanquisherData.Times["(2)"] = [getAverageFromList(seaCreatureData.CRIMSON['VanquisherAllCount'])]
@@ -337,8 +333,7 @@ register("step", () => {
     
     if(settings.vialUIToggle) {
         //Vial render
-        //TODO: Modify this thing whenever i add a function for this on the library
-        let VialData = guiManager.getElement("JawbusVialTimer").data
+        let VialData = guiManager.getElementData("JawbusVialTimer")
 
         VialData.Times["(1)"] = [seaCreatureData.DROPS["RadioactiveVial"]]
         VialData.Times["(2)"] = [getVialAverage()]
