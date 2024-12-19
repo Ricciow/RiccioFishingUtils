@@ -1,8 +1,8 @@
 {
     "CATCHES": {
-        "LastCatch": 1734629586067,
-        "ThisCatches": 68,
-        "FirstCatch": 1734628828259
+        "LastCatch": 1734583770350,
+        "ThisCatches": 237,
+        "FirstCatch": 1734582566841
     },
     "DROPS": {
         "RadioactiveVial": 40,
@@ -70,22 +70,22 @@
     "CRIMSON": {
         "PlhlegblastCount": 7,
         "PlhlegblastTime": 1728068183193,
-        "JawbusCount": 490,
+        "JawbusCount": 651,
         "JawbusTime": 1733456774524,
-        "ThunderCount": 10,
-        "ThunderTime": 1734629302625,
-        "VanquisherCount": 715,
-        "VanquisherTime": 1734629293081,
+        "ThunderCount": 113,
+        "ThunderTime": 1734583259978,
+        "VanquisherCount": 1070,
+        "VanquisherTime": 1734583710560,
         "Plhlegblast": 1,
         "Lord Jawbus": 357,
         "Thunder": 1792,
-        "Taurus": 7147,
-        "Fire Eel": 12415,
-        "Lava Flame": 15873,
-        "Pyroclastic Worm": 14100,
-        "Lava Leech": 21530,
-        "Moogma": 42663,
-        "Magma Slug": 56451,
+        "Taurus": 7158,
+        "Fire Eel": 12422,
+        "Lava Flame": 15888,
+        "Pyroclastic Worm": 14113,
+        "Lava Leech": 21541,
+        "Moogma": 42713,
+        "Magma Slug": 56513,
         "PlhlegblastAllCount": [
             954
         ],
@@ -1867,7 +1867,7 @@
             356,
             12,
             21,
-            202
+            260
         ],
         "VanquisherAllCount": [
             124,
@@ -2722,8 +2722,8 @@
         "PlhegblastAllCount": []
     },
     "GOLDEN": {
-        "StartTime": 1734629561098,
-        "LastCast": 1734629586073,
+        "StartTime": 1734583971698,
+        "LastCast": 1734584008002,
         "Cooking": false
     }
 }
