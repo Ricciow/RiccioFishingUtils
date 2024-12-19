@@ -54,7 +54,7 @@ export function updateUI() {
     Manager.updateElement("GoldenFishTimer", settings.goldenTimerToggle && playerData.GUI["Toggle"])
 
     //BossBar
-    Manager.updateElement("BossBar", settings.bossHealthBarToggle, undefined, undefined, settings.BossHealthBarLength && playerData.GUI["Toggle"])
+    Manager.updateElement("BossBar", settings.bossHealthBarToggle && playerData.GUI["Toggle"], undefined, undefined, settings.BossHealthBarLength)
 }
 
 register('guiClosed', (gui) => {
