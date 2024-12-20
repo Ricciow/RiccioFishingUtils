@@ -7,8 +7,6 @@ import guiManager from "../gui/guiManager";
 
 const BasePlhegblast = {
     "Name":"§lPlhlegblast",
-    "HPLabel": "§l100M/100M❤",
-    "HPPercentage": 93,
     "ColorScheme": {
         "Text": [0.7, 0, 0, 1],
         "BgBar": [0, 0, 0, 1],
@@ -18,8 +16,6 @@ const BasePlhegblast = {
 
 const BaseJawbus = {
     "Name":"§lJawbus",
-    "HPLabel": "§l100M/100M❤",
-    "HPPercentage": 80,
     "ColorScheme": {
         "Text": [1, 0, 0, 1],
         "BgBar": [0, 0, 0, 1],
@@ -29,8 +25,6 @@ const BaseJawbus = {
 
 const BaseThunder = {
     "Name":"§lThunder",
-    "HPLabel": "§l100M/100M❤",
-    "HPPercentage": 37,
     "ColorScheme": {
         "Text": [0.4, 1, 1, 1],
         "BgBar": [0, 0, 0, 1],
@@ -38,9 +32,6 @@ const BaseThunder = {
     }
 }
 
-let jawbusHealthStrTemp = '100M/100M';
-let jawbusHealthTemp = 100;
-let jawbusMaxHealthTemp = 100;
 let bossCount = [];
 let MythicScs = [];
 
@@ -76,68 +67,68 @@ register("step", () => {
                 if(mob_name != undefined){
                     if(settings.jawbusHealthBarToggle) {
                         if (mob_name.includes("Lord Jawbus")){
-                            jawbusHealthStrTemp = mob_name.split("[Lv600] Lord Jawbus ")[1];
+                            let jawbusHealthStrTemp = mob_name.split("[Lv600] Lord Jawbus ")[1];
+                            let jawbusHealthTemp = 0
                             if (jawbusHealthStrTemp.includes("M/")) {
                                 jawbusHealthTemp = parseFloat(jawbusHealthStrTemp.replace(/k|❤/, "").split("/")[0]);
                             }
                             else if (jawbusHealthStrTemp.includes("k/")) {
-                                jawbusHealthTemp = parseFloat(jawbusHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000
-                                ;
+                                jawbusHealthTemp = parseFloat(jawbusHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000;
                             }
                             else {
                                 jawbusHealthTemp = parseFloat(jawbusHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000000;
                             }
-                            jawbusMaxHealthTemp = parseFloat(jawbusHealthStrTemp.replace(/M|❤/, "").split("/")[1]);
-                            jawbusHealthStrTemp = "§l"+jawbusHealthStrTemp.split(" ")[0];
-                            let newJawbus = Object.assign(BaseJawbus, {
+                            let jawbusMaxHealthTemp = parseFloat(jawbusHealthStrTemp.replace(/M|❤/, "").split("/")[1]);
+                            jawbusHealthStrTemp = "§l" + jawbusHealthStrTemp.split(" ")[0];
+                            let newJawbus = Object.assign({
                                 "HPLabel" : jawbusHealthStrTemp,
                                 "HPPercentage" : (jawbusHealthTemp/jawbusMaxHealthTemp)*100
-                            })
+                            }, BaseJawbus)
                             bossCount.push(newJawbus);
                         }
                     }
                     if(settings.thunderHealthBarToggle) {
                         if (mob_name.includes("Thunder ")){
-                            thunderHealthStrTemp = mob_name.split("[Lv400] Thunder ")[1];
+                            let thunderHealthStrTemp = mob_name.split("[Lv400] Thunder ")[1];
+                            let thunderHealthTemp = 0
                             if (thunderHealthStrTemp.includes("M/")) {
                                 thunderHealthTemp = parseFloat(thunderHealthStrTemp.replace(/k|❤/, "").split("/")[0]);
                             }
                             else if (thunderHealthStrTemp.includes("k/")) {
-                                thunderHealthTemp = parseFloat(thunderHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000
-                                ;
+                                thunderHealthTemp = parseFloat(thunderHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000;
                             }
                             else {
                                 thunderHealthTemp = parseFloat(thunderHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000000;
                             }
-                            thunderMaxHealthTemp = parseFloat(thunderHealthStrTemp.replace(/M|❤/, "").split("/")[1]);
-                            thunderHealthStrTemp = "§l"+thunderHealthStrTemp.split(" ")[0];
-                            let newThunder = Object.assign(BaseThunder, {
+                            let thunderMaxHealthTemp = parseFloat(thunderHealthStrTemp.replace(/M|❤/, "").split("/")[1]);
+                            thunderHealthStrTemp = "§l" + thunderHealthStrTemp.split(" ")[0];
+                            let newThunder = Object.assign({
                                 "HPLabel" : thunderHealthStrTemp,
                                 "HPPercentage" : (thunderHealthTemp/thunderMaxHealthTemp)*100
-                            })
+                            }, BaseThunder)
                             bossCount.push(newThunder);
                         }
                     }
                     if(settings.plhlegblastHealthBarToggle) {
                         if (mob_name.includes("Plhlegblast ")){
-                            plhlegblastHealthStrTemp = mob_name.split("[Lv300] Plhlegblast ")[1];
+                            let plhlegblastHealthStrTemp = mob_name.split("[Lv300] Plhlegblast ")[1];
+                            let plhlegblastHealthTemp = 0
                             if (plhlegblastHealthStrTemp.includes("M/")) {
                                 plhlegblastHealthTemp = parseFloat(plhlegblastHealthStrTemp.replace(/k|❤/, "").split("/")[0]);
                             }
                             else if (plhlegblastHealthStrTemp.includes("k/")) {
-                                plhlegblastHealthTemp = parseFloat(plhlegblastHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000
-                                ;
+                                plhlegblastHealthTemp = parseFloat(plhlegblastHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000;
                             }
                             else {
                                 plhlegblastHealthTemp = parseFloat(plhlegblastHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000000;
                             }
-                            plhlegblastMaxHealthTemp = parseFloat(plhlegblastHealthStrTemp.replace(/M|❤/, "").split("/")[1]);
-                            plhlegblastHealthStrTemp = "§l"+plhlegblastHealthStrTemp;
-                            let newPlhlegblast = Object.assign(BaseThunder, {
+                            let plhlegblastMaxHealthTemp = parseFloat(plhlegblastHealthStrTemp.replace(/M|❤/, "").split("/")[1]);
+                            plhlegblastHealthStrTemp = "§l" + plhlegblastHealthStrTemp;
+                            let newPlhlegblast = Object.assign({
                                 "HPLabel" : plhlegblastHealthStrTemp,
                                 "HPPercentage" : (plhlegblastHealthTemp/plhlegblastMaxHealthTemp)*100
-                            })
-                            bossCount.push(newThunder);
+                            }, BasePlhegblast)
+                            bossCount.push(newPlhlegblast);
                         }
                     }
                     if (mythicRegex.test(mob_name)){
