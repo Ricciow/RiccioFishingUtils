@@ -36,6 +36,123 @@ const TempBars = [
     }
 ]
 
+class HealthBar {
+    constructor(boundingBox, width, height, scale) {
+        this.boundingBox = boundingBox
+        this.width = width
+        this.height = height
+        this.scale = scale
+        this.data = undefined
+        this.hidden = false
+
+        this.barContainer = new UIContainer()
+        .setX(new CenterConstraint)
+        .setY(new SiblingConstraint)
+        .setWidth((this.width * this.scale).pixels())
+        .setHeight((this.height * this.scale).pixels())
+        .setChildOf(this.boundingBox)
+
+        this.name = new UIText()
+        .setX(new SiblingConstraint)
+        .setY(new CenterConstraint)
+        .setWidth(new TextAspectConstraint)
+        .setHeight((100).percent())
+        .setChildOf(this.barContainer)
+
+        this.bar = new UIRoundedRectangle(5)
+        .setX(new AdditiveConstraint(new SiblingConstraint, (1).pixels()))
+        .setY(new CenterConstraint)
+        .setWidth(new SubtractiveConstraint(new FillConstraint, (2).pixels()))
+        .setHeight((100).percent())
+        .setChildOf(this.barContainer)
+
+        const healthBarContainer = new UIContainer()
+        .setX(new CenterConstraint)
+        .setY((1).pixels())
+        .setWidth(new SubtractiveConstraint((100).percent(), (2).pixels()))
+        .setHeight(new SubtractiveConstraint((100).percent(), (2).pixels()))
+        .setChildOf(this.bar)
+
+        this.healthBar = new UIRoundedRectangle(5)
+        .setX((0).pixels())
+        .setY(new CenterConstraint)
+        .setHeight((100).percent())
+        .setChildOf(healthBarContainer)
+
+        this.hp = new UIText()
+        .setX(new AdditiveConstraint(new SiblingConstraint, (1).pixels()))
+        .setY(new CenterConstraint)
+        .setWidth(new TextAspectConstraint)
+        .setHeight((100).percent())
+        .setChildOf(this.barContainer)
+
+        this.spacer = new UIContainer()
+        .setX(new CenterConstraint)
+        .setY(new SiblingConstraint)
+        .setWidth((this.width * this.scale).pixels())
+        .setHeight((4 * this.scale).pixels())
+        .setChildOf(this.boundingBox)
+
+        this.updateScale()
+        this.updateData()
+    }
+
+    setScale(scale) {
+        this.scale = scale
+        this.updateScale()
+    }
+
+    updateScale() {
+        this.barContainer
+        .setWidth((this.width * this.scale).pixels())
+        .setHeight((this.height * this.scale).pixels())
+
+        this.spacer
+        .setWidth((this.width * this.scale).pixels())
+        .setHeight((4 * this.scale).pixels())
+    }
+
+    setData(data) {
+        this.data = data
+        this.updateData()
+    }
+
+    updateData() {
+        if(this.data == undefined) {
+            this.hide()
+            return
+        }
+        else {
+            this.unhide()
+        }
+
+        this.name
+        .setText(this.data.Name)
+        .setColor(new Color(this.data.ColorScheme.Text[0], this.data.ColorScheme.Text[1], this.data.ColorScheme.Text[2], this.data.ColorScheme.Text[3]))
+
+        this.bar
+        .setColor(new Color(this.data.ColorScheme.BgBar[0], this.data.ColorScheme.BgBar[1], this.data.ColorScheme.BgBar[2], this.data.ColorScheme.BgBar[3]))
+
+        this.healthBar
+        .setWidth((this.data.HPPercentage).percent())
+        .setColor(new Color(this.data.ColorScheme.FgBar[0], this.data.ColorScheme.FgBar[1], this.data.ColorScheme.FgBar[2], this.data.ColorScheme.FgBar[3]))
+
+        this.hp
+        .setText(this.data.HPLabel)
+        .setColor(new Color(this.data.ColorScheme.Text[0], this.data.ColorScheme.Text[1], this.data.ColorScheme.Text[2], this.data.ColorScheme.Text[3]))
+    }
+
+    hide() {
+        this.barContainer.hide()
+        this.spacer.hide()
+    }
+
+    unhide() {
+        this.barContainer.unhide(true)
+        this.spacer.unhide(true)
+    }
+}
+
 export class BossBarElement extends BaseElement {
     /**
      * Makes a boss bar
@@ -54,100 +171,33 @@ export class BossBarElement extends BaseElement {
         this.type = "BossBar"
 
         this.bars = []
-        this.spacers = []
         this.tempBars = false
 
         this.loadData()
     }
 
-    reloadData() {
-        let allStuff = this.bars.concat(this.spacers)
-        allStuff.forEach((element) => {
-            element.getParent().removeChild(element)
-        })
-        this.loadData()
-    }
-
     loadData() {
-        this.data.forEach((data) => {this.createBossBar(data)})
+        while (this.bars.length < this.data.length) {
+            this.createBossBar()
+        }
+        this.bars.forEach((element, index) => {
+            element.setData(this.data[index])
+        })
     }
 
-    createBossBar(barData) {
-        const barContainer = new UIContainer()
-        .setX(new CenterConstraint)
-        .setY(new SiblingConstraint)
-        .setWidth((this.width * this.scale).pixels())
-        .setHeight((this.height * this.scale).pixels())
-        .setChildOf(this.boundingBox)
-
-        const name = new UIText(barData.Name)
-        .setX(new SiblingConstraint)
-        .setY(new CenterConstraint)
-        .setWidth(new TextAspectConstraint)
-        .setHeight((100).percent())
-        .setColor(new Color(barData.ColorScheme.Text[0], barData.ColorScheme.Text[1], barData.ColorScheme.Text[2], barData.ColorScheme.Text[3]))
-        .setChildOf(barContainer)
-
-        const bar = new UIRoundedRectangle(5)
-        .setX(new AdditiveConstraint(new SiblingConstraint, (1).pixels()))
-        .setY(new CenterConstraint)
-        .setWidth(new SubtractiveConstraint(new FillConstraint, (2).pixels()))
-        .setHeight((100).percent())
-        .setColor(new Color(barData.ColorScheme.BgBar[0], barData.ColorScheme.BgBar[1], barData.ColorScheme.BgBar[2], barData.ColorScheme.BgBar[3]))
-        .setChildOf(barContainer)
-
-        const healthBarContainer = new UIContainer()
-        .setX(new CenterConstraint)
-        .setY((1).pixels())
-        .setWidth(new SubtractiveConstraint((100).percent(), (2).pixels()))
-        .setHeight(new SubtractiveConstraint((100).percent(), (2).pixels()))
-        .setChildOf(bar)
-
-        const healthBar = new UIRoundedRectangle(5)
-        .setX((0).pixels())
-        .setY(new CenterConstraint)
-        .setWidth((barData.HPPercentage).percent())
-        .setHeight((100).percent())
-        .setColor(new Color(barData.ColorScheme.FgBar[0], barData.ColorScheme.FgBar[1], barData.ColorScheme.FgBar[2], barData.ColorScheme.FgBar[3]))
-        .setChildOf(healthBarContainer)
-
-        const hp = new UIText(barData.HPLabel)
-        .setX(new AdditiveConstraint(new SiblingConstraint, (1).pixels()))
-        .setY(new CenterConstraint)
-        .setWidth(new TextAspectConstraint)
-        .setHeight((100).percent())
-        .setColor(new Color(barData.ColorScheme.Text[0], barData.ColorScheme.Text[1], barData.ColorScheme.Text[2], barData.ColorScheme.Text[3]))
-        .setChildOf(barContainer)
-
-        const spacer = new UIContainer()
-        .setX(new CenterConstraint)
-        .setY(new SiblingConstraint)
-        .setWidth((this.width * this.scale).pixels())
-        .setHeight((4 * this.scale).pixels())
-        .setChildOf(this.boundingBox)
-
-        this.bars.push(barContainer)
-        this.spacers.push(spacer)
+    createBossBar() {
+        this.bars.push(new HealthBar(this.boundingBox, this.width, this.height, this.scale))
     }
 
     updateState(updateData = false) {
-        this.reloadData()
+        this.loadData()
         super.updateState(updateData)
     }
 
     updateWidth() {
         this.bars.forEach((bar) => {
-            bar
-            .setWidth((this.width * this.scale).pixels())
-            .setHeight((this.height * this.scale).pixels())
+            bar.setScale(this.scale)
         })
-
-        this.spacers.forEach((spacer) => {
-            spacer
-            .setWidth((this.width * this.scale).pixels())
-            .setHeight((4 * this.scale).pixels())
-        })
-
         super.updateWidth()
     }
 
@@ -163,7 +213,7 @@ export class BossBarElement extends BaseElement {
         else {
             super.setData(data)
         }
-        this.reloadData()
+        this.loadData()
     }
 
     open() {
