@@ -6,7 +6,7 @@ import { BaseElement } from "../../SimpleOverlays/elements/BaseElement"
 const TempBars = [
     {
         "Name":"§lPlhlegblast",
-        "HPLabel": "§l100M/100M❤",
+        "HPLabel": "§l465M/500M❤",
         "HPPercentage": 93,
         "ColorScheme": {
             "Text": [0.7, 0, 0, 1],
@@ -16,7 +16,7 @@ const TempBars = [
     },
     {
         "Name":"§lJawbus",
-        "HPLabel": "§l100M/100M❤",
+        "HPLabel": "§l80M/100M❤",
         "HPPercentage": 80,
         "ColorScheme": {
             "Text": [1, 0, 0, 1],
@@ -26,7 +26,7 @@ const TempBars = [
     },
     {
         "Name":"§lThunder",
-        "HPLabel": "§l100M/100M❤",
+        "HPLabel": "§l13M/35M❤",
         "HPPercentage": 37,
         "ColorScheme": {
             "Text": [0.4, 1, 1, 1],
@@ -148,8 +148,8 @@ class HealthBar {
     }
 
     unhide() {
-        this.barContainer.unhide(true)
         this.spacer.unhide(true)
+        this.barContainer.unhide(true)
     }
 }
 

@@ -1,3 +1,4 @@
+import { Inspector } from "../../Elementa"
 import { playerData } from "../data/data"
 import { updateUI } from "../utils/newsettings/onClose"
 import settings from "../utils/settings"
