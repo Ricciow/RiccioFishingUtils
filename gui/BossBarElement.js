@@ -117,6 +117,11 @@ class HealthBar {
         this.updateData()
     }
 
+    setWidth(width) {
+        this.width = width
+        this.updateScale()
+    }
+
     updateData() {
         if(this.data == undefined) {
             this.hide()
@@ -196,6 +201,7 @@ export class BossBarElement extends BaseElement {
 
     updateWidth() {
         this.bars.forEach((bar) => {
+            bar.setWidth(this.width)
             bar.setScale(this.scale)
         })
         super.updateWidth()
