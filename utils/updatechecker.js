@@ -16,7 +16,7 @@ function compareVersions(version1, version2) {
     return false;
 }
 
-function getLatestVersion() {
+const latestwarn = register('worldLoad', () => {
     request({
         url: "https://api.github.com/repos/ricciow/RiccioFishingUtils/releases",
         json: true
@@ -29,10 +29,5 @@ function getLatestVersion() {
             ChatLib.chat(new TextComponent(`&5[&b&lRFU&5] &9&lNew Release: &f&lv${latestVersion} &a&l[Download]`).setClick("open_url", downloadLink))
         }
     })
-}
-
-
-const latestwarn = register('worldLoad', () => {
-    getLatestVersion()
     latestwarn.unregister()
 })
