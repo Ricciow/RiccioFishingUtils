@@ -22,7 +22,7 @@ RiccioFishingUtils is a Chattriggers module for Minecraft 1.8.9 that adds many u
 
 Give feedback or just chat with others on our Discord
 
-* **Bug Reports:** Use the `#bug-reporting` channel when you find broken features.
+* **Bug Reports:** Use the `#bug-reporting` channel when you find broken stuff.
 * **Feature Suggestions:** Feel free to tell your ideas in `#suggestions` channel for new features and improvements to the mod.
 * **Chatting:** Chat with other RFU users in `#general` channel.
 
