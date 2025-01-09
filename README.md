@@ -25,7 +25,7 @@ Give feedback or just chat with others on our community Discord!
 
 * **Bug Reports:** Use the `#bug-reporting` channel when you find broken features.
 * **Feature Suggestions:** Feel free to tell your ideas in `#suggestions` channel for new features and improvements to the mod.
-* **General Chat:** Chat with other RFU users in `#general` channel.
+* **Chatting:** Chat with other RFU users in `#general` channel.
 
 **[Join the Discord!](https://discord.gg/JfrXm6TqXz)**
 

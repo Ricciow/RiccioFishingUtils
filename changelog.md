@@ -145,3 +145,7 @@ Current Features:
 # V0.2.4
 - Fixed Boss bars killing Fps
 - Also fixed filename
+# V0.2.5
+- Fixed Boss bars length not being updated
+- Moved changelog to a separate file
+- Added a cooler README
