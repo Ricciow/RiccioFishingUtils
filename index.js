@@ -12,6 +12,7 @@ import "./features/playerStats.js";
 import "./utils/mixenddata.js";
 import "./utils/keybinds.js";
 import "./gui/gui.js"
+import "./utils/updatechecker.js"
 
 register("command", () => {
     settings.openGUI();
