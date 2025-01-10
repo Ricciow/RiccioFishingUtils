@@ -13,7 +13,7 @@ function compareVersions(version1, version2) {
     return false;
 }
 
-const latestwarn = register('worldLoad', () => {
+function checkIfUpdate(announceUpToDate = false) {
     //Verify if ctjs is in version 2.2.1 or later
     if(!compareVersions(com.chattriggers.ctjs.Reference.MODVERSION, "2.2.1")) {
         releases = JSON.parse(FileLib.getUrlContent("https://api.github.com/repos/ricciow/RiccioFishingUtils/releases"))
@@ -22,11 +22,13 @@ const latestwarn = register('worldLoad', () => {
         if (compareVersions(version, latestVersion)) {
             const downloadLink = latestRelease.html_url;
             ChatLib.chat(
-                new TextComponent(`&5[&b&lRFU&5] &9&lNew RFU Release: &f&lv${latestVersion} &a&l[Download]`)
+                new TextComponent(`&5[&b&lRFU&5] &9&lNew RFU Release: &fv${latestVersion} &a&l[Download]`)
                 .setClick("open_url", downloadLink)
             )
         }
-        latestwarn.unregister()
+        else if(announceUpToDate) {
+            ChatLib.chat("&5[&b&lRFU&5] &9You're on the latest version!")
+        }
     }
     else {
         ChatLib.chat(
@@ -34,4 +36,11 @@ const latestwarn = register('worldLoad', () => {
             .setClick("open_url", "https://www.chattriggers.com")
         )
     }
+}
+
+const latestwarn = register('worldLoad', () => {
+    checkIfUpdate()
+    latestwarn.unregister()
 })
+
+register("command", () => checkIfUpdate(true)).setName("rfucheckupdate")
