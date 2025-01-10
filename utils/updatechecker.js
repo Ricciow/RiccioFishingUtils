@@ -1,5 +1,3 @@
-import request from "../../requestV2"
-
 const metadata = JSON.parse(FileLib.read("RiccioFishingUtils", "metadata.json"));
 const version = metadata["version"];
 
@@ -17,17 +15,24 @@ function compareVersions(version1, version2) {
 }
 
 const latestwarn = register('worldLoad', () => {
-    request({
-        url: "https://api.github.com/repos/ricciow/RiccioFishingUtils/releases",
-        json: true
-    })
-    .then((response) => {
-        const latestRelease = response[0];
+    //Verify if ctjs is in version 2.2.1 or later
+    if(!compareVersions(com.chattriggers.ctjs.Reference.MODVERSION, "2.2.1")) {
+        releases = JSON.parse(FileLib.getUrlContent("https://api.github.com/repos/ricciow/RiccioFishingUtils/releases"))
+        const latestRelease = releases[0];
         const latestVersion = latestRelease.name.substring(1);
         if (compareVersions(version, latestVersion)) {
             const downloadLink = latestRelease.html_url;
-            ChatLib.chat(new TextComponent(`&5[&b&lRFU&5] &9&lNew Release: &f&lv${latestVersion} &a&l[Download]`).setClick("open_url", downloadLink))
+            ChatLib.chat(
+                new TextComponent(`&5[&b&lRFU&5] &9&lNew RFU Release: &f&lv${latestVersion} &a&l[Download]`)
+                .setClick("open_url", downloadLink)
+            )
         }
-    })
-    latestwarn.unregister()
+        latestwarn.unregister()
+    }
+    else {
+        ChatLib.chat(
+            new TextComponent(`&5[&b&lRFU&5] &cUnable to check if there's a new version since your chattriggers is outdated. &a&l[CT website]`)
+            .setClick("open_url", "https://www.chattriggers.com")
+        )
+    }
 })
