@@ -10,6 +10,7 @@
         "RenderLib",
         "SimpleOverlays",
         "Elementa",
-        "KeybindFix"
+        "KeybindFix",
+        "requestV2"
     ]
 }

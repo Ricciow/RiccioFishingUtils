@@ -1,7 +1,7 @@
 import request from "../../requestV2"
 
 const metadata = JSON.parse(FileLib.read("RiccioFishingUtils", "metadata.json"));
-const version = metadata.version;
+const version = metadata["version"];
 
 function compareVersions(version1, version2) {
     const v1Parts = version1.split('.').map(Number);
