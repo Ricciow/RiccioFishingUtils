@@ -1,2 +1,4 @@
 *.toml
-*.json
+gui.json
+playerData.json
+seaCreatureData.json
