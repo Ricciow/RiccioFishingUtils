@@ -149,3 +149,5 @@ Current Features:
 - Fixed Boss bars length not being updated
 - Moved changelog to a separate file
 - Added a cooler README
+# V0.2.6
+- Added new github version alert.
