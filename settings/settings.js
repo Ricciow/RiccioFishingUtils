@@ -11,24 +11,6 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     subcategory: "Party Commands",
     value : true
 })
-.addSlider({
-    category: "Chat Commands",
-    configName: "partyCooldown",
-    title: "Command Cooldown",
-    description: "Cooldown between commands in seconds, default: 1s",
-    options: [0, 60],
-    value: 1,
-    subcategory: "General Commands"
-})
-.addTextInput({
-    category: "Chat Commands",
-    configName: "partyPrefix",
-    title: "Command Prefix",
-    description: "The prefix used for commands, default: !",
-    value: "!",
-    placeHolder: "",
-    subcategory: "General Commands"
-})
 .addSwitch({
     category: "Chat Commands",
     configName: "partyJoinHelp",
@@ -43,7 +25,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Leader Only New Member Help",
     description: "Only triggers the New Member Help if you`re party leader",
     subcategory: "Party Commands",
-    value: true
+    value: true,
+    shouldShow: data => data.partyJoinHelp
 })
 .addMultiCheckbox({
     category: "Chat Commands",
@@ -97,6 +80,24 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Makes it so the im muted message warps the party",
     subcategory: "Party Commands",
     value: false
+})
+.addSlider({
+    category: "Chat Commands",
+    configName: "partyCooldown",
+    title: "Command Cooldown",
+    description: "Cooldown between commands in seconds, default: 1s",
+    options: [0, 60],
+    value: 1,
+    subcategory: "General Commands"
+})
+.addTextInput({
+    category: "Chat Commands",
+    configName: "partyPrefix",
+    title: "Command Prefix",
+    description: "The prefix used for commands, default: !",
+    value: "!",
+    placeHolder: "",
+    subcategory: "General Commands"
 })
 .addTextInput({
     category: "Chat Commands",
@@ -162,7 +163,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Set the number of worms needed to send the message\nif you use 59 ur weird ¯\\_(ツ)_/¯",
     options: [1, 60],
     value: 60,
-    subcategory: "Worm Fishing"
+    subcategory: "Worm Fishing",
+    shouldShow: data => data.wormMessageToggle
 })
 .addTextInput({
     category: "Crystal Hollows Fishing",
@@ -171,7 +173,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the worm cap message.\n write ([number]) to show the worm count, write ([time]) to show the time it took",
     value: "Worm cap reached! ([number]) worms in ([time])",
     placeHolder: "",
-    subcategory: "Worm Fishing"
+    subcategory: "Worm Fishing",
+    shouldShow: data => data.wormMessageToggle
 })
 .addSwitch({
     category: "Crystal Hollows Fishing",
@@ -188,7 +191,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Set the number of worms needed to show the title message",
     options: [1, 60],
     value: 60,
-    subcategory: "Worm Fishing"
+    subcategory: "Worm Fishing",
+    shouldShow: data => data.wormTitleToggle
 })
 .addTextInput({
     category: "Crystal Hollows Fishing",
@@ -197,7 +201,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the worm count title message.\n write ([number]) to show the worm count, write ([time]) to show the time it took",
     value: "&cWorm cap reached!",
     placeHolder: "",
-    subcategory: "Worm Fishing"
+    subcategory: "Worm Fishing",
+    shouldShow: data => data.wormTitleToggle
 })
 .addTextInput({
     category: "Crystal Hollows Fishing",
@@ -206,7 +211,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the text below the title message.\n write ([number]) to show the worm count, write ([time]) to show the time it took",
     value: "&c([number]) worms in ([time])!",
     placeHolder: "",
-    subcategory: "Worm Fishing"
+    subcategory: "Worm Fishing",
+    shouldShow: data => data.wormTitleToggle
 })
 .addSwitch({
     category: "Crystal Hollows Fishing",
@@ -231,7 +237,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Set the number of worms needed to play the sound",
     options: [1, 60],
     value: 60,
-    subcategory: "Worm Fishing"
+    subcategory: "Worm Fishing",
+    shouldShow: data => data.wormSoundToggle
 })
 .addTextInput({
     category: "Crystal Hollows Fishing",
@@ -240,7 +247,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the worm count sound, Default: random.orb",
     value: "random.orb",
     placeHolder: "",
-    subcategory: "Worm Fishing"
+    subcategory: "Worm Fishing",
+    shouldShow: data => data.wormSoundToggle
 })
 .addSlider({
     category: "Crystal Hollows Fishing",
@@ -249,7 +257,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "The volume of the worm count sound",
     options: [0.001, 1],
     value: 1,
-    subcategory: "Worm Fishing"
+    subcategory: "Worm Fishing",
+    shouldShow: data => data.wormSoundToggle
 })
 .addSlider({
     category: "Crystal Hollows Fishing",
@@ -258,7 +267,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "The pitch of the worm count sound",
     options: [0, 200],
     value: 100,
-    subcategory: "Worm Fishing"
+    subcategory: "Worm Fishing",
+    shouldShow: data => data.wormSoundToggle
 })
 .addSwitch({
     category: "Deployables",
@@ -283,7 +293,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the totem expired title message.",
     value: "&5Corruption Totem Expired!",
     placeHolder: "",
-    subcategory: "Corruption Totem"
+    subcategory: "Corruption Totem",
+    shouldShow: data => data.totemTitleToggle
 })
 .addSwitch({
     category: "Deployables",
@@ -317,14 +328,6 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     subcategory: "Creature Counting",
     value: true
 })
-.addToggle({
-    category: "General Fishing",
-    configName: "seaCreatureCountWorms",
-    title: "Count worms anyways",
-    description: "Makes it so the features that dont count worms in this page also count worms",
-    subcategory: "Other Settings",
-    value: false
-})
 .addSwitch({
     category: "General Fishing",
     configName: "seaCreatureSoundToggle",
@@ -340,7 +343,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Set the number of sea creatures needed to play the sound",
     options: [1, 60],
     value: 15,
-    subcategory: "Creature Counting"
+    subcategory: "Creature Counting",
+    shouldShow: data => data.seaCreatureSoundToggle
 })
 .addTextInput({
     category: "General Fishing",
@@ -349,7 +353,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the sea creature sound, Default: random.orb",
     value: "random.orb",
     placeHolder: "",
-    subcategory: "Creature Counting"
+    subcategory: "Creature Counting",
+    shouldShow: data => data.seaCreatureSoundToggle
 })
 .addSlider({
     category: "General Fishing",
@@ -358,7 +363,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "The volume of the sea creature sound",
     options: [0.001, 1],
     value: 1,
-    subcategory: "Creature Counting"
+    subcategory: "Creature Counting",
+    shouldShow: data => data.seaCreatureSoundToggle
 })
 .addSlider({
     category: "General Fishing",
@@ -367,7 +373,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "The pitch of the sea creature sound",
     options: [0, 200],
     value: 100,
-    subcategory: "Creature Counting"
+    subcategory: "Creature Counting",
+    shouldShow: data => data.seaCreatureSoundToggle
 })
 .addSwitch({
     category: "General Fishing",
@@ -384,7 +391,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Set the number of sea creatures needed to show the title message, wont count worms\nif you're a barn fisher, please use this on 10-30",
     options: [1, 60],
     value: 15,
-    subcategory: "Creature Counting"
+    subcategory: "Creature Counting",
+    shouldShow: data => data.seaCreatureTitleToggle
 })
 .addTextInput({
     category: "General Fishing",
@@ -393,7 +401,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the sea creature count title message.\n write ([number]) to show the catch count, write ([time]) to show the time it took",
     value: "&4&lKill Creatures!",
     placeHolder: "",
-    subcategory: "Creature Counting"
+    subcategory: "Creature Counting",
+    shouldShow: data => data.seaCreatureTitleToggle
 })
 .addTextInput({
     category: "General Fishing",
@@ -402,7 +411,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the text below the title message.\n write ([number]) to show the catch count, write ([time]) to show the time it took",
     value: "&e([number]) sea creatures in ([time])!",
     placeHolder: "",
-    subcategory: "Creature Counting"
+    subcategory: "Creature Counting",
+    shouldShow: data => data.seaCreatureTitleToggle
 })
 .addSwitch({
     category: "General Fishing",
@@ -419,7 +429,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Set the number of sea creatures needed to send the message",
     options: [1, 60],
     value: 60,
-    subcategory: "Creature Counting"
+    subcategory: "Creature Counting",
+    shouldShow: data => data.seaCreatureMessageToggle
 })
 .addTextInput({
     category: "General Fishing",
@@ -428,15 +439,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the sea creature count message.\n write ([number]) to show the sea creature count, write ([time]) to show the time it took",
     value: "Reached ([number]) sea creatures in ([time])",
     placeHolder: "",
-    subcategory: "Creature Counting"
-})
-.addSwitch({
-    category: "General Fishing",
-    configName: "bobberUIToggle",
-    title: "Toggle bobber counter UI",
-    description: "Shows the bobber count on your screen\n/rfumove to move it",
-    subcategory: "Bobbin Features",
-    value: true
+    subcategory: "Creature Counting",
+    shouldShow: data => data.seaCreatureMessageToggle
 })
 .addSwitch({
     category: "General Fishing",
@@ -453,7 +457,16 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "The amount of downtime it takes for the sc/h counter to reset in minutes",
     options: [1, 60],
     value: 30,
-    subcategory: "Creature Counting"
+    subcategory: "Creature Counting",
+    shouldShow: data => data.seacreatureHourUIToggle
+})
+.addSwitch({
+    category: "General Fishing",
+    configName: "bobberUIToggle",
+    title: "Toggle bobber counter UI",
+    description: "Shows the bobber count on your screen\n/rfumove to move it",
+    subcategory: "Bobbin Features",
+    value: true
 })
 .addSwitch({
     category: "General Fishing",
@@ -470,7 +483,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the double hook message.You can add multiple messages that will play in order separated by \"|\"",
     value: "><))))`> <'((((><|><))))`> ❤ <'((((><|><))))`> ><))`>|<'((>< <'((((><",
     placeHolder: "",
-    subcategory: "Double Hook"
+    subcategory: "Double Hook",
+    shouldShow: data => data.doubleHookMessageToggle
 })
 .addSwitch({
     category: "General Fishing",
@@ -478,6 +492,15 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Toggle random messages",
     description: "Makes double hook messages random from the list of messages\n&8Older ([random]) in the messages still works.",
     subcategory: "Double Hook",
+    value: false,
+    shouldShow: data => data.doubleHookMessageToggle
+})
+.addToggle({
+    category: "General Fishing",
+    configName: "seaCreatureCountWorms",
+    title: "Count worms anyways",
+    description: "Makes it so the features that dont count worms in this page also count worms",
+    subcategory: "Other Settings",
     value: false
 })
 .addSwitch({
@@ -519,7 +542,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the power orb expired title message.",
     value: "&dPower Orb Expired!",
     placeHolder: "",
-    subcategory: "Power Orbs"
+    subcategory: "Power Orbs",
+    shouldShow: data => data.fluxTitleToggle
 })
 .addSwitch({
     category: "Deployables",
@@ -560,7 +584,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the flare expired title message.",
     value: "&6Flare Expired!",
     placeHolder: "",
-    subcategory: "Flares"
+    subcategory: "Flares",
+    shouldShow: data => data.flareTitleToggle
 })
 .addSwitch({
     category: "Deployables",
@@ -602,7 +627,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the deployable expired sound, Default: mob.irongolem.death",
     value: "mob.irongolem.death",
     placeHolder: "",
-    subcategory: "All Deployables"
+    subcategory: "All Deployables",
+    shouldShow: data => data.deployableSoundToggle
 })
 .addSlider({
     category: "Deployables",
@@ -611,7 +637,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "The volume of the deployable expired sound",
     options: [0.001, 1],
     value: 1,
-    subcategory: "All Deployables"
+    subcategory: "All Deployables",
+    shouldShow: data => data.deployableSoundToggle
 })
 .addSlider({
     category: "Deployables",
@@ -620,7 +647,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "The pitch of the deployable expired sound",
     options: [0, 200],
     value: 100,
-    subcategory: "All Deployables"
+    subcategory: "All Deployables",
+    shouldShow: data => data.deployableSoundToggle
 })
 .addSwitch({
     category: "Deployables",
@@ -645,7 +673,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "The percentage needed for the title message",
     options: [0.001, 1],
     value: 0.3,
-    subcategory: "Mana"
+    subcategory: "Mana",
+    shouldShow: data => data.manaTitleToggle
 })
 .addTextInput({
     category: "Player Stats",
@@ -654,7 +683,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the mana low title message.",
     value: "&b&lMana low!",
     placeHolder: "",
-    subcategory: "Mana"
+    subcategory: "Mana",
+    shouldShow: data => data.manaTitleToggle
 })
 .addSwitch({
     category: "Pets",
@@ -679,7 +709,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Change the length of the health bar",
     options: [200, 600],
     value: 200,
-    subcategory: "Boss Bar"
+    subcategory: "Boss Bar",
+    shouldShow: data => data.bossHealthBarToggle
 })
 .addToggle({
     category: "Crimson Fishing",
@@ -687,7 +718,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Toggle jawbus health bar",
     description: "Shows a health bar for jawbus on the boss bar",
     subcategory: "Boss Bar",
-    value: true
+    value: true,
+    shouldShow: data => data.bossHealthBarToggle
 })
 .addToggle({
     category: "Crimson Fishing",
@@ -695,7 +727,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Toggle thunder health bar",
     description: "Shows a health bar for thunder on the boss bar",
     subcategory: "Boss Bar",
-    value: true
+    value: true,
+    shouldShow: data => data.bossHealthBarToggle
 })
 .addToggle({
     category: "Crimson Fishing",
@@ -703,7 +736,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Toggle plhlegblast health bar",
     description: "Shows a health bar for plhlegblast on the boss bar",
     subcategory: "Boss Bar",
-    value: true
+    value: true,
+    shouldShow: data => data.bossHealthBarToggle
 })
 .addSwitch({
     category: "Crimson Fishing",
@@ -719,7 +753,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Warn upon Jawbus Death",
     description: "Warns you if a player dies to jawbus",
     subcategory: "Fisherman Tracking",
-    value: true
+    value: true,
+    shouldShow: data => data.fishermanTrackingToggle
 })
 .addToggle({
     category: "Crimson Fishing",
@@ -727,7 +762,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Warn upon Thunder Death",
     description: "Warns you if a player dies to thunder",
     subcategory: "Fisherman Tracking",
-    value: false
+    value: false,
+    shouldShow: data => data.fishermanTrackingToggle
 })
 .addSlider({
     category: "Crimson Fishing",
@@ -736,7 +772,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "The minimum amount of time in seconds between warns",
     options: [0, 300],
     value: 60,
-    subcategory: "Fisherman Tracking"
+    subcategory: "Fisherman Tracking",
+    shouldShow: data => data.fishermanTrackingToggle
 })
 .addSwitch({
     category: "Crimson Fishing",
@@ -744,7 +781,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Player coords on warn",
     description: "Shows you the last known coords of the fisherman who died",
     subcategory: "Fisherman Tracking",
-    value: true
+    value: true,
+    shouldShow: data => data.fishermanTrackingToggle
 })
 .addSwitch({
     category: "Crimson Fishing",
@@ -752,7 +790,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Render box on coords on warn",
     description: "Renders a box in the last known coords of the fisherman who died, getting close to it will stop showing it\nrequires player coords on warn to be active",
     subcategory: "Fisherman Tracking",
-    value: true
+    value: true,
+    shouldShow: data => data.fishermanTrackingToggle
 })
 .addSwitch({
     category: "Crimson Fishing",
@@ -760,7 +799,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Sound on warn",
     description: "Plays a sound whenever someone dies to one of the rare creatures",
     subcategory: "Fisherman Tracking",
-    value: true
+    value: true,
+    shouldShow: data => data.fishermanTrackingToggle
 })
 .addSlider({
     category: "Crimson Fishing",
@@ -769,7 +809,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "The volume of the death warn sound",
     options: [0.001, 1],
     value: 0.1,
-    subcategory: "Fisherman Tracking"
+    subcategory: "Fisherman Tracking",
+    shouldShow: data => data.fishermanTrackingToggle && data.deathWarnSoundToggle
 })
 .addSwitch({
     category: "Crimson Fishing",
@@ -805,6 +846,24 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
 })
 .addSwitch({
     category: "Crimson Fishing",
+    configName: "vanquisherMessageToggle",
+    title: "Toggle vanquisher party messages",
+    description: "Sends messages whenever you spawn a vanquisher",
+    subcategory: "Vanquisher",
+    value: true
+})
+.addTextInput({
+    category: "Crimson Fishing",
+    configName: "vanquisherMessage",
+    title: "● Vanquisher message",
+    description: "Customize the vanquisher message.\n write ([number]) to show the kill count, write ([time]) to show the time it took , write ([coords]) to show the coords",
+    value: "Vanquisher (([number]) sea creature kills, ([time]))",
+    placeHolder: "",
+    subcategory: "Vanquisher",
+    shouldShow: data => data.vanquisherMessageToggle
+})
+.addSwitch({
+    category: "Crimson Fishing",
     configName: "mythicMessageToggle",
     title: "Toggle Mythic Creature party messages",
     description: "Sends messages whenever you spawn a mythic sc",
@@ -818,7 +877,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the plhlegblast message.\n write ([number]) to show the catch count, write ([time]) to show the time it took , write ([coords]) to show the coords, write ([double]) on where you want \"Double\" on whenever you get a dh, leave empty to disable it",
     value: "([hooray]) ([double])Plhlegblast (([number]) catches, ([time]))",
     placeHolder: "",
-    subcategory: "Mythic Creatures Messages"
+    subcategory: "Mythic Creatures Messages",
+    shouldShow: data => data.mythicMessageToggle
 })
 .addTextInput({
     category: "Crimson Fishing",
@@ -827,7 +887,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the jawbus message.\n write ([number]) to show the catch count, write ([time]) to show the time it took , write ([coords]) to show the coords, write ([double]) on where you want \"Double\" on whenever you get a dh, leave empty to disable it",
     value: "([surprised]) ([double])Lord Jawbus (([number]) catches, ([time]))",
     placeHolder: "",
-    subcategory: "Mythic Creatures Messages"
+    subcategory: "Mythic Creatures Messages",
+    shouldShow: data => data.mythicMessageToggle
 })
 .addTextInput({
     category: "Crimson Fishing",
@@ -836,15 +897,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the thunder message.\n write ([number]) to show the catch count, write ([time]) to show the time it took , write ([coords]) to show the coords, write ([double]) on where you want \"Double\" on whenever you get a dh, leave empty to disable it",
     value: "([mixface]) ([double])Thunder (([number]) catches, ([time]))",
     placeHolder: "",
-    subcategory: "Mythic Creatures Messages"
-})
-.addSwitch({
-    category: "Crimson Fishing",
-    configName: "vanquisherMessageToggle",
-    title: "Toggle vanquisher party messages",
-    description: "Sends messages whenever you spawn a vanquisher",
-    subcategory: "Vanquisher",
-    value: true
+    subcategory: "Mythic Creatures Messages",
+    shouldShow: data => data.mythicMessageToggle
 })
 .addSwitch({
     category: "Crimson Fishing",
@@ -860,7 +914,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Plhlegblast Detection",
     description: "Warns you if there is a plhlegblast nearby",
     subcategory: "Mythic Creatures Detection",
-    value: true
+    value: true,
+    shouldShow: data => data.mythicDetectionToggle
 })
 .addToggle({
     category: "Crimson Fishing",
@@ -868,7 +923,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Jawbus Detection",
     description: "Warns you if there is a jawbus nearby",
     subcategory: "Mythic Creatures Detection",
-    value: true
+    value: true,
+    shouldShow: data => data.mythicDetectionToggle
 })
 .addToggle({
     category: "Crimson Fishing",
@@ -876,7 +932,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Thunder Detection",
     description: "Warns you if there is a thunder nearby",
     subcategory: "Mythic Creatures Detection",
-    value: true
+    value: true,
+    shouldShow: data => data.mythicDetectionToggle
 })
 .addTextInput({
     category: "Crimson Fishing",
@@ -885,7 +942,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the detection message. Write ([mob]) to see the mob name",
     value: "&4&l([mob]) detected!",
     placeHolder: "",
-    subcategory: "Mythic Creatures Detection"
+    subcategory: "Mythic Creatures Detection",
+    shouldShow: data => data.mythicDetectionToggle
 })
 .addSwitch({
     category: "Crimson Fishing",
@@ -893,7 +951,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Sound on detection",
     description: "Plays a sound whenever a mythic creature is detected",
     subcategory: "Mythic Creatures Detection",
-    value: true
+    value: true,
+    shouldShow: data => data.mythicDetectionToggle
 })
 .addSlider({
     category: "Crimson Fishing",
@@ -902,16 +961,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "The volume of the death warn sound",
     options: [0.001, 1],
     value: 1,
-    subcategory: "Mythic Creatures Detection"
-})
-.addTextInput({
-    category: "Crimson Fishing",
-    configName: "vanquisherMessage",
-    title: "● Vanquisher message",
-    description: "Customize the vanquisher message.\n write ([number]) to show the kill count, write ([time]) to show the time it took , write ([coords]) to show the coords",
-    value: "Vanquisher (([number]) sea creature kills, ([time]))",
-    placeHolder: "",
-    subcategory: "Vanquisher"
+    subcategory: "Mythic Creatures Detection",
+    shouldShow: data => data.mythicDetectionToggle && data.mythicDetectionSoundToggle
 })
 .addSwitch({
     category: "Crimson Fishing",
@@ -927,7 +978,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Plhlegblast lootshare range",
     description: "shows you the lootshare range if there is a plhlegblast nearby",
     subcategory: "Mythic Creatures Lootsharing",
-    value: true
+    value: true,
+    shouldShow: data => data.mythicLootshareToggle
 })
 .addToggle({
     category: "Crimson Fishing",
@@ -935,7 +987,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Jawbus lootshare range",
     description: "shows you the lootshare range if there is a jawbus nearby",
     subcategory: "Mythic Creatures Lootsharing",
-    value: true
+    value: true,
+    shouldShow: data => data.mythicLootshareToggle
 })
 .addToggle({
     category: "Crimson Fishing",
@@ -943,7 +996,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Thunder lootshare range",
     description: "shows you the lootshare range if there is a thunder nearby",
     subcategory: "Mythic Creatures Lootsharing",
-    value: true
+    value: true,
+    shouldShow: data => data.mythicLootshareToggle
 })
 .addSwitch({
     category: "Crimson Fishing",
@@ -968,7 +1022,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the vial message.\n write ([number]) to show the kill count, write ([time]) to show the time it took, write ([mf]) for magic find",
     value: "RARE DROP! Radioactive Vial (+([mf])% ✯ Magic Find (([number]) Jawbus Kills, ([time]))",
     placeHolder: "",
-    subcategory: "Radioactive Vial"
+    subcategory: "Radioactive Vial",
+    shouldShow: data => data.vialMessageToggle
 })
 .addToggle({
     category: "Rare Drops",
@@ -976,7 +1031,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Party Chat",
     description: "The message will be sent to party chat",
     subcategory: "Radioactive Vial",
-    value: true
+    value: true,
+    shouldShow: data => data.vialMessageToggle
 })
 .addToggle({
     category: "Rare Drops",
@@ -984,7 +1040,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Guild Chat",
     description: "The message will also be sent to guild chat",
     subcategory: "Radioactive Vial",
-    value: true
+    value: true,
+    shouldShow: data => data.vialMessageToggle
 })
 .addToggle({
     category: "Rare Drops",
@@ -992,7 +1049,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● All Chat",
     description: "The message will also be sent to all chat",
     subcategory: "Radioactive Vial",
-    value: false
+    value: false,
+    shouldShow: data => data.vialMessageToggle
 })
 .addToggle({
     category: "Rare Drops",
@@ -1000,7 +1058,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Coop Chat",
     description: "The message will also be sent to coop chat",
     subcategory: "Radioactive Vial",
-    value: false
+    value: false,
+    shouldShow: data => data.vialMessageToggle
 })
 .addSwitch({
     category: "Rare Drops",
@@ -1024,7 +1083,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "● Toggle air drop",
     description: "Sends an air dropped message if you dont drop anything lol, will trigger for any Thunders/Jawbus that die near you",
     subcategory: "Other Drops",
-    value: true
+    value: true,
+    shouldShow: data => data.dropsMessageToggle
 })
 .addSwitch({
     category: "Pets",
@@ -1041,7 +1101,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Set the number of levels needed to start showing the title message",
     options: [1, 100],
     value: 100,
-    subcategory: "Pet Level Up"
+    subcategory: "Pet Level Up",
+    shouldShow: data => data.petTitleToggle
 })
 .addTextInput({
     category: "Pets",
@@ -1050,7 +1111,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize the level up title message.\n write ([level]) to show the level, write ([pet]) to show the pet name",
     value: "&6&l([pet]) level ([level])",
     placeHolder: "",
-    subcategory: "Pet Level Up"
+    subcategory: "Pet Level Up",
+    shouldShow: data => data.petTitleToggle
 })
 .addSwitch({
     category: "Other",
@@ -1107,7 +1169,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Customize rod timer UI.\n write ([time]) to show the timer\nThis is a different one, you should write it like this: ([time])|Click! , the things to the left of | will appear on the timer and the things to the right will appear when the timer is on !!!\n(you may need to add some spaces so it gets centered)",
     value: " &e&l([time])|&c&lClick!",
     placeHolder: "",
-    subcategory: "Fishing rod timer"
+    subcategory: "Fishing rod timer",
+    shouldShow: data => data.rodTimerToggle
 })
 .addSlider({
     category: "Other",
