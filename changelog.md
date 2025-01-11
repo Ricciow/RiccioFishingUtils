@@ -2,6 +2,7 @@
 - Made keybindfix Work
 - Changed config system to AmaterasuModded
 - Inverted Changelog
+- Revamped loading messages
 # V0.2.6
 - Added new github version alert.
 # V0.2.5
