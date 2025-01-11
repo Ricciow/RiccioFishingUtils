@@ -1,6 +1,6 @@
 import { playerData } from "../data/data"
 import { Keybind } from "../../KeybindFix"
-import updateUI from "../settings/updateUI";
+import { updateUI } from "../settings/updateUI";
 
 const KeyBindFix = Keybind
 

@@ -1,6 +1,5 @@
-import { Inspector } from "../../Elementa"
 import { playerData } from "../data/data"
-import updateUI from "../settings/updateUI"
+import { updateUI } from "../settings/updateUI"
 import settings from "../settings/settings"
 import Manager from "./guiManager"
 
@@ -244,9 +243,5 @@ if(!playerData.GUI.Updated) {
 }
 
 updateUI()
-
-register("command", () => {
-    updateUI()
-}).setName("rfuupdateui")
 
 Manager.saveData()

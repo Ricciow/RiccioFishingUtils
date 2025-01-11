@@ -2,7 +2,7 @@ import Manager from "../gui/guiManager"
 import settings from "./settings"
 import { playerData } from "../data/data"
 
-export default function updateUI() {
+export function updateUI() {
     //Disable totem UI if it has the settings(). turned off.
     Manager.updateElement("TotemTimer", settings().totemToggle && settings().totemTimerToggle && playerData.GUI["Toggle"])
 
@@ -54,3 +54,7 @@ export default function updateUI() {
     //BossBar
     Manager.updateElement("BossBar", settings().bossHealthBarToggle && playerData.GUI["Toggle"], undefined, undefined, settings().BossHealthBarLength)
 }
+
+settings().getConfig().onCloseGui(() => {
+    updateUI()
+})

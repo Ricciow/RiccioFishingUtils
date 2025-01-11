@@ -1255,9 +1255,6 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
 const setting = new Settings("RiccioFishingUtils", config, "settings/ColorScheme.json")
 .addChangelog(FileLib.read("RiccioFishingUtils", "changelog.md"))
 .setCommand("rfu", ["ricciofishingutils"]) 
-.onCloseGui(() => { //Scuffed workaround for import loops
-    ChatLib.command("rfuupdateui", true)
-})
 .setSize(90, 90)
 .setPos(5, 5)
 .apply()
@@ -1463,14 +1460,17 @@ register("command", () => {
     playerData.save()
 }).setName("rfusetsettingstoupdated")
 
-if(!playerData.SETTINGS.Updated) {
-    ChatLib.chat(
-        new Message(
-            new TextComponent(`\n&5[&b&lRFU&5] &e&lRfu has updated to a new settings system!\n&a&l[Click to convert old settings]`)
-            .setHover("show_text", "&cThis is a compute intensive task.\n&cIt may lag your computer or not work at all :(")
-            .setClick("run_command", "rfurunconfigconversion"),
-            new TextComponent(`\n&c&l[Click to not see this again]\n`)
-            .setClick("run_command", "rfusetsettingstoupdated"),
+const updateSettingsRegister = register("worldLoad", () => {
+    if(!playerData.SETTINGS.Updated) {
+        ChatLib.chat(
+            new Message(
+                new TextComponent(`\n&5[&b&lRFU&5] &e&lRfu has updated to a new settings system!\n&a&l[Click to convert old settings]`)
+                .setHover("show_text", "&cThis is a compute intensive task.\n&cIt may lag your computer or not work at all :(")
+                .setClick("run_command", "rfurunconfigconversion"),
+                new TextComponent(`\n&c&l[Click to not see this again]\n`)
+                .setClick("run_command", "rfusetsettingstoupdated"),
+            )
         )
-    )
-}
+    }
+    updateSettingsRegister.unregister()
+})
