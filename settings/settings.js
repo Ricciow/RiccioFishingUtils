@@ -1263,15 +1263,20 @@ export default () => setting.settings
 
 //? Code to update from old settings to new settings
 
+let timeout = 1000
 function setConfigValue(category, key, value) {
     if(setting.settings[key] !== value) {
-        setting.setConfigValue(category, key, value)
+        setTimeout(() => {
+            setting.setConfigValue(category, key, value)
+            ChatLib.chat(`&5[&b&lRFU&5] &6&lConverted ${key}`)
+        }, timeout);
+        timeout += 1000
     }
 }
 
 
 function convertOldConfigToNew() {
-    ChatLib.chat("&5[&b&lRFU&5] &6&lConverting Chat Commands Settings")
+
     //Chat Commands
     setConfigValue("Chat Commands", "partyCommands", oldValues.partyCommands)
     setConfigValue("Chat Commands", "partyCooldown", oldValues.partyCooldown)
@@ -1290,7 +1295,7 @@ function convertOldConfigToNew() {
     setConfigValue("Chat Commands", "infoJawbus", oldValues.infoJawbus)
     setConfigValue("Chat Commands", "infoThunder", oldValues.infoThunder)
     setConfigValue("Chat Commands", "infoVial", oldValues.infoVial)
-    ChatLib.chat("&5[&b&lRFU&5] &6&lConverting Crystal Hollows Fishing Settings")
+
     //Crystal Hollows
     setConfigValue("Crystal Hollows Fishing", "wormToggle", oldValues.wormToggle)
     setConfigValue("Crystal Hollows Fishing", "wormMessageToggle", oldValues.wormMessageToggle)
@@ -1306,7 +1311,6 @@ function convertOldConfigToNew() {
     setConfigValue("Crystal Hollows Fishing", "wormSound", oldValues.wormSound)
     setConfigValue("Crystal Hollows Fishing", "wormSoundVolume", oldValues.wormSoundVolume)
     setConfigValue("Crystal Hollows Fishing", "wormSoundPitch", oldValues.wormSoundPitch)
-    ChatLib.chat("&5[&b&lRFU&5] &6&lConverting Deployable Settings")
     //Deployables
     //  Totem
     setConfigValue("Deployables", "totemToggle", oldValues.totemToggle)
@@ -1315,18 +1319,21 @@ function convertOldConfigToNew() {
     setConfigValue("Deployables", "totemMessageToggle", oldValues.totemMessageToggle)
     setConfigValue("Deployables", "totemTitleToggle", oldValues.totemTitleToggle)
     setConfigValue("Deployables", "totemTimerToggle", oldValues.totemTimerToggle)
+
     //  Flux
     setConfigValue("Deployables", "fluxToggle", oldValues.fluxToggle)
     setConfigValue("Deployables", "fluxTitleToggle", oldValues.fluxTitleToggle)
     setConfigValue("Deployables", "fluxTitleMessage", oldValues.fluxTitleMessage)
     setConfigValue("Deployables", "fluxMessageToggle", oldValues.fluxMessageToggle)
     setConfigValue("Deployables", "fluxTimerToggle", oldValues.fluxTimerToggle)
+
     //  Flare
     setConfigValue("Deployables", "flareToggle", oldValues.flareToggle)
     setConfigValue("Deployables", "flareTitleToggle", oldValues.flareTitleToggle)
     setConfigValue("Deployables", "flareTitleMessage", oldValues.flareTitleMessage)
     setConfigValue("Deployables", "flareMessageToggle", oldValues.flareMessageToggle)
     setConfigValue("Deployables", "flareTimerToggle", oldValues.flareTimerToggle)
+
     //  All
     setConfigValue("Deployables", "deployableMessage", oldValues.deployableMessage)
     setConfigValue("Deployables", "deployableSoundToggle", oldValues.deployableSoundToggle)
@@ -1334,7 +1341,7 @@ function convertOldConfigToNew() {
     setConfigValue("Deployables", "deployableSoundVolume", oldValues.deployableSoundVolume)
     setConfigValue("Deployables", "deployableSoundPitch", oldValues.deployableSoundPitch)
     setConfigValue("Deployables", "deployableHideToggle", oldValues.deployableHideToggle)
-    ChatLib.chat("&5[&b&lRFU&5] &6&lConverting General Fishing Settings")
+
     //General Fishing
     setConfigValue("General Fishing", "seaCreatureCounterToggle", oldValues.seaCreatureCounterToggle)
     setConfigValue("General Fishing", "seaCreatureCounterUiToggle", oldValues.seaCreatureCounterUiToggle)
@@ -1359,19 +1366,18 @@ function convertOldConfigToNew() {
     setConfigValue("General Fishing", "doubleHookRandomToggle", oldValues.doubleHookRandomToggle)
     setConfigValue("General Fishing", "generalHideUIToggle", oldValues.generalHideUIToggle)
     setConfigValue("General Fishing", "creatureDhHideToggle", oldValues.creatureDhHideToggle)
-    ChatLib.chat("&5[&b&lRFU&5] &6&lConverting Player Stats Settings")
+
     //Player Stats
     setConfigValue("Player Stats", "manaTitleToggle", oldValues.manaTitleToggle)
     setConfigValue("Player Stats", "manaWarnPercentage", oldValues.manaWarnPercentage)
     setConfigValue("Player Stats", "manaTitleMessage", oldValues.manaTitleMessage)
     
-    ChatLib.chat("&5[&b&lRFU&5] &6&lConverting Pets Settings")
     //Pets
     setConfigValue("Pets", "petDisplayToggle", oldValues.petDisplayToggle)
     setConfigValue("Pets", "petTitleToggle", oldValues.petTitleToggle)
     setConfigValue("Pets", "petTitleLimit", oldValues.petTitleLimit)
     setConfigValue("Pets", "petTitleMessage", oldValues.petTitleMessage)
-    ChatLib.chat("&5[&b&lRFU&5] &6&lConverting Crimson Fishing Settings")
+
     //Crimson Fishing
     setConfigValue("Crimson Fishing", "bossHealthBarToggle", oldValues.bossHealthBarToggle)
     setConfigValue("Crimson Fishing", "BossHealthBarLength", oldValues.BossHealthBarLength)
@@ -1408,7 +1414,7 @@ function convertOldConfigToNew() {
     setConfigValue("Crimson Fishing", "mythicLootshareJawbusToggle", oldValues.mythicLootshareJawbusToggle)
     setConfigValue("Crimson Fishing", "mythicLootshareThunderToggle", oldValues.mythicLootshareThunderToggle)
     setConfigValue("Crimson Fishing", "crimsonHideUIToggle", oldValues.crimsonHideUIToggle)
-    ChatLib.chat("&5[&b&lRFU&5] &6&lConverting Rare Drops Settings")
+
     //Rare Drops
     setConfigValue("Rare Drops", "vialMessageToggle", oldValues.vialMessageToggle)
     setConfigValue("Rare Drops", "vialMessage", oldValues.vialMessage)
@@ -1419,7 +1425,7 @@ function convertOldConfigToNew() {
     setConfigValue("Rare Drops", "vialUIToggle", oldValues.vialUIToggle)
     setConfigValue("Rare Drops", "dropsMessageToggle", oldValues.dropsMessageToggle)
     setConfigValue("Rare Drops", "dropsMessageToggle", oldValues.dropsAirMessageToggle)
-    ChatLib.chat("&5[&b&lRFU&5] &6&lConverting Other Settings")
+
     //Other
     setConfigValue("Other", "phoenixTitleToggle", oldValues.phoenixTitleToggle)
     setConfigValue("Other", "spiritTitleToggle", oldValues.spiritTitleToggle)
@@ -1441,15 +1447,17 @@ function convertOldConfigToNew() {
     setConfigValue("Other", "chBossPollingrate", oldValues.chBossPollingrate)
     setConfigValue("Other", "FunMessages", oldValues.FunMessages)
     setConfigValue("Other", "lobbyTracking", oldValues.lobbyTracking)
-    ChatLib.chat("&5[&b&lRFU&5] &6&lConverting Trophy Fishing Settings")
+
     //Trophy Fishing
     setConfigValue("Trophy Fishing", "sulphurRightClickToggle", oldValues.sulphurRightClickToggle)
     setConfigValue("Trophy Fishing", "goldenTimerToggle", oldValues.goldenTimerToggle)
     setConfigValue("Trophy Fishing", "trophyHideUIToggle", oldValues.trophyHideUIToggle)
 
-    playerData.SETTINGS.Updated = true
-    playerData.save()
-    ChatLib.chat("&5[&b&lRFU&5] &a&lDone Updating! &f&lRecomended Restarting Game")
+    setTimeout(() => {
+        playerData.SETTINGS.Updated = true
+        playerData.save()
+        ChatLib.chat("&5[&b&lRFU&5] &a&lDone Updating! &f&lRecomended Restarting Game")
+    }, timeout);
 }
 
 register("command", convertOldConfigToNew).setName("rfurunconfigconversion")
@@ -1465,7 +1473,7 @@ const updateSettingsRegister = register("worldLoad", () => {
         ChatLib.chat(
             new Message(
                 new TextComponent(`\n&5[&b&lRFU&5] &e&lRfu has updated to a new settings system!\n&a&l[Click to convert old settings]`)
-                .setHover("show_text", "&cThis is a compute intensive task.\n&cIt may lag your computer or not work at all :(")
+                .setHover("show_text", "&cThis may lag a bit and will take a while if you have modified a lot of settings from its original state")
                 .setClick("run_command", "rfurunconfigconversion"),
                 new TextComponent(`\n&c&l[Click to not see this again]\n`)
                 .setClick("run_command", "rfusetsettingstoupdated"),
