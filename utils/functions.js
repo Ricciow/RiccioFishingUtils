@@ -23,7 +23,7 @@ export function checkIfUser(ign){
 export function checkBlacklist(ign){
     let Blacklisted = false;
     ign = removeRankTag(ign);
-    settings.partyBlacklist.replace(" ", "").split(",").forEach(name => {
+    settings().partyBlacklist.replace(" ", "").split(",").forEach(name => {
         if (ign.toLowerCase() == name.toLowerCase() || checkIfUser(ign)){
             Blacklisted = true;
         }
@@ -120,7 +120,7 @@ export function readableTime(time, fractionalSeconds = false){
 
 export function funniFaces(text){
     text = text.replace("([lineskip])", '\n');
-    settings.FunMessages.split('|').forEach(face => {
+    settings().FunMessages.split('|').forEach(face => {
         key = face.split(',')[0];
         door = face.split(',')[1];
         text = text.replace(`([${key}])`, `${door}`);
@@ -163,7 +163,7 @@ export function getAverageFromList(list) {
     }
 }
 //['Party', 'Guild', 'AllChat', 'Party/Local','Local', 'Coop']
-export function sendMsg(text, chat = settings.ChatSelected) {
+export function sendMsg(text, chat = settings().ChatSelected) {
     switch (chat) {
         case 0:
             if (playerData.PARTY['inParty']) {
