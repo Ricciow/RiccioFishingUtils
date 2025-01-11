@@ -1,4 +1,4 @@
-import settings from "../utils/settings";
+import settings from "../settings/settings";
 import { seaCreatureData, playerData} from "../data/data";
 import { CrimsonCreatures, CrimsonMessages, Chats, MythicDetectSound, colorsRegex, VialRegex} from "../data/constants";
 import { makeRegexFromList ,getAverageFromList, funniFaces, readableTime, sendMsg, getRandomInt, getVialAverage} from "../utils/functions";
@@ -65,7 +65,7 @@ register("step", () => {
             World.getAllEntities().forEach(mob => {
                 mob_name = mob.name.replace(colorsRegex, "");
                 if(mob_name != undefined){
-                    if(settings.jawbusHealthBarToggle) {
+                    if(settings().jawbusHealthBarToggle) {
                         if (mob_name.includes("Lord Jawbus")){
                             let jawbusHealthStrTemp = mob_name.split("[Lv600] Lord Jawbus ")[1];
                             let jawbusHealthTemp = 0
@@ -87,7 +87,7 @@ register("step", () => {
                             bossCount.push(newJawbus);
                         }
                     }
-                    if(settings.thunderHealthBarToggle) {
+                    if(settings().thunderHealthBarToggle) {
                         if (mob_name.includes("Thunder ")){
                             let thunderHealthStrTemp = mob_name.split("[Lv400] Thunder ")[1];
                             let thunderHealthTemp = 0
@@ -109,7 +109,7 @@ register("step", () => {
                             bossCount.push(newThunder);
                         }
                     }
-                    if(settings.plhlegblastHealthBarToggle) {
+                    if(settings().plhlegblastHealthBarToggle) {
                         if (mob_name.includes("Plhlegblast ")){
                             let plhlegblastHealthStrTemp = mob_name.split("[Lv300] Plhlegblast ")[1];
                             let plhlegblastHealthTemp = 0
@@ -134,13 +134,13 @@ register("step", () => {
                     if (mythicRegex.test(mob_name)){
                         if(!mythicDetected){
                             if(mob_name == 'Squid'){
-                                if(settings.mythicDetectionToggle&&settings.plhlegblastDetectionToggle){
-                                    MythicDetectTitle = funniFaces(settings.mythicDetectionMessage).replace('([mob])',`Plhlegblast`);
-                                    Client.showTitle(MythicDetectTitle, "", settings.titleFadeIn, settings.titleDuration, settings.titleFadeOut);
+                                if(settings().mythicDetectionToggle&&settings().plhlegblastDetectionToggle){
+                                    MythicDetectTitle = funniFaces(settings().mythicDetectionMessage).replace('([mob])',`Plhlegblast`);
+                                    Client.showTitle(MythicDetectTitle, "", settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
                                     mythicDetected = true;
-                                    if(settings.mythicDetectionSoundToggle){
+                                    if(settings().mythicDetectionSoundToggle){
                                         try {
-                                            MythicDetectSound.setVolume(settings.mythicDetectionSoundVolume).play();
+                                            MythicDetectSound.setVolume(settings().mythicDetectionSoundVolume).play();
                                         }
                                         catch (error) {
                                             console.log("Sound playing no workie, prob sounds refreshed\n", error);
@@ -149,12 +149,12 @@ register("step", () => {
                                 }
                             }
                             else if(mob_name == 'Iron Golem'){
-                                if(settings.mythicDetectionToggle&&settings.jawbusDetectionToggle){
-                                    MythicDetectTitle = funniFaces(settings.mythicDetectionMessage).replace('([mob])',`Lord Jawbus`);
-                                    Client.showTitle(MythicDetectTitle, "", settings.titleFadeIn, settings.titleDuration, settings.titleFadeOut);
-                                    if(settings.mythicDetectionSoundToggle){
+                                if(settings().mythicDetectionToggle&&settings().jawbusDetectionToggle){
+                                    MythicDetectTitle = funniFaces(settings().mythicDetectionMessage).replace('([mob])',`Lord Jawbus`);
+                                    Client.showTitle(MythicDetectTitle, "", settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
+                                    if(settings().mythicDetectionSoundToggle){
                                         try {
-                                            MythicDetectSound.setVolume(settings.mythicDetectionSoundVolume).play();
+                                            MythicDetectSound.setVolume(settings().mythicDetectionSoundVolume).play();
                                         }
                                         catch (error) {
                                             console.log("Sound playing no workie, prob sounds refreshed\n", error);
@@ -167,12 +167,12 @@ register("step", () => {
                             }
                             else if(mob_name == 'Guardian'){
                                 if(mob.getWidth() > 1.5){
-                                    if(settings.mythicDetectionToggle&&settings.thunderDetectionToggle){
-                                        MythicDetectTitle = funniFaces(settings.mythicDetectionMessage).replace('([mob])',`Thunder`);
-                                        Client.showTitle(MythicDetectTitle, "", settings.titleFadeIn, settings.titleDuration, settings.titleFadeOut);
-                                        if(settings.mythicDetectionSoundToggle){
+                                    if(settings().mythicDetectionToggle&&settings().thunderDetectionToggle){
+                                        MythicDetectTitle = funniFaces(settings().mythicDetectionMessage).replace('([mob])',`Thunder`);
+                                        Client.showTitle(MythicDetectTitle, "", settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
+                                        if(settings().mythicDetectionSoundToggle){
                                             try {
-                                                MythicDetectSound.setVolume(settings.mythicDetectionSoundVolume).play();
+                                                MythicDetectSound.setVolume(settings().mythicDetectionSoundVolume).play();
                                             }
                                             catch (error) {
                                                 console.log("Sound playing no workie, prob sounds refreshed\n", error);
@@ -188,19 +188,19 @@ register("step", () => {
                         if(mob_name == 'Guardian'){
                             if(mob.getWidth() > 1.5){
                                 foundMythic = true; 
-                                if(settings.mythicLootshareThunderToggle) {
+                                if(settings().mythicLootshareThunderToggle) {
                                     MythicScs.push([mob.x, mob.y, mob.z]);
                                 }
                             }
                         }
                         else if(mob_name == 'Iron Golem'){
-                            if(settings.mythicLootshareJawbusToggle) {
+                            if(settings().mythicLootshareJawbusToggle) {
                                 MythicScs.push([mob.x, mob.y, mob.z]);
                             }
                             foundMythic = true; 
                         }
                         else if(mob_name == 'Squid') {
-                            if(settings.mythicLootsharePlhlegblastToggle) {
+                            if(settings().mythicLootsharePlhlegblastToggle) {
                                 MythicScs.push([mob.x, mob.y, mob.z]);
                             }
                             foundMythic = true; 
@@ -222,7 +222,7 @@ register("step", () => {
         }
     }
     
-    if(settings.plhlegblastUIToggle) {
+    if(settings().plhlegblastUIToggle) {
         //Plhlegblast render
         let PlhlegblastData = guiManager.getElementData("PlhlegblastTimer")
 
@@ -230,12 +230,12 @@ register("step", () => {
         PlhlegblastData.Times["(2)"] = [getAverageFromList(seaCreatureData.CRIMSON['PlhlegblastAllCount'])]
         PlhlegblastData.Times["(3)"] = seaCreatureData.CRIMSON['PlhlegblastTime']
 
-        if(!settings.crimsonHideUIToggle) {
+        if(!settings().crimsonHideUIToggle) {
             //Hide if not relevant OFF
             PlhlegblastData.Hidden = false
             guiManager.updateElementData("PlhlegblastTimer", PlhlegblastData)
         }
-        else if((Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime && (Player.asPlayerMP()?.getDimension() == -1)) && (-357 > Player.getX() && Player.getX() > -398 && 72 < Player.getY() && Player.getY() < 100 && -683 > Player.getZ() && Player.getZ() > -722)) {
+        else if((Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings().seacreatureHourResetTime && (Player.asPlayerMP()?.getDimension() == -1)) && (-357 > Player.getX() && Player.getX() > -398 && 72 < Player.getY() && Player.getY() < 100 && -683 > Player.getZ() && Player.getZ() > -722)) {
             //Hide if not relevant ON, you are Fishing, You are inside Phlegblast pond
             PlhlegblastData.Hidden = false
             guiManager.updateElementData("PlhlegblastTimer", PlhlegblastData)
@@ -247,7 +247,7 @@ register("step", () => {
         }
     }
 
-    if(settings.jawbusUIToggle) {
+    if(settings().jawbusUIToggle) {
         //Jawbus render
         let JawbusData = guiManager.getElementData("JawbusTimer")
 
@@ -255,12 +255,12 @@ register("step", () => {
         JawbusData.Times["(2)"] = [getAverageFromList(seaCreatureData.CRIMSON['JawbusAllCount'])]
         JawbusData.Times["(3)"] = seaCreatureData.CRIMSON['JawbusTime']
 
-        if(!settings.crimsonHideUIToggle) {
+        if(!settings().crimsonHideUIToggle) {
             //Hide if not relevant OFF
             JawbusData.Hidden = false
             guiManager.updateElementData("JawbusTimer", JawbusData)
         }
-        else if((Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime && (Player.asPlayerMP()?.getDimension() == -1))) {
+        else if((Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings().seacreatureHourResetTime && (Player.asPlayerMP()?.getDimension() == -1))) {
             //Hide if not relevant ON, you are Fishing, You are in the crimson isle
             JawbusData.Hidden = false
             guiManager.updateElementData("JawbusTimer", JawbusData)
@@ -272,7 +272,7 @@ register("step", () => {
         }
     }
 
-    if(settings.thunderUIToggle) {
+    if(settings().thunderUIToggle) {
         //Thunder render
         let ThunderData = guiManager.getElementData("ThunderTimer")
 
@@ -280,12 +280,12 @@ register("step", () => {
         ThunderData.Times["(2)"] = [getAverageFromList(seaCreatureData.CRIMSON['ThunderAllCount'])]
         ThunderData.Times["(3)"] = seaCreatureData.CRIMSON['ThunderTime']
 
-        if(!settings.crimsonHideUIToggle) {
+        if(!settings().crimsonHideUIToggle) {
             //Hide if not relevant OFF
             ThunderData.Hidden = false
             guiManager.updateElementData("ThunderTimer", ThunderData)
         }
-        else if((Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime && (Player.asPlayerMP()?.getDimension() == -1))) {
+        else if((Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings().seacreatureHourResetTime && (Player.asPlayerMP()?.getDimension() == -1))) {
             //Hide if not relevant ON, you are Fishing, You are in the crimson isle
             ThunderData.Hidden = false
             guiManager.updateElementData("ThunderTimer", ThunderData)
@@ -297,7 +297,7 @@ register("step", () => {
         }
     }
 
-    if(settings.vanquisherUIToggle) {
+    if(settings().vanquisherUIToggle) {
         //Vanquisher render
         let VanquisherData = guiManager.getElementData("VanquisherTimer")
 
@@ -305,12 +305,12 @@ register("step", () => {
         VanquisherData.Times["(2)"] = [getAverageFromList(seaCreatureData.CRIMSON['VanquisherAllCount'])]
         VanquisherData.Times["(3)"] = seaCreatureData.CRIMSON['VanquisherTime']
 
-        if(!settings.crimsonHideUIToggle) {
+        if(!settings().crimsonHideUIToggle) {
             //Hide if not relevant OFF
             VanquisherData.Hidden = false
             guiManager.updateElementData("VanquisherTimer", VanquisherData)
         }
-        else if((Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime && (Player.asPlayerMP()?.getDimension() == -1))) {
+        else if((Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings().seacreatureHourResetTime && (Player.asPlayerMP()?.getDimension() == -1))) {
             //Hide if not relevant ON, you are Fishing, You are in the crimson isle
             VanquisherData.Hidden = false
             guiManager.updateElementData("VanquisherTimer", VanquisherData)
@@ -322,7 +322,7 @@ register("step", () => {
         }
     }
     
-    if(settings.vialUIToggle) {
+    if(settings().vialUIToggle) {
         //Vial render
         let VialData = guiManager.getElementData("JawbusVialTimer")
 
@@ -330,12 +330,12 @@ register("step", () => {
         VialData.Times["(2)"] = [getVialAverage()]
         VialData.Times["(3)"] = seaCreatureData.DROPS["RadioactiveVialTime"]
 
-        if(!settings.crimsonHideUIToggle) {
+        if(!settings().crimsonHideUIToggle) {
             //Hide if not relevant OFF
             VialData.Hidden = false
             guiManager.updateElementData("JawbusVialTimer", VialData)
         }
-        else if((Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime && (Player.asPlayerMP()?.getDimension() == -1))) {
+        else if((Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings().seacreatureHourResetTime && (Player.asPlayerMP()?.getDimension() == -1))) {
             //Hide if not relevant ON, you are Fishing, You are in the crimson isle
             VialData.Hidden = false
             guiManager.updateElementData("JawbusVialTimer", VialData)
@@ -347,11 +347,11 @@ register("step", () => {
         }
     }
 
-    if(settings.bossHealthBarToggle) {
+    if(settings().bossHealthBarToggle) {
         guiManager.updateElementData("BossBar", bossCount)
     }
 
-}).setFps(settings.chBossPollingrate);
+}).setFps(settings().chBossPollingrate);
 
 const crimsonMsg = makeRegexFromList(CrimsonMessages, true);
 const crimsonCreatures = makeRegexFromList(CrimsonCreatures);
@@ -370,9 +370,9 @@ register("chat", (message, event) => {
         crimsonCreatures.lastIndex = 0;
         Creature = crimsonCreatures.exec(message);
         if(Creature == 'Plhlegblast'){
-            if(settings.mythicMessageToggle){
-                if(settings.mythicPlhlegblastMessage != '') {
-                    mythicmsg = `${funniFaces(settings.mythicPlhlegblastMessage)}`;
+            if(settings().mythicMessageToggle){
+                if(settings().mythicPlhlegblastMessage != '') {
+                    mythicmsg = `${funniFaces(settings().mythicPlhlegblastMessage)}`;
                     mythicmsg = mythicmsg.replace("([number])", `${seaCreatureData.CRIMSON['PlhlegblastCount']}`).replace("([time])", `${readableTime(Date.now()-seaCreatureData.CRIMSON['PlhlegblastTime'])}`).replace("([coords])", `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
                     if(doubleHook){
                         mythicmsg = mythicmsg.replace("([double])", "Double ")
@@ -396,9 +396,9 @@ register("chat", (message, event) => {
             }
         }
         if(Creature == 'Lord Jawbus'){
-            if(settings.mythicMessageToggle){
-                if(settings.mythicJawbusMessage != ''){
-                    mythicmsg = `${funniFaces(settings.mythicJawbusMessage)}`;
+            if(settings().mythicMessageToggle){
+                if(settings().mythicJawbusMessage != ''){
+                    mythicmsg = `${funniFaces(settings().mythicJawbusMessage)}`;
                     mythicmsg = mythicmsg.replace("([number])", `${seaCreatureData.CRIMSON['JawbusCount']}`).replace("([time])", `${readableTime(Date.now()-seaCreatureData.CRIMSON['JawbusTime'])}`).replace("([coords])", `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
                     if(doubleHook){
                         mythicmsg = mythicmsg.replace("([double])", "Double ")
@@ -426,9 +426,9 @@ register("chat", (message, event) => {
             seaCreatureData.CRIMSON['JawbusCount'] += 1;
         }
         if(Creature == 'Thunder'){
-            if(settings.mythicMessageToggle){
-                if(settings.mythicThunderMessage != '') {
-                    mythicmsg = `${funniFaces(settings.mythicThunderMessage)}`;                                                                                          
+            if(settings().mythicMessageToggle){
+                if(settings().mythicThunderMessage != '') {
+                    mythicmsg = `${funniFaces(settings().mythicThunderMessage)}`;                                                                                          
                     mythicmsg = mythicmsg.replace("([number])", `${seaCreatureData.CRIMSON['ThunderCount']}`).replace("([time])", `${readableTime(Date.now()-seaCreatureData.CRIMSON['ThunderTime'])}`).replace("([coords])", `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
                     if(doubleHook){
                         mythicmsg = mythicmsg.replace("([double])", "Double ")
@@ -479,34 +479,34 @@ register("chat", (message, event) => {
         thisTime = Date.now();
         thisTimeLast = seaCreatureData.DROPS["RadioactiveVialTime"]
         seaCreatureData.DROPS["VialHistory"].push([seaCreatureData.DROPS["RadioactiveVial"], thisTime]);
-        if(settings.vialMessageToggle){
-            if(settings.vialPartyChatToggle) {
+        if(settings().vialMessageToggle){
+            if(settings().vialPartyChatToggle) {
                 setTimeout(() => {
-                    sendMsg(funniFaces(settings.vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(thisTime-thisTimeLast)).replace("([mf])", Magicfind), 0);
+                    sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(thisTime-thisTimeLast)).replace("([mf])", Magicfind), 0);
                 }, delay);
                 delay += 500;
             }
-            if(settings.vialGuildChatToggle) {
+            if(settings().vialGuildChatToggle) {
                 setTimeout(() => {
-                    sendMsg(funniFaces(settings.vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(thisTime-thisTimeLast)).replace("([mf])", Magicfind), 1);
+                    sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(thisTime-thisTimeLast)).replace("([mf])", Magicfind), 1);
                 }, delay);
                 delay += 500;
             }
-            if(settings.vialAllChatToggle) {
+            if(settings().vialAllChatToggle) {
                 setTimeout(() => {
-                    sendMsg(funniFaces(settings.vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(thisTime-thisTimeLast)).replace("([mf])", Magicfind), 2);
+                    sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(thisTime-thisTimeLast)).replace("([mf])", Magicfind), 2);
                 }, delay);
                 delay += 500;
             }
-            if(settings.vialCoopChatToggle) {
+            if(settings().vialCoopChatToggle) {
                 setTimeout(() => {
-                    sendMsg(funniFaces(settings.vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(Date.now()-seaCreatureData.DROPS["RadioactiveVialTime"])).replace("([mf])", Magicfind), 5);
+                    sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(Date.now()-seaCreatureData.DROPS["RadioactiveVialTime"])).replace("([mf])", Magicfind), 5);
                 }, delay);
                 delay += 500;
             }
         }
         ChatLib.chat("&5[&b&lRFU&5] &f&lVial drop message copied to clipboard.");
-        ChatLib.command(`ct copy ${funniFaces(settings.vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(Date.now()-seaCreatureData.DROPS["RadioactiveVialTime"])).replace("([mf])", Magicfind)}`, true);
+        ChatLib.command(`ct copy ${funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(Date.now()-seaCreatureData.DROPS["RadioactiveVialTime"])).replace("([mf])", Magicfind)}`, true);
         seaCreatureData.DROPS["RadioactiveVial"] = 0;
         seaCreatureData.DROPS["RadioactiveVialTime"] = thisTime;
     }
@@ -514,15 +514,15 @@ register("chat", (message, event) => {
 
 
 register('chat', () => {
-    if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime) {
-        vanqmsg = `${funniFaces(settings.vanquisherMessage)}`;
+    if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings().seacreatureHourResetTime) {
+        vanqmsg = `${funniFaces(settings().vanquisherMessage)}`;
         vanqmsg = vanqmsg.replace("([number])", `${seaCreatureData.CRIMSON['VanquisherCount']}`).replace("([time])", `${readableTime(Date.now()-seaCreatureData.CRIMSON['VanquisherTime'])}`).replace("([coords])", `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
         sendMsg(vanqmsg);
         seaCreatureData.CRIMSON['VanquisherAllCount'].push(seaCreatureData.CRIMSON['VanquisherCount']);
         seaCreatureData.CRIMSON['VanquisherCount'] = 0;
     }
     else{
-        vanqmsg = `${funniFaces(settings.vanquisherMessage)}`;
+        vanqmsg = `${funniFaces(settings().vanquisherMessage)}`;
         vanqmsg = vanqmsg.replace("([number])", `?`).replace("([time])", `${readableTime(Date.now()-seaCreatureData.CRIMSON['VanquisherTime'])}`).replace("([coords])", `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
         sendMsg(vanqmsg);
     }
@@ -683,7 +683,7 @@ let lastBobbin = 0;
 let sent = false;
 let lastTime = 0;
 register("entityDeath", (entity) => {
-    if(settings.dropsMessageToggle) {
+    if(settings().dropsMessageToggle) {
         if(entity != null) {
             if(entity.name != null && Player != null) {
                 if(Player.asPlayerMP() != null){
@@ -748,7 +748,7 @@ register("entityDeath", (entity) => {
                                         sent = true;
                                     }
                                     if(!sent) {
-                                        if(settings.dropsAirMessageToggle) {
+                                        if(settings().dropsAirMessageToggle) {
                                             randomNumber = getRandomInt(3);
                                             if(randomNumber == 2) {
                                                 ChatLib.chat("&6&lRARE DROP! &fAir &b(+420% ✯ Magic Find)");

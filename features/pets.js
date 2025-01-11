@@ -1,7 +1,7 @@
 import { playerData } from "../data/data"
 import { funniFaces } from "../utils/functions";
 import { colorsRegex } from "../data/constants";
-import settings from "../utils/settings";
+import settings from "../settings/settings";
 import guiManager from "../gui/guiManager";
 
 const gdragskinRegex = /Lvl \d{1,3}] \[\d+✦/g
@@ -34,10 +34,10 @@ register('chat', (pet, level) =>{
             playerData.PETS['CosmeticLevel'] = level - 200;
         }
     }
-    if(settings.petTitleToggle) {
-        if(level >= settings.petTitleLimit){
-            petTitle = funniFaces(settings.petTitleMessage).replace("([level])", level).replace("([pet])", pet);
-            Client.showTitle(petTitle, "", settings.titleFadeIn, settings.titleDuration, settings.titleFadeOut);
+    if(settings().petTitleToggle) {
+        if(level >= settings().petTitleLimit){
+            petTitle = funniFaces(settings().petTitleMessage).replace("([level])", level).replace("([pet])", pet);
+            Client.showTitle(petTitle, "", settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
         }
     }
 }).setCriteria("Your ${pet} leveled up to level ${level}!");
@@ -101,7 +101,7 @@ register('guimouseclick', (x,y,button,gui,event) => {
 });
 
 register('step', () => {
-    if (settings.petDisplayToggle) {
+    if (settings().petDisplayToggle) {
         //Pets Render
         let petData = guiManager.getElementData("PetDisplay")
 

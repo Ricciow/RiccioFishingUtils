@@ -1,8 +1,10 @@
 import { playerData } from "../data/data"
 import { Keybind } from "../../KeybindFix"
-import { updateUI } from "./newsettings/onClose";
+import updateUI from "../settings/updateUI";
 
-const toggleKeybind = new KeyBind("Toggle UI", Keyboard.KEY_NONE, "RiccioFishingUtils")
+const KeyBindFix = Keybind
+
+const toggleKeybind = new KeyBindFix("Toggle UI", Keyboard.KEY_NONE, "RiccioFishingUtils")
 
 toggleKeybind.registerKeyDown(ToggleDown);
 toggleKeybind.registerKeyRelease(ToggleUP);

@@ -1,4 +1,4 @@
-import settings from "../utils/settings";
+import settings from "../settings/settings";
 import { colorsRegex } from "../data/constants";
 import { funniFaces } from "../utils/functions";
 
@@ -16,13 +16,13 @@ register('actionbar', (bar) => {
         ManaMax = parseInt(ManaText.replace(/,|✎/g, '').split("/")[1]);
         ManaCurrent = parseInt(ManaText.replace(/,|✎/g, '').split("/")[0]);
         ManaPercentage = ManaCurrent/ManaMax;
-        if(settings.manaWarnPercentage < ManaPercentage){
+        if(settings().manaWarnPercentage < ManaPercentage){
             manaSent = false;
         }
     }
-    if (settings.manaTitleToggle && settings.manaWarnPercentage > ManaPercentage && !manaSent){
-        manaTitle = `${funniFaces(settings.manaTitleMessage)}`;
-        Client.showTitle(manaTitle, "", settings.titleFadeIn, settings.titleDuration, settings.titleFadeOut);
+    if (settings().manaTitleToggle && settings().manaWarnPercentage > ManaPercentage && !manaSent){
+        manaTitle = `${funniFaces(settings().manaTitleMessage)}`;
+        Client.showTitle(manaTitle, "", settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
         manaSent = true;
     }
 });

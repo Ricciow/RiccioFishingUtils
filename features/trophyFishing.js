@@ -1,4 +1,4 @@
-import settings from "../utils/settings";
+import settings from "../settings/settings";
 import RenderLib from "../../RenderLib"
 import { seaCreatureData , playerData} from "../data/data";
 import guiManager from "../gui/guiManager";
@@ -34,7 +34,7 @@ register('playerinteract', (action, position, event) => {
 
 register('renderWorld', () => {
     if(Player.asPlayerMP() != null){
-        if (render == true && settings.sulphurRightClickToggle && Player.asPlayerMP().getDimension() == -1){
+        if (render == true && settings().sulphurRightClickToggle && Player.asPlayerMP().getDimension() == -1){
             RenderLib.drawEspBox(x+0.5, y-4, z+0.5, 9, 9, 1, 1, 0, 1, false);
         }
     }
@@ -50,7 +50,7 @@ register('command', () => {
 
 
 register("step", () => {
-    if(settings.goldenTimerToggle) {
+    if(settings().goldenTimerToggle) {
         if(Player.asPlayerMP() != null){
             if(Player.asPlayerMP().getDimension() == -1){
                 now = Date.now();
@@ -106,7 +106,7 @@ register("step", () => {
             GoldenFishData.Times["(2)"] = ["3m 0s"]
         }
 
-        if(!settings.trophyHideUIToggle) {
+        if(!settings().trophyHideUIToggle) {
             //Hide if not relevant OFF
             GoldenFishData.Hidden = false
             guiManager.updateElementData("GoldenFishTimer", GoldenFishData)

@@ -1,4 +1,4 @@
-import settings from '../utils/settings';
+import settings from "../settings/settings";
 import { playerData , seaCreatureData} from '../data/data';
 import { checkIfUser, removeRankTag, checkBlacklist , getAverageFromList, readableTime, getVialAverage} from '../utils/functions';
 import { colorsRegex } from '../data/constants';
@@ -12,78 +12,78 @@ let warpExcluded = []
 let needJoin = []
 //Party Commands V2
 register("chat", (user, message) =>{
-    if(settings.partyCommands && !checkBlacklist(user)){
-        if(lastCommand + settings.partyCooldown*1000 < Date.now()){
+    if(settings().partyCommands && !checkBlacklist(user)){
+        if(lastCommand + settings().partyCooldown*1000 < Date.now()){
             if (playerData.PARTY['isLeader']) {
-                if (settings.partyHelp && message == `${settings.partyPrefix}help`){ // Help Command Party Leader
-                    helpmsg = `pc commands: ${settings.partyPrefix}help`;
-                    if (settings.partyWarp){
-                        helpmsg += ` | ${settings.partyPrefix}warp`;
+                if (settings().partyHelp && message == `${settings().partyPrefix}help`){ // Help Command Party Leader
+                    helpmsg = `pc commands: ${settings().partyPrefix}help`;
+                    if (settings().partyWarp){
+                        helpmsg += ` | ${settings().partyPrefix}warp`;
                     }
-                    if (settings.partyToggleWarp) {
-                        helpmsg += ` | ${settings.partyPrefix}togglewarp/twarp`;
+                    if (settings().partyToggleWarp) {
+                        helpmsg += ` | ${settings().partyPrefix}togglewarp/twarp`;
                     }
-                    if (settings.partyAllinvite){
-                        helpmsg += ` | ${settings.partyPrefix}allinvite`;
+                    if (settings().partyAllinvite){
+                        helpmsg += ` | ${settings().partyPrefix}allinvite`;
                     }
-                    if (settings.partyInvite){
-                        helpmsg += ` | ${settings.partyPrefix}invite/p [username]`;
+                    if (settings().partyInvite){
+                        helpmsg += ` | ${settings().partyPrefix}invite/p [username]`;
                     }
-                    if (settings.partyTransfer) {
-                        helpmsg += ` | ${settings.partyPrefix}transfer/pt`;
+                    if (settings().partyTransfer) {
+                        helpmsg += ` | ${settings().partyPrefix}transfer/pt`;
                     }
-                    if (settings.partyCoords) {
-                        helpmsg += ` | ${settings.partyPrefix}coords`;
+                    if (settings().partyCoords) {
+                        helpmsg += ` | ${settings().partyPrefix}coords`;
                     }
-                    if (settings.infoJawbus) {
-                        helpmsg += ` | ${settings.partyPrefix}ji`;
+                    if (settings().infoJawbus) {
+                        helpmsg += ` | ${settings().partyPrefix}ji`;
                     }
-                    if (settings.infoThunder) {
-                        helpmsg += ` | ${settings.partyPrefix}ti`;
+                    if (settings().infoThunder) {
+                        helpmsg += ` | ${settings().partyPrefix}ti`;
                     }
-                    if (settings.infoVial) {
-                        helpmsg += ` | ${settings.partyPrefix}vi`;
+                    if (settings().infoVial) {
+                        helpmsg += ` | ${settings().partyPrefix}vi`;
                     }
                     ChatLib.command(helpmsg);
                     lastCommand = Date.now();
                 }
-                if (settings.partyTransfer && message.startsWith(`${settings.partyPrefix}pt `)){
-                    transferto = message.split(`${settings.partyPrefix}pt `)
+                if (settings().partyTransfer && message.startsWith(`${settings().partyPrefix}pt `)){
+                    transferto = message.split(`${settings().partyPrefix}pt `)
                     if (transferto[1] != undefined && !checkIfUser(transferto[1])){
                         transferto = (transferto[1]+" ").split(" ")[0];
                         ChatLib.command(`p transfer ${transferto}`);
                         lastCommand = Date.now();
                     }
                 }
-                if (settings.partyTransfer && message.startsWith(`${settings.partyPrefix}transfer `)){
-                    transferto = message.split(`${settings.partyPrefix}transfer `)
+                if (settings().partyTransfer && message.startsWith(`${settings().partyPrefix}transfer `)){
+                    transferto = message.split(`${settings().partyPrefix}transfer `)
                     if (transferto[1] != undefined && !checkIfUser(transferto[1])){
                         transferto = (transferto[1]+" ").split(" ")[0];
                         ChatLib.command(`p transfer ${transferto}`);
                         lastCommand = Date.now();
                     }               
                 }
-                if (settings.partyTransfer && (message.endsWith(`${settings.partyPrefix}transfer`)||message.endsWith(`${settings.partyPrefix}pt`))){
+                if (settings().partyTransfer && (message.endsWith(`${settings().partyPrefix}transfer`)||message.endsWith(`${settings().partyPrefix}pt`))){
                     ChatLib.command(`p transfer ${removeRankTag(user)}`);
                     lastCommand = Date.now();
                 }
-                if (settings.partyInvite && message.startsWith(`${settings.partyPrefix}invite `)){
-                    inviteto = message.split(`${settings.partyPrefix}invite `)
+                if (settings().partyInvite && message.startsWith(`${settings().partyPrefix}invite `)){
+                    inviteto = message.split(`${settings().partyPrefix}invite `)
                     if (inviteto[1] != undefined && !checkIfUser(inviteto[1])){
                         inviteto = (inviteto[1]+" ").split(" ")[0];
                         ChatLib.command(`p ${inviteto}`);
                         lastCommand = Date.now();
                     }
                 }
-                if (settings.partyInvite && message.startsWith(`${settings.partyPrefix}p `)){
-                    inviteto = message.split(`${settings.partyPrefix}p `)
+                if (settings().partyInvite && message.startsWith(`${settings().partyPrefix}p `)){
+                    inviteto = message.split(`${settings().partyPrefix}p `)
                     if (inviteto[1] != undefined && !checkIfUser(inviteto[1])){
                         inviteto = (inviteto[1]+" ").split(" ")[0];
                         ChatLib.command(`p ${inviteto}`);
                         lastCommand = Date.now();
                     }
                 }
-                if (settings.partyWarp && (message == `${settings.partyPrefix}warp` || message == `${settings.partyPrefix}w`)){
+                if (settings().partyWarp && (message == `${settings().partyPrefix}warp` || message == `${settings().partyPrefix}w`)){
                     PlayerCountText = TabList.getNames().filter(name => {
                         if(name.replace(colorsRegex, "").includes("Players (") || name.replace(colorsRegex, "").includes("Guests (")) return true;
                         else return false;
@@ -146,11 +146,11 @@ register("chat", (user, message) =>{
                         }
                     }
                 }
-                if (settings.partyAllinvite && (message == `${settings.partyPrefix}allinvite` || message == `${settings.partyPrefix}allinv` || message == `${settings.partyPrefix}ai`)){
+                if (settings().partyAllinvite && (message == `${settings().partyPrefix}allinvite` || message == `${settings().partyPrefix}allinv` || message == `${settings().partyPrefix}ai`)){
                     ChatLib.command("p settings allinvite");
                     lastCommand = Date.now();
                 }
-                if (settings.partyToggleWarp && (message == `${settings.partyPrefix}togglewarp`|| message == `${settings.partyPrefix}twarp` || message == `${settings.partyPrefix}tw`)){
+                if (settings().partyToggleWarp && (message == `${settings().partyPrefix}togglewarp`|| message == `${settings().partyPrefix}twarp` || message == `${settings().partyPrefix}tw`)){
                     let i = 0;
                     let found = false;
                     warpExcluded.forEach(player => {
@@ -169,37 +169,37 @@ register("chat", (user, message) =>{
                 }
             } // End of Leader Required Commands
             else {
-                if (settings.partyHelp && message == `${settings.partyPrefix}help`){
-                    helpmsg = `pc commands: ${settings.partyPrefix}help`;
-                    if (settings.partyCoords){
-                        helpmsg += ` | ${settings.partyPrefix}coords`;
+                if (settings().partyHelp && message == `${settings().partyPrefix}help`){
+                    helpmsg = `pc commands: ${settings().partyPrefix}help`;
+                    if (settings().partyCoords){
+                        helpmsg += ` | ${settings().partyPrefix}coords`;
                     }
-                    if (settings.infoJawbus) {
-                        helpmsg += ` | ${settings.partyPrefix}jawbusinfo`;
+                    if (settings().infoJawbus) {
+                        helpmsg += ` | ${settings().partyPrefix}jawbusinfo`;
                     }
-                    if (settings.infoThunder) {
-                        helpmsg += ` | ${settings.partyPrefix}thunderinfo`;
+                    if (settings().infoThunder) {
+                        helpmsg += ` | ${settings().partyPrefix}thunderinfo`;
                     }
-                    if (settings.infoVial) {
-                        helpmsg += ` | ${settings.partyPrefix}vialinfo`;
+                    if (settings().infoVial) {
+                        helpmsg += ` | ${settings().partyPrefix}vialinfo`;
                     }
                     ChatLib.command(helpmsg);
                     lastCommand = Date.now();
                 }
             } // End of Not Leader Required Commands
-            if (settings.partyCoords && message == `${settings.partyPrefix}coords`){
+            if (settings().partyCoords && message == `${settings().partyPrefix}coords`){
                 ChatLib.command(`pc x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
                 lastCommand = Date.now();
             }
-            if (settings.infoJawbus && (message == `${settings.partyPrefix}jawbusinfo` || message == `${settings.partyPrefix}ji`)){
+            if (settings().infoJawbus && (message == `${settings().partyPrefix}jawbusinfo` || message == `${settings().partyPrefix}ji`)){
                 ChatLib.command(`pc Current count: ${seaCreatureData.CRIMSON["JawbusCount"]-1}, Last: ${readableTime(Date.now() - seaCreatureData.CRIMSON["JawbusTime"])}, avg: ${getAverageFromList(seaCreatureData.CRIMSON["JawbusAllCount"])}`);
                 lastCommand = Date.now();
             }
-            if (settings.infoThunder && (message == `${settings.partyPrefix}thunderinfo` || message == `${settings.partyPrefix}ti`)){
+            if (settings().infoThunder && (message == `${settings().partyPrefix}thunderinfo` || message == `${settings().partyPrefix}ti`)){
                 ChatLib.command(`pc Current count: ${seaCreatureData.CRIMSON["ThunderCount"]-1}, Last: ${readableTime(Date.now() - seaCreatureData.CRIMSON["ThunderTime"])}, avg: ${getAverageFromList(seaCreatureData.CRIMSON["ThunderAllCount"])}`);
                 lastCommand = Date.now();
             }
-            if (settings.infoVial && (message == `${settings.partyPrefix}vialinfo` || message == `${settings.partyPrefix}vi`)){
+            if (settings().infoVial && (message == `${settings().partyPrefix}vialinfo` || message == `${settings().partyPrefix}vi`)){
                 ChatLib.command(`pc Current count: ${seaCreatureData.DROPS["RadioactiveVial"]}, Last: ${readableTime(Date.now() - seaCreatureData.DROPS["RadioactiveVialTime"])}, avg: ${getVialAverage()}`);
                 lastCommand = Date.now();
             }
@@ -225,52 +225,52 @@ register("chat", (user) => {
 
 register("chat", (user) => { // Send Help Message if a new player joins party
     if(!checkIfUser(removeRankTag(user))){
-        if (settings.partyJoinHelp && settings.partyCommands){
+        if (settings().partyJoinHelp && settings().partyCommands){
             if(playerData.PARTY['isLeader']){
-                helpmsg = `pc Welcome ${removeRankTag(user)}, these are the enabled commands: ${settings.partyPrefix}help`;
-                if (settings.partyWarp){
-                    helpmsg += ` | ${settings.partyPrefix}warp`;
+                helpmsg = `pc Welcome ${removeRankTag(user)}, these are the enabled commands: ${settings().partyPrefix}help`;
+                if (settings().partyWarp){
+                    helpmsg += ` | ${settings().partyPrefix}warp`;
                 }
-                if (settings.partyToggleWarp) {
-                    helpmsg += ` | ${settings.partyPrefix}togglewarp/twarp`;
+                if (settings().partyToggleWarp) {
+                    helpmsg += ` | ${settings().partyPrefix}togglewarp/twarp`;
                 }
-                if (settings.partyAllinvite){
-                    helpmsg += ` | ${settings.partyPrefix}allinvite`;
+                if (settings().partyAllinvite){
+                    helpmsg += ` | ${settings().partyPrefix}allinvite`;
                 }
-                if (settings.partyInvite){
-                    helpmsg += ` | ${settings.partyPrefix}invite/p [username]`;
+                if (settings().partyInvite){
+                    helpmsg += ` | ${settings().partyPrefix}invite/p [username]`;
                 }
-                if (settings.partyTransfer) {
-                    helpmsg += ` | ${settings.partyPrefix}transfer/pt`;
+                if (settings().partyTransfer) {
+                    helpmsg += ` | ${settings().partyPrefix}transfer/pt`;
                 }
-                if (settings.partyCoords) {
-                    helpmsg += ` | ${settings.partyPrefix}coords`;
+                if (settings().partyCoords) {
+                    helpmsg += ` | ${settings().partyPrefix}coords`;
                 }
-                if (settings.infoJawbus) {
-                    helpmsg += ` | ${settings.partyPrefix}ji`;
+                if (settings().infoJawbus) {
+                    helpmsg += ` | ${settings().partyPrefix}ji`;
                 }
-                if (settings.infoThunder) {
-                    helpmsg += ` | ${settings.partyPrefix}ti`;
+                if (settings().infoThunder) {
+                    helpmsg += ` | ${settings().partyPrefix}ti`;
                 }
-                if (settings.infoVial) {
-                    helpmsg += ` | ${settings.partyPrefix}vi`;
+                if (settings().infoVial) {
+                    helpmsg += ` | ${settings().partyPrefix}vi`;
                 }
                 ChatLib.command(helpmsg);
                 lastCommand = Date.now();
             }
-            else if (!settings.partyJoinHelpLeader){
-                helpmsg = `pc Welcome ${removeRankTag(user)}, these are the enabled commands: ${settings.partyPrefix}help`;
-                if (settings.partyCoords){
-                    helpmsg += ` | ${settings.partyPrefix}coords`;
+            else if (!settings().partyJoinHelpLeader){
+                helpmsg = `pc Welcome ${removeRankTag(user)}, these are the enabled commands: ${settings().partyPrefix}help`;
+                if (settings().partyCoords){
+                    helpmsg += ` | ${settings().partyPrefix}coords`;
                 }
-                if (settings.infoJawbus) {
-                    helpmsg += ` | ${settings.partyPrefix}jawbusinfo`;
+                if (settings().infoJawbus) {
+                    helpmsg += ` | ${settings().partyPrefix}jawbusinfo`;
                 }
-                if (settings.infoThunder) {
-                    helpmsg += ` | ${settings.partyPrefix}thunderinfo`;
+                if (settings().infoThunder) {
+                    helpmsg += ` | ${settings().partyPrefix}thunderinfo`;
                 }
-                if (settings.infoVial) {
-                    helpmsg += ` | ${settings.partyPrefix}vialinfo`;
+                if (settings().infoVial) {
+                    helpmsg += ` | ${settings().partyPrefix}vialinfo`;
                 }
                 ChatLib.command(helpmsg);
                 lastCommand = Date.now();
@@ -418,49 +418,49 @@ register("worldload", () => {
 register("command", () => {
     if (playerData.PARTY["inParty"]) {
         if(playerData.PARTY['isLeader']){
-            helpmsg = `pc commands: ${settings.partyPrefix}help `;
-            if (settings.partyWarp){
-                helpmsg += ` | ${settings.partyPrefix}warp`;
+            helpmsg = `pc commands: ${settings().partyPrefix}help `;
+            if (settings().partyWarp){
+                helpmsg += ` | ${settings().partyPrefix}warp`;
             }
-            if (settings.partyToggleWarp) {
-                helpmsg += ` | ${settings.partyPrefix}togglewarp/twarp`;
+            if (settings().partyToggleWarp) {
+                helpmsg += ` | ${settings().partyPrefix}togglewarp/twarp`;
             }
-            if (settings.partyAllinvite){
-                helpmsg += ` | ${settings.partyPrefix}allinvite`;
+            if (settings().partyAllinvite){
+                helpmsg += ` | ${settings().partyPrefix}allinvite`;
             }
-            if (settings.partyInvite){
-                helpmsg += ` | ${settings.partyPrefix}invite/p [username]`;
+            if (settings().partyInvite){
+                helpmsg += ` | ${settings().partyPrefix}invite/p [username]`;
             }
-            if (settings.partyTransfer) {
-                helpmsg += ` | ${settings.partyPrefix}transfer/pt`;
+            if (settings().partyTransfer) {
+                helpmsg += ` | ${settings().partyPrefix}transfer/pt`;
             }
-            if (settings.partyCoords) {
-                helpmsg += ` | ${settings.partyPrefix}coords`;
+            if (settings().partyCoords) {
+                helpmsg += ` | ${settings().partyPrefix}coords`;
             }
-            if (settings.infoJawbus) {
-                helpmsg += ` | ${settings.partyPrefix}ji`;
+            if (settings().infoJawbus) {
+                helpmsg += ` | ${settings().partyPrefix}ji`;
             }
-            if (settings.infoThunder) {
-                helpmsg += ` | ${settings.partyPrefix}ti`;
+            if (settings().infoThunder) {
+                helpmsg += ` | ${settings().partyPrefix}ti`;
             }
-            if (settings.infoVial) {
-                helpmsg += ` | ${settings.partyPrefix}vi`;
+            if (settings().infoVial) {
+                helpmsg += ` | ${settings().partyPrefix}vi`;
             }
             ChatLib.command(helpmsg);
         }
         else {
-            helpmsg = `pc commands: ${settings.partyPrefix}help`;
-            if (settings.partyCoords){
-                helpmsg += ` | ${settings.partyPrefix}coords`;
+            helpmsg = `pc commands: ${settings().partyPrefix}help`;
+            if (settings().partyCoords){
+                helpmsg += ` | ${settings().partyPrefix}coords`;
             }
-            if (settings.infoJawbus) {
-                helpmsg += ` | ${settings.partyPrefix}jawbusinfo`;
+            if (settings().infoJawbus) {
+                helpmsg += ` | ${settings().partyPrefix}jawbusinfo`;
             }
-            if (settings.infoThunder) {
-                helpmsg += ` | ${settings.partyPrefix}thunderinfo`;
+            if (settings().infoThunder) {
+                helpmsg += ` | ${settings().partyPrefix}thunderinfo`;
             }
-            if (settings.infoVial) {
-                helpmsg += ` | ${settings.partyPrefix}vialinfo`;
+            if (settings().infoVial) {
+                helpmsg += ` | ${settings().partyPrefix}vialinfo`;
             }
             ChatLib.command(helpmsg);
         }
@@ -490,7 +490,7 @@ register("chat", (user, message) => {
 //From [MVP++] Jenyk: Hey! I'm currently muted and am unable to message right now.
 
 register("chat", (user, event) => {
-    if (playerData.PARTY['isLeader'] && settings.partyWarpMuted) {
+    if (playerData.PARTY['isLeader'] && settings().partyWarpMuted) {
         PlayerCountText = TabList.getNames().filter(name => {
             if(name.replace(colorsRegex, "").includes("Players (") || name.replace(colorsRegex, "").includes("Guests (")) return true;
             else return false;

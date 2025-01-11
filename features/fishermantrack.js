@@ -1,4 +1,4 @@
-import settings from "../utils/settings";
+import settings from "../settings/settings";
 import { Bobber, colorsRegex } from "../data/constants";
 import { playerName , DeathSound} from "../data/constants";
 import RenderLib from "../../RenderLib"
@@ -10,7 +10,7 @@ var fishermanData = {
 };
 
 register('step', () =>{
-    if (settings.fishermanTrackingToggle) {
+    if (settings().fishermanTrackingToggle) {
         World.getAllPlayers().forEach(player => {
             if (player.getItemInSlot(0) != null && player.getDimension() == -1) {
                 if(player.getItemInSlot(0).getID() == 346) {
@@ -34,15 +34,15 @@ let foundcoords = false;
 let renderlist = [];
 register('chat', (player, mob) => {
     foundcoords = false;
-    if(settings.fishermanTrackingToggle && player != playerName) {
-        if ((mob == 'Thunder' && settings.thunderDeathWarnToggle)||(mob == 'Lord Jawbus' && settings.jawbusDeathWarnToggle)){
-            if(Date.now()-LastCoords > settings.deathWarnCooldown * 1000) {
-                if (settings.deathWarnCoordsToggle) {
+    if(settings().fishermanTrackingToggle && player != playerName) {
+        if ((mob == 'Thunder' && settings().thunderDeathWarnToggle)||(mob == 'Lord Jawbus' && settings().jawbusDeathWarnToggle)){
+            if(Date.now()-LastCoords > settings().deathWarnCooldown * 1000) {
+                if (settings().deathWarnCoordsToggle) {
                     Object.keys(fishermanData.FISHINGPLAYERS).forEach(fisherman =>{
                         if(fisherman == player.toLowerCase()){
-                            Client.showTitle(`&4&l${player} died to ${mob}`, `&fx:${fishermanData.FISHINGPLAYERS[fisherman][0]}, y:${fishermanData.FISHINGPLAYERS[fisherman][1]}, z:${fishermanData.FISHINGPLAYERS[fisherman][2]}`, settings.titleFadeIn, settings.titleDuration, settings.titleFadeOut);
+                            Client.showTitle(`&4&l${player} died to ${mob}`, `&fx:${fishermanData.FISHINGPLAYERS[fisherman][0]}, y:${fishermanData.FISHINGPLAYERS[fisherman][1]}, z:${fishermanData.FISHINGPLAYERS[fisherman][2]}`, settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
                             ChatLib.chat(`&4&l${player} died to ${mob} \nLast seen fishing at &fx:${fishermanData.FISHINGPLAYERS[fisherman][0]}, y:${fishermanData.FISHINGPLAYERS[fisherman][1]}, z:${fishermanData.FISHINGPLAYERS[fisherman][2]}`);
-                            if(settings.deathWarnRenderToggle) {
+                            if(settings().deathWarnRenderToggle) {
                                 renderlist.push([player, [fishermanData.FISHINGPLAYERS[fisherman][0],fishermanData.FISHINGPLAYERS[fisherman][1],fishermanData.FISHINGPLAYERS[fisherman][2]], Date.now()])
                                 LastCoords = Date.now();
                             }
@@ -51,17 +51,17 @@ register('chat', (player, mob) => {
                     })
                     if (!foundcoords) {
                         ChatLib.chat(`&4&l${player} died to ${mob} &f\nNo Known Coords`);
-                        Client.showTitle(`&4&l${player} died to ${mob}`, `&fNo Known Coords`, settings.titleFadeIn, settings.titleDuration, settings.titleFadeOut);
+                        Client.showTitle(`&4&l${player} died to ${mob}`, `&fNo Known Coords`, settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
                         LastCoords = Date.now();
                     }
                 }
                 else {
-                    Client.showTitle(`&4&l${player} died to ${mob}`, ``, settings.titleFadeIn, settings.titleDuration, settings.titleFadeOut);
+                    Client.showTitle(`&4&l${player} died to ${mob}`, ``, settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
                     LastCoords = Date.now();
                     }
-                if(settings.deathWarnSoundToggle){
+                if(settings().deathWarnSoundToggle){
                     try {
-                        DeathSound.setVolume(settings.deathWarnSoundVolume).play();
+                        DeathSound.setVolume(settings().deathWarnSoundVolume).play();
                     }
                     catch (error) {
                         console.log("Sound playing no workie, prob sounds refreshed\n", error);
@@ -79,7 +79,7 @@ register('renderWorld', () => {
             Tessellator.drawString(`${render[0]}`, render[1][0], render[1][1]+2, render[1][2]);
             RenderLib.drawEspBox(render[1][0],render[1][1],render[1][2],1,1,0,0,1,0.5,true);
             RenderLib.drawInnerEspBox(render[1][0],render[1][1],render[1][2],1,1,0,0,1,0.5,true);
-            if(Date.now() - render[2] > settings.renderDuration*1000 || Player.asPlayerMP().distanceTo(render[1][0],render[1][1],render[1][2]) < 5) {
+            if(Date.now() - render[2] > settings().renderDuration*1000 || Player.asPlayerMP().distanceTo(render[1][0],render[1][1],render[1][2]) < 5) {
                 renderlist.splice(i,1);
             }
             i++;
@@ -89,7 +89,7 @@ register('renderWorld', () => {
 
 register('command', (name = '') => {
     name = name.toLowerCase();
-    if (settings.fishermanTrackingToggle) {
+    if (settings().fishermanTrackingToggle) {
         if (name != '') {
             if (Object.keys(fishermanData.FISHINGPLAYERS).includes(name)) {
                 Msg = new TextComponent(`&9&lLast known &e&l${name} &9&lcoords: &f&lx:${fishermanData.FISHINGPLAYERS[name][0]}, y:${fishermanData.FISHINGPLAYERS[name][1]}, z:${fishermanData.FISHINGPLAYERS[name][2]} \n&a&l[Click to render]`).setClickAction('run_command').setClickValue(`/rfurendercoords ${fishermanData.FISHINGPLAYERS[name][0]} ${fishermanData.FISHINGPLAYERS[name][1]} ${fishermanData.FISHINGPLAYERS[name][2]} ${name}`).setHoverAction("show_text").setHoverValue("Click to render the coords");
@@ -127,7 +127,7 @@ register('command', () => {
 }).setName("rfudeletefishermandata");
 
 register('command', (name = '') => {
-    if (settings.fishermanTrackingToggle) {
+    if (settings().fishermanTrackingToggle) {
         if (name != '') {
             if (name.toLowerCase() != playerName.toLowerCase()){
                 fishermanData.FISHINGPLAYERS[name.toLowerCase()] = [Math.round(Player.getX()), Math.round(Player.getY()), Math.round(Player.getZ())];
@@ -166,7 +166,7 @@ const coordsRegex = /.+:.*-?\d+\.?\d*(, | |\|){1}.{0,5}-?\d+\.?\d*(, | |\|).{0,5
 const numberRegex = /-?\d+\.?\d*/g
 
 register("chat", (event) => {
-    if(settings.renderChatCoords) {
+    if(settings().renderChatCoords) {
         let name = ''
         coords = ChatLib.getChatMessage(event).replace(colorsRegex, "");
         coordsRegex.lastIndex = 0;

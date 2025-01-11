@@ -2,7 +2,7 @@
     "name": "RiccioFishingUtils",
     "creator": "Riccio",
     "description": "A module focused entirely on fishing utilities",
-    "version": "0.2.6",
+    "version": "0.2.7",
     "entry": "index.js",
     "requires": [
         "PogData",
@@ -10,6 +10,8 @@
         "RenderLib",
         "SimpleOverlays",
         "Elementa",
-        "KeybindFix"
+        "KeybindFix",
+        "Amaterasu",
+        "AmaterasuModded"
     ]
 }

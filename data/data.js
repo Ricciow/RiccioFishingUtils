@@ -9,7 +9,8 @@ export let playerData = new PogObject('RiccioFishingUtils', {
     "SETTINGS": {
         "WarnBait": true,
         "BaitBag": true,
-        "Inventory": true
+        "Inventory": true,
+        "Updated": true
     },
     "WORM": {
         "Timer": 564004800000,
@@ -18,6 +19,7 @@ export let playerData = new PogObject('RiccioFishingUtils', {
     "GUI": {
         "Toggle": true,
         "TogglePets": false,
+        "Updated": true
     },
     "GENERALFISHING": {
         "Sound": false

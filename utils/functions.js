@@ -1,6 +1,6 @@
-import settings from "./settings";
+import settings from "../settings/settings"
 import { playerName } from "../data/constants";
-import { playerData , seaCreatureData} from "../data/data";
+import { playerData , seaCreatureData } from "../data/data";
 
 export function removeRankTag(ign){
     ign = ign.replace("[VIP] ", "");

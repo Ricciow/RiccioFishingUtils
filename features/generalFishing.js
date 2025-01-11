@@ -1,8 +1,9 @@
-import settings from "../utils/settings";
+import settings from "../settings/settings";
 import { playerData , seaCreatureData} from "../data/data";
 import { readableTime, funniFaces, makeRegexFromList, readableTime, sendMsg, getRandomInt, readableQuantity} from "../utils/functions";
 import { Chats , seaCreatures, seaCreaturesNW, Bobber, seaCreatureMessages, colorsRegex, ArmorStand, Firework} from "../data/constants";
 import guiManager from "../gui/guiManager";
+import settings from "../settings/settings";
 
 let SeaCreatures = 0;
 let SeaCreaturesNW = 0;
@@ -20,7 +21,7 @@ let fluxCoords = [];
 //Bobbers
 let BobberCount = 0
 register('step', () => {
-    if (settings.seaCreatureCounterToggle || settings.fluxToggle) {
+    if (settings().seaCreatureCounterToggle || settings().fluxToggle) {
         SeaCreatures = 0;
         SeaCreaturesNW = 0;
         fluxActive = false;
@@ -56,19 +57,19 @@ register('step', () => {
         playerData.GENERALFISHING["Sound"] = false;
         TitleSent = false;
     }
-    if(!fluxActive && !fluxSent && settings.fluxToggle){ // Flux Expired Message
+    if(!fluxActive && !fluxSent && settings().fluxToggle){ // Flux Expired Message
         if(Player.asPlayerMP() != null){
             if(Player.asPlayerMP() != null){
                 if(Player.asPlayerMP().distanceTo(fluxCoords[0], fluxCoords[1], fluxCoords[2]) < 27) {
-                    if (settings.fluxMessageToggle) {
-                        sendMsg(funniFaces(settings.deployableMessage.replace("([deployable])", "Power Orb")));
+                    if (settings().fluxMessageToggle) {
+                        sendMsg(funniFaces(settings().deployableMessage.replace("([deployable])", "Power Orb")));
                     }
-                    if (settings.fluxTitleToggle){                     // Flux Title message
-                        fluxTitle = `${funniFaces(settings.fluxTitleMessage)}`;
-                        Client.showTitle(fluxTitle, "", settings.titleFadeIn, settings.titleDuration, settings.titleFadeOut);
+                    if (settings().fluxTitleToggle){                     // Flux Title message
+                        fluxTitle = `${funniFaces(settings().fluxTitleMessage)}`;
+                        Client.showTitle(fluxTitle, "", settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
                     }
-                    if (settings.deployableSoundToggle){          // Flux sound
-                        World.playSound(settings.deployableSound, settings.deployableSoundVolume, settings.deployableSoundPitch/100);
+                    if (settings().deployableSoundToggle){          // Flux sound
+                        World.playSound(settings().deployableSound, settings().deployableSoundVolume, settings().deployableSoundPitch/100);
                     }
                 }
                 fluxSent = true;
@@ -76,11 +77,11 @@ register('step', () => {
             }
         }
     }
-    if (settings.fluxTimerToggle && settings.fluxToggle) {
+    if (settings().fluxTimerToggle && settings().fluxToggle) {
         //Power Orb Render
         let fluxData = guiManager.getElementData("PowerOrbTimer")
         fluxData.Data["(1)"] = fluxTime
-        if(!settings.deployableHideToggle) {
+        if(!settings().deployableHideToggle) {
             //Hide if not relevant OFF
             fluxData.Hidden = false
             guiManager.updateElementData("PowerOrbTimer", fluxData)
@@ -96,59 +97,59 @@ register('step', () => {
             guiManager.updateElementData("PowerOrbTimer", fluxData)
         }
     }
-    if (settings.seaCreatureCounterToggle){
+    if (settings().seaCreatureCounterToggle){
         now = Date.now()
-        if (settings.seaCreatureMessageToggle) {
-            if ((settings.seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW) >= settings.seaCreatureLimit && !MsgSent){
-                ScMessage = `${funniFaces(settings.seaCreatureMessage)}`;
-                ScMessage = ScMessage.replace("([number])", `${(settings.seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW)}`);
+        if (settings().seaCreatureMessageToggle) {
+            if ((settings().seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW) >= settings().seaCreatureLimit && !MsgSent){
+                ScMessage = `${funniFaces(settings().seaCreatureMessage)}`;
+                ScMessage = ScMessage.replace("([number])", `${(settings().seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW)}`);
                 ScMessage = ScMessage.replace("([time])", `${readableTime(now - playerData.GENERALFISHING["SeaTimer"])}`);
                 sendMsg(ScMessage);
                 MsgSent = true;
             }
-            else if ((settings.seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW) <= Math.floor(settings.seaCreatureLimit/2) && MsgSent){
+            else if ((settings().seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW) <= Math.floor(settings().seaCreatureLimit/2) && MsgSent){
                 MsgSent = false;
                 playerData.GENERALFISHING["SeaTimer"] = now;
             }
         }
-        if (settings.seaCreatureTitleToggle){
-            if ((settings.seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW) >= settings.seaCreatureTitleLimit && !TitleSent){
+        if (settings().seaCreatureTitleToggle){
+            if ((settings().seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW) >= settings().seaCreatureTitleLimit && !TitleSent){
                 // Main Title
-                ScTitleMessage = `${funniFaces(settings.seaCreatureTitleMessage)}`;
-                ScTitleMessage = ScTitleMessage.replace("([number])", `${(settings.seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW)}`);
+                ScTitleMessage = `${funniFaces(settings().seaCreatureTitleMessage)}`;
+                ScTitleMessage = ScTitleMessage.replace("([number])", `${(settings().seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW)}`);
                 ScTitleMessage = ScTitleMessage.replace("([time])", `${readableTime(now - playerData.FISHING["SeaTTimer"])}`);
                 // Subtitle
-                ScSubTitleMessage = `${funniFaces(settings.seaCreatureTitleMessageSubtitle)}`;
-                ScSubTitleMessage = ScSubTitleMessage.replace("([number])", `${(settings.seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW)}`);
+                ScSubTitleMessage = `${funniFaces(settings().seaCreatureTitleMessageSubtitle)}`;
+                ScSubTitleMessage = ScSubTitleMessage.replace("([number])", `${(settings().seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW)}`);
                 ScSubTitleMessage = ScSubTitleMessage.replace("([time])", `${readableTime(now - playerData.FISHING["SeaTTimer"])}`);
-                Client.showTitle(ScTitleMessage, ScSubTitleMessage, settings.titleFadeIn, settings.titleDuration, settings.titleFadeOut);
+                Client.showTitle(ScTitleMessage, ScSubTitleMessage, settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
                 TitleSent = true;
             }
-            else if ((settings.seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW) <= Math.floor(settings.seaCreatureTitleLimit/2) && TitleSent){
+            else if ((settings().seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW) <= Math.floor(settings().seaCreatureTitleLimit/2) && TitleSent){
                 TitleSent = false;
                 playerData.FISHING["SeaTTimer"] = now;
             }
         }
-        if ((settings.seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW) >= settings.seaCreatureSoundLimit && settings.seaCreatureSoundToggle && !playerData.GENERALFISHING["Sound"]){
+        if ((settings().seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW) >= settings().seaCreatureSoundLimit && settings().seaCreatureSoundToggle && !playerData.GENERALFISHING["Sound"]){
             playerData.GENERALFISHING["Sound"] = true;
         }
-        else if ((settings.seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW) <= Math.floor(settings.seaCreatureSoundLimit/2) && playerData.GENERALFISHING["Sound"]) {
+        else if ((settings().seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW) <= Math.floor(settings().seaCreatureSoundLimit/2) && playerData.GENERALFISHING["Sound"]) {
             playerData.GENERALFISHING["Sound"] = false;
         }
     }
     //
-    if (settings.seaCreatureCounterToggle) {
-        if(settings.seaCreatureCounterUiToggle) {
+    if (settings().seaCreatureCounterToggle) {
+        if(settings().seaCreatureCounterUiToggle) {
             //Sea creature counter render
             let seaCreatureDataUI = guiManager.getElementData("SeaCreatureCount")
             seaCreatureDataUI.Times["(1)"] = [SeaCreatures]
             seaCreatureDataUI.Times["(2)"] = ((SeaCreatures > 0 && ((Date.now() - StartTime) > 1000)) ? StartTime : ['0s'])
-            if(!settings.generalHideUIToggle) {
+            if(!settings().generalHideUIToggle) {
                 //Hide if not relevant OFF
                 seaCreatureDataUI.Hidden = false
                 guiManager.updateElementData("SeaCreatureCount", seaCreatureDataUI)
             }
-            else if (SeaCreatures > 0 || (Date.now() - seaCreatureDataUI.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime)) {
+            else if (SeaCreatures > 0 || (Date.now() - seaCreatureDataUI.CATCHES["LastCatch"] < 60000*settings().seacreatureHourResetTime)) {
                 //Hide if not relevant ON, you are Fishing
                 seaCreatureDataUI.Hidden = false
                 guiManager.updateElementData("SeaCreatureCount", seaCreatureDataUI)
@@ -159,10 +160,10 @@ register('step', () => {
                 guiManager.updateElementData("SeaCreatureCount", seaCreatureDataUI)
             }
         }
-        if(settings.seacreatureHourUIToggle) {
+        if(settings().seacreatureHourUIToggle) {
             //Sea creature per hour render
             let seaCreatureHourData = guiManager.getElementData("SeaCreatureHour")
-            if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime) {
+            if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings().seacreatureHourResetTime) {
                 seaCreatureHourData.Times["(1)"] = [Math.floor((3600000/(Date.now()-seaCreatureData.CATCHES["FirstCatch"]))*seaCreatureData.CATCHES["ThisCatches"])]
                 seaCreatureHourData.Times["(2)"] = [seaCreatureData.CATCHES["ThisCatches"]]
                 seaCreatureHourData.Times["(3)"] = seaCreatureData.CATCHES["FirstCatch"]
@@ -172,12 +173,12 @@ register('step', () => {
                 seaCreatureHourData.Times["(2)"] = ["0"]
                 seaCreatureHourData.Times["(3)"] = ["0s"]
             }
-            if(!settings.generalHideUIToggle) {
+            if(!settings().generalHideUIToggle) {
                 //Hide if not relevant OFF
                 seaCreatureHourData.Hidden = false
                 guiManager.updateElementData("SeaCreatureHour", seaCreatureHourData)
             }
-            else if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime) {
+            else if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings().seacreatureHourResetTime) {
                 //Hide if not relevant ON, you are Fishing
                 seaCreatureHourData.Hidden = false
                 guiManager.updateElementData("SeaCreatureHour", seaCreatureHourData)
@@ -192,7 +193,7 @@ register('step', () => {
 
 
 
-    if (settings.bobberUIToggle){
+    if (settings().bobberUIToggle){
         BobberCount = 0;
         let playercoords = [Player.getX(), Player.getY(), Player.getZ()];
         World.getAllEntitiesOfType(Bobber).forEach(bobber => {
@@ -208,12 +209,12 @@ register('step', () => {
         //Bobbin Render
         let BobberData = guiManager.getElementData("BobberCount")
         BobberData.Data["(1)"] = BobberCount
-        if(!settings.generalHideUIToggle) {
+        if(!settings().generalHideUIToggle) {
             //Hide if not relevant OFF
             BobberData.Hidden = false
             guiManager.updateElementData("BobberCount", BobberData)
         }
-        else if (BobberCount > 0 || (Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime)) {
+        else if (BobberCount > 0 || (Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings().seacreatureHourResetTime)) {
             //Hide if not relevant ON, you are Fishing
             BobberData.Hidden = false
             guiManager.updateElementData("BobberCount", BobberData)
@@ -224,7 +225,7 @@ register('step', () => {
             guiManager.updateElementData("BobberCount", BobberData)
         }
     }
-}).setFps(settings.seaCreaturePollingrate);
+}).setFps(settings().seaCreaturePollingrate);
 
 register('command', () => {
     seaCreatureData.CATCHES["LastCatch"] = 0;
@@ -236,11 +237,11 @@ let indexmsg = 0;
 let dhmsglist = [''];
 let DoubleHook = false;
 register('chat', (event) => {
-    if(settings.creatureDhHideToggle) cancel(event);
-    if(settings.doubleHookMessageToggle){
-        if(settings.doubleHookMessage.includes('|')){
-            dhmsgBase = funniFaces(settings.doubleHookMessage)
-            if(settings.doubleHookMessage.includes('([random])' || (settings.doubleHookRandomToggle))){
+    if(settings().creatureDhHideToggle) cancel(event);
+    if(settings().doubleHookMessageToggle){
+        if(settings().doubleHookMessage.includes('|')){
+            dhmsgBase = funniFaces(settings().doubleHookMessage)
+            if(settings().doubleHookMessage.includes('([random])' || (settings().doubleHookRandomToggle))){
                 dhmsgBase = dhmsgBase.replace('([random])', '');
                 if(dhmsgBase.endsWith("|")){
                     dhmsgBase = dhmsgBase.slice(0, -1);
@@ -279,7 +280,7 @@ register('chat', (event) => {
             }
         }
         else{
-            dhmsg = funniFaces(settings.doubleHookMessage).replace('([random])', '');
+            dhmsg = funniFaces(settings().doubleHookMessage).replace('([random])', '');
         }
         if (dhmsg != ''){
             sendMsg(dhmsg);
@@ -297,7 +298,7 @@ let lastFacing = [-500,-500];
 register('chat', (message, event) => {
     catchMessages.lastIndex = 0;
     if(catchMessages.test(message)){
-        if(settings.creatureDhHideToggle) cancel(event);
+        if(settings().creatureDhHideToggle) cancel(event);
         if(Player.getYaw() == lastFacing[0] && Player.getPitch() == lastFacing[1]) {
             NoMoveCount += 1;
         }
@@ -306,14 +307,14 @@ register('chat', (message, event) => {
             NoMoveCount = 1;
         }
         if(NoMoveCount > 7) {
-            Client.showTitle("&c&lMove Camera!", "&f&lor you wont catch any creatures :/", settings.titleFadeIn, settings.titleDuration, settings.titleFadeOut);
+            Client.showTitle("&c&lMove Camera!", "&f&lor you wont catch any creatures :/", settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
         }
         if(playerData.SETTINGS["WarnBait"]) {
             if(!playerData.SETTINGS["BaitBag"]) {
-                Client.showTitle("&c&lYou have baits OFF", "&8/rfutogglebag to toggle this", settings.titleFadeIn, settings.titleDuration, settings.titleFadeOut);
+                Client.showTitle("&c&lYou have baits OFF", "&8/rfutogglebag to toggle this", settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
             }
         }
-        if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings.seacreatureHourResetTime){
+        if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings().seacreatureHourResetTime){
             seaCreatureData.CATCHES["LastCatch"] = Date.now();
             if (DoubleHook){
                 seaCreatureData.CATCHES["ThisCatches"] += 2;
@@ -357,7 +358,7 @@ const timerRegex = /^(\d\.\d)|(!!!)$/;
 let Timer = ''
 let FoundFireWork = false;
 register('step', () => {
-    if(settings.flareToggle) {
+    if(settings().flareToggle) {
         foundflare = false;
         World.getAllEntitiesOfType(ArmorStand).forEach(mob => {
             if(getTextureFromEntity(mob)?.startsWith("ewogICJ0aW1lc3RhbXAiIDogMT")) {
@@ -449,15 +450,15 @@ register('step', () => {
                     if(FlareCoords.length > 0) {
                         if(Player.asPlayerMP() != null) {
                             if(Player.asPlayerMP().distanceTo(FlareCoords[0], FlareCoords[1], FlareCoords[2]) < 40) {
-                                if (settings.flareMessageToggle) {
-                                    sendMsg(funniFaces(settings.deployableMessage.replace("([deployable])", "Flare")));
+                                if (settings().flareMessageToggle) {
+                                    sendMsg(funniFaces(settings().deployableMessage.replace("([deployable])", "Flare")));
                                 }
-                                if (settings.flareTitleToggle){                    
-                                    flareTitle = `${funniFaces(settings.flareTitleMessage)}`;
-                                    Client.showTitle(flareTitle, "", settings.titleFadeIn, settings.titleDuration, settings.titleFadeOut);
+                                if (settings().flareTitleToggle){                    
+                                    flareTitle = `${funniFaces(settings().flareTitleMessage)}`;
+                                    Client.showTitle(flareTitle, "", settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
                                 }
-                                if (settings.deployableSoundToggle){     
-                                    World.playSound(settings.deployableSound, settings.deployableSoundVolume, settings.deployableSoundPitch/100);
+                                if (settings().deployableSoundToggle){     
+                                    World.playSound(settings().deployableSound, settings().deployableSoundVolume, settings().deployableSoundPitch/100);
                                 }
                             }
                         }
@@ -466,12 +467,12 @@ register('step', () => {
             }
         }
     }
-    if (settings.flareTimerToggle && settings.flareToggle) {
+    if (settings().flareTimerToggle && settings().flareToggle) {
         //Flare Render
         let flareData = guiManager.getElementData("FlareTimer")
         flareData.Data["(1)"] = flareTime
         flareData.Data["(2)"] = (Bonus > 0 ? `&b${Bonus*100}%` : "")
-        if(!settings.deployableHideToggle) {
+        if(!settings().deployableHideToggle) {
             //Hide if not relevant OFF
             flareData.Hidden = false
             guiManager.updateElementData("FlareTimer", flareData)
@@ -487,7 +488,7 @@ register('step', () => {
             guiManager.updateElementData("FlareTimer", flareData)
         }
     }
-    if(settings.rodTimerToggle) {
+    if(settings().rodTimerToggle) {
         foundTimer = false
         World.getAllEntitiesOfType(ArmorStand).forEach(mob => {
             Mob = mob.getName().replace(colorsRegex, '');
@@ -503,7 +504,7 @@ register('step', () => {
 
         //Rod Timer Render
         let rodTimerData = guiManager.getElementData("RodTimer")
-        let rodTexts = settings.rodTimerUI.split("|");
+        let rodTexts = settings().rodTimerUI.split("|");
         if(Timer == '!!!') {
             rodTimerData.Text = funniFaces((rodTexts[1]).replace("([time])", ` `))
         }
@@ -521,7 +522,7 @@ register("renderEntity", (entity, pos, partialTick, event) => {
     if(entity != null) {
         if(entity.getClassName() == "EntityArmorStand") {
             if(entity.name != null && playerData.GUI["Toggle"]) {
-                if ((/^(§e§l\d\.\d)|(§c§l!!!)$/).test(entity?.name) && settings.rodTimerToggle) {
+                if ((/^(§e§l\d\.\d)|(§c§l!!!)$/).test(entity?.name) && settings().rodTimerToggle) {
                     cancel(event);
                 }
             }
@@ -530,19 +531,19 @@ register("renderEntity", (entity, pos, partialTick, event) => {
 })
 
 register('chat', () => {
-    if(settings.flareToggle) {
+    if(settings().flareToggle) {
         Flare = false;
         flareTime = "No Flare";
         FlareSent = true;
-        if (settings.flareMessageToggle) {
-            sendMsg(funniFaces(settings.deployableMessage.replace("([deployable])", "Flare")));
+        if (settings().flareMessageToggle) {
+            sendMsg(funniFaces(settings().deployableMessage.replace("([deployable])", "Flare")));
         }
-        if (settings.flareTitleToggle){                    
-            flareTitle = `${funniFaces(settings.flareTitleMessage)}`;
-            Client.showTitle(flareTitle, "", settings.titleFadeIn, settings.titleDuration, settings.titleFadeOut);
+        if (settings().flareTitleToggle){                    
+            flareTitle = `${funniFaces(settings().flareTitleMessage)}`;
+            Client.showTitle(flareTitle, "", settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
         }
-        if (settings.deployableSoundToggle){     
-            World.playSound(settings.deployableSound, settings.deployableSoundVolume, settings.deployableSoundPitch/100);
+        if (settings().deployableSoundToggle){     
+            World.playSound(settings().deployableSound, settings().deployableSoundVolume, settings().deployableSoundPitch/100);
         }
     }
 }).setCriteria("Your flare disappeared because you were too far away!");
@@ -743,7 +744,7 @@ const ImportantDropsRender = {"Enchanted Book":[0,0],
                         "Magma Lord Boots": [0, 0]};
 
 register('renderslot', (slot, gui, event) => {
-    if(settings.renderItems) {
+    if(settings().renderItems) {
         if(slot != null) {
             item = slot.getItem()
             if (item != null) {
@@ -758,53 +759,53 @@ register('renderslot', (slot, gui, event) => {
                     magicFindRegex.lastIndex = 0;
                     if(!lore) return
                     if(lore.includes("Blazing Fortune") && magicFindRegex.test(lore)) {
-                        if(settings.renderItemsBg) Renderer.drawRect(Renderer.color(0, 225, 255, 100), slot.getDisplayX(), slot.getDisplayY(), 16, 16);
+                        if(settings().renderItemsBg) Renderer.drawRect(Renderer.color(0, 225, 255, 100), slot.getDisplayX(), slot.getDisplayY(), 16, 16);
                         ItemText = new Text(`&b&lBf &3&lMf`, slot.getDisplayX()+2, slot.getDisplayY()+15).setShadow(true).setScale(0.4);
                         ItemText.draw();
                     }
                     else if(lore.includes("Fishing Experience") && lore.includes("Magic Find")) {
                         if(lore.includes("Blazing Fortune")) {
-                            if(settings.renderItemsBg) Renderer.drawRect(Renderer.color(0, 150, 200, 100), slot.getDisplayX(), slot.getDisplayY(), 16, 16);
+                            if(settings().renderItemsBg) Renderer.drawRect(Renderer.color(0, 150, 200, 100), slot.getDisplayX(), slot.getDisplayY(), 16, 16);
                             ItemText = new Text(`&b&lBf &9&lFe`, slot.getDisplayX()+2, slot.getDisplayY()+15).setShadow(true).setScale(0.4);
                             ItemText.draw();
                         }
                         else if(magicFindRegex.test(lore)){
-                            if(settings.renderItemsBg) Renderer.drawRect(Renderer.color(0, 150, 200, 100), slot.getDisplayX(), slot.getDisplayY(), 16, 16);
+                            if(settings().renderItemsBg) Renderer.drawRect(Renderer.color(0, 150, 200, 100), slot.getDisplayX(), slot.getDisplayY(), 16, 16);
                             ItemText = new Text(`&3&lMf &9&lFe`, slot.getDisplayX()+2, slot.getDisplayY()+15).setShadow(true).setScale(0.4);
                             ItemText.draw();
                         }
                         else {
-                            if(settings.renderItemsBg) Renderer.drawRect(Renderer.color(0, 75, 145, 100), slot.getDisplayX(), slot.getDisplayY(), 16, 16);
+                            if(settings().renderItemsBg) Renderer.drawRect(Renderer.color(0, 75, 145, 100), slot.getDisplayX(), slot.getDisplayY(), 16, 16);
                             ItemText = new Text(`&9&lFe`, slot.getDisplayX()+2, slot.getDisplayY()+15).setShadow(true).setScale(0.4);
                             ItemText.draw();
                         }
                     }
                     else if(lore.includes("Magic Find")) {
                         if(lore.includes("Blazing Fortune")) {
-                            if(settings.renderItemsBg) Renderer.drawRect(Renderer.color(0, 225, 255, 100), slot.getDisplayX(), slot.getDisplayY(), 16, 16);
+                            if(settings().renderItemsBg) Renderer.drawRect(Renderer.color(0, 225, 255, 100), slot.getDisplayX(), slot.getDisplayY(), 16, 16);
                             ItemText = new Text(`&b&lBf`, slot.getDisplayX()+2, slot.getDisplayY()+15).setShadow(true).setScale(0.4);
                             ItemText.draw();
                         }
                         else if(magicFindRegex.test(lore)){
-                            if(settings.renderItemsBg) Renderer.drawRect(Renderer.color(0, 225, 255, 50), slot.getDisplayX(), slot.getDisplayY(), 16, 16);
+                            if(settings().renderItemsBg) Renderer.drawRect(Renderer.color(0, 225, 255, 50), slot.getDisplayX(), slot.getDisplayY(), 16, 16);
                             ItemText = new Text(`&3&lMf`, slot.getDisplayX()+2, slot.getDisplayY()+15).setShadow(true).setScale(0.4);
                             ItemText.draw();
                         }
                     }
                     else if(lore.includes("Fishing Experience")) {
-                        if(settings.renderItemsBg) Renderer.drawRect(Renderer.color(0, 75, 145, 100), slot.getDisplayX(), slot.getDisplayY(), 16, 16);
+                        if(settings().renderItemsBg) Renderer.drawRect(Renderer.color(0, 75, 145, 100), slot.getDisplayX(), slot.getDisplayY(), 16, 16);
                         ItemText = new Text(`&9&lFe`, slot.getDisplayX()+2, slot.getDisplayY()+15).setShadow(true).setScale(0.4);
                         ItemText.draw();
                     }
                     else if(lore.includes("Flash")) {
                         level = lore.split("Flash ")[1].split("\n")[0];
-                        if(settings.renderItemsBg) Renderer.drawRect(Renderer.color(255, 255, 255, 100), slot.getDisplayX(), slot.getDisplayY(), 16, 16);
+                        if(settings().renderItemsBg) Renderer.drawRect(Renderer.color(255, 255, 255, 100), slot.getDisplayX(), slot.getDisplayY(), 16, 16);
                         ItemText = new Text(`Flash ${level}`, slot.getDisplayX()+1, slot.getDisplayY()+15).setShadow(true).setScale(0.4);
                         ItemText.draw();
                     }
                     else if(lore.includes("Charm")) {
                         level = lore.split("Charm ")[1].split("\n")[0];
-                        if(settings.renderItemsBg) Renderer.drawRect(Renderer.color(255, 166, 0, 100), slot.getDisplayX(), slot.getDisplayY(), 16, 16);
+                        if(settings().renderItemsBg) Renderer.drawRect(Renderer.color(255, 166, 0, 100), slot.getDisplayX(), slot.getDisplayY(), 16, 16);
                         ItemText = new Text(`Charm ${level}`, slot.getDisplayX()+1, slot.getDisplayY()+15).setShadow(true).setScale(0.4);
                         ItemText.draw();
                     }
@@ -828,7 +829,7 @@ register('command', () => {
 register('chat', (event) => {
     cancel(event)
     now = Date.now();
-    Client.showTitle("&9&lThunder Bottle Full", `Took ${readableTime(now-playerData.FISHING["Tbottle"])}`, settings.titleFadeIn, settings.titleDuration, settings.titleFadeOut);
+    Client.showTitle("&9&lThunder Bottle Full", `Took ${readableTime(now-playerData.FISHING["Tbottle"])}`, settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
     ChatLib.chat(`&e> Your bottle of thunder has fully charged! (${readableTime(now-playerData.FISHING["Tbottle"])})`);
     playerData.FISHING["Tbottle"] = now;
 }).setCriteria("> Your bottle of thunder has fully charged!");

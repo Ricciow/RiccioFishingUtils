@@ -1,12 +1,12 @@
 import { readableTime, removeRankTag , funniFaces} from "../utils/functions";
-import settings from "../utils/settings";
+import settings from "../settings/settings";
 import { playerData } from "../data/data";
 import { colorsRegex } from "../data/constants";
 import guiManager from "../gui/guiManager";
 
 register('command', () => {
     text = '\n';
-    settings.FunMessages.split('|').forEach(face => {
+    settings().FunMessages.split('|').forEach(face => {
         key = face.split(',')[0];
         door = face.split(',')[1];
         text += `([${key}]): ${door}\n`;
@@ -74,20 +74,20 @@ register("command", () => {
 let phoenixUseTime = 0;
 let spiritMaskUseTime = 0;
 register("chat", () => {
-    if(settings.phoenixTitleToggle) {
-        Client.showTitle(`&4&lPhoenix pet Used!`, ` `, settings.titleFadeIn, settings.titleDuration, settings.titleFadeOut);
+    if(settings().phoenixTitleToggle) {
+        Client.showTitle(`&4&lPhoenix pet Used!`, ` `, settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
         setTimeout(() => {
-            Client.showTitle(`&a&lPhoenix pet back!`, ` `, settings.titleFadeIn, settings.titleDuration, settings.titleFadeOut);
+            Client.showTitle(`&a&lPhoenix pet back!`, ` `, settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
         }, 60000);
     }
     phoenixUseTime = Date.now()
 }).setCriteria("Your Phoenix Pet saved you from certain death!");
 
 register("chat", () => {
-    if(settings.spiritTitleToggle){
-        Client.showTitle(`&4&lSpirit Mask Used!`, ` `, settings.titleFadeIn, settings.titleDuration, settings.titleFadeOut);
+    if(settings().spiritTitleToggle){
+        Client.showTitle(`&4&lSpirit Mask Used!`, ` `, settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
         setTimeout(() => {
-            Client.showTitle(`&a&lSpirit Mask back!`, ` `, settings.titleFadeIn, settings.titleDuration, settings.titleFadeOut);
+            Client.showTitle(`&a&lSpirit Mask back!`, ` `, settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
         }, 30000)
     }
     spiritMaskUseTime = Date.now()
@@ -119,7 +119,7 @@ register("worldload", () => {
 })
 
 register("step", () => {
-    if(settings.lobbyTracking) {
+    if(settings().lobbyTracking) {
         if(Looking) {
             ServerText = TabList.getNames().filter(name => {
                 if(name.replace(colorsRegex, "").includes("Area: ") || name.replace(colorsRegex, "").includes("Server: ")) return true;
@@ -143,7 +143,7 @@ register("step", () => {
             if(ServerText[1]) Server = ServerText[1].replace("Server: ", "").replace(" ", "");
             else Server = '';
             if(!SentMsg) {
-                if(Object.keys(ServerJoin).includes(Server) && settings.lobbyTracking) {
+                if(Object.keys(ServerJoin).includes(Server) && settings().lobbyTracking) {
                     ChatLib.chat(`&5[&b&lRFU&5]\n&7&lYou have been on this server!\n&e&l${Server} &7&lLast here: &e&l${readableTime(Date.now()-ServerJoin[Server])} &7&lago`);
                 }
                 SentMsg = true;
@@ -152,11 +152,11 @@ register("step", () => {
         }
     }
 
-    if (settings.deathItemPhoenixStatusToggle) {
+    if (settings().deathItemPhoenixStatusToggle) {
         //Phoenix Render
         let phoenixData = guiManager.getElementData("PhoenixTimer")
         phoenixData.Times["(1)"] = (Date.now() - phoenixUseTime > 60000) ? ["&a&lActive"] : (phoenixUseTime + 60000)
-        if(!settings.deathItemStatusUIToggle) {
+        if(!settings().deathItemStatusUIToggle) {
             //Hide if not relevant OFF
             phoenixData.Hidden = false
             guiManager.updateElementData("PhoenixTimer", phoenixData)
@@ -173,11 +173,11 @@ register("step", () => {
         }
     }
 
-    if (settings.deathItemSpiritMaskStatusToggle) {
+    if (settings().deathItemSpiritMaskStatusToggle) {
         //Spirit Mask Render
         let spiritMaskData = guiManager.getElementData("SpiritMaskTimer")
         spiritMaskData.Times["(1)"] = (Date.now() - spiritMaskUseTime > 30000) ? ["&a&lActive"] : (spiritMaskUseTime + 30000)
-        if(!settings.deathItemStatusUIToggle) {
+        if(!settings().deathItemStatusUIToggle) {
             //Hide if not relevant OFF
             spiritMaskData.Hidden = false
             guiManager.updateElementData("SpiritMaskTimer", spiritMaskData)
