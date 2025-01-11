@@ -1,12 +1,14 @@
 import settings from "./settings";
+import { playerData } from "../data/data";
+import oldValues from "../utils/settings"
 
 //? Code to update from old settings to new settings
 
-let timeout = 1000
+let timeout = 0
 function setConfigValue(category, key, value, multiCheckbox) {
-    if(settings().settings[key] !== value) {
+    if(settings()[key] !== value) {
         setTimeout(() => {
-            settings.getConfig().setConfigValue(category, key, value, multiCheckbox)
+            settings().getConfig().setConfigValue(category, key, value, multiCheckbox)
             ChatLib.chat(`&5[&b&lRFU&5] &6&lConverted ${key}`)
         }, timeout);
         timeout += 1000
@@ -33,9 +35,10 @@ function convertOldConfigToNew() {
     
     setConfigValue("Chat Commands", "partyWarpMuted", oldValues.partyWarpMuted)
     setConfigValue("Chat Commands", "partyBlacklist", oldValues.partyBlacklist)
-    setConfigValue("Chat Commands", "infoJawbus", oldValues.infoJawbus)
-    setConfigValue("Chat Commands", "infoThunder", oldValues.infoThunder)
-    setConfigValue("Chat Commands", "infoVial", oldValues.infoVial)
+
+    setConfigValue("Chat Commands", "infoJawbus", oldValues.infoJawbus, "infoCommandsMultiCheckbox")
+    setConfigValue("Chat Commands", "infoThunder", oldValues.infoThunder, "infoCommandsMultiCheckbox")
+    setConfigValue("Chat Commands", "infoVial", oldValues.infoVial, "infoCommandsMultiCheckbox")
 
     //Crystal Hollows
     setConfigValue("Crystal Hollows Fishing", "wormToggle", oldValues.wormToggle)

@@ -2,15 +2,6 @@
 - Made keybindfix Work
 - Changed config system to AmaterasuModded
 - Inverted Changelog
-
-**A couple of settings have reset:**
-
-**Chat Commands:**
-
-Help, Invite, Warp, Togglewarp, Transfer, Allinvite, Coords
-
-
-
 # V0.2.6
 - Added new github version alert.
 # V0.2.5

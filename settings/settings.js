@@ -1,7 +1,5 @@
 import Settings from "../../AmaterasuModded/core/Settings"
 import DefaultConfig from "../../Amaterasu/core/DefaultConfig"
-import { playerData } from "../data/data"
-import oldValues from "../utils/settings"
 
 const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
 
@@ -109,29 +107,37 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     placeHolder: "",
     subcategory: "General Commands"
 })
-.addToggle({
+.addMultiCheckbox({
     category: "Chat Commands",
-    configName: "infoJawbus",
-    title: "jawbusinfo",
-    description: "Enable the jawbusinfo command, which sends your jawbus count/avg and last jawbus time in chat",
     subcategory: "Info Commands",
-    value: true
+    configName: "infoCommandsMultiCheckbox",
+    title: "Information Commands",
+    description: "Toggle the information commands",
+    placeHolder: "Commands:",
+    options: [
+       {
+            configName: "infoJawbus",
+            title: "jawbusinfo",
+            value: true
+       },
+       {
+            configName: "infoThunder",
+            title: "thunderinfo",
+            value: true
+       },
+       {
+        configName: "infoVial",
+        title: "vialinfo",
+        value: true
+       }
+    ]
 })
-.addToggle({
+.addTextParagraph({
     category: "Chat Commands",
-    configName: "infoThunder",
-    title: "thunderinfo",
-    description: "Enable the jawbusinfo command, which sends your thunder count/avg and last thunder time in chat",
     subcategory: "Info Commands",
-    value: true
-})
-.addToggle({
-    category: "Chat Commands",
-    configName: "infoVial",
-    title: "vialinfo",
-    description: "Enable the vialinfo command, which sends your vial jawbus count and last vial time in chat",
-    subcategory: "Info Commands",
-    value: true
+    configName: "infoCommandsParagraph",
+    title: "About the commands",
+    description: "The information commands show time since last, average and count since last."
 })
 .addSwitch({
     category: "Crystal Hollows Fishing",
