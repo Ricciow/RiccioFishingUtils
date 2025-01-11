@@ -6,7 +6,8 @@
 
 <div align="center">
 
-[![Discord](https://img.shields.io/discord/1210734539186376774?label=discord&color=9089DA&logo=discord&style=for-the-badge)](https://discord.gg/JfrXm6TqXz)
+[![Discord](https://img.shields.io/discord/1210734539186376774?label=discord&color=7289da&logo=discord&style=for-the-badge)](https://discord.gg/JfrXm6TqXz)
+[![Downloads](https://img.shields.io/github/downloads/ricciow/RiccioFishingUtils/total?label=downloads&color=055ca3&logo=github&style=for-the-badge)](https://github.com/ricciow/RiccioFishingUtils/releases)
 </div>
 
 ## What it does
