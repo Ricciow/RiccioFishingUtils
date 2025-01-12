@@ -14,5 +14,6 @@ import "./utils/keybinds.js";
 import "./gui/gui.js";
 import "./utils/updatechecker.js";
 import "./settings/updateSettings.js";
+import "./settings/config.js"
 
 ChatLib.chat("\n&5[&b&lRFU&5] &2&lLoaded! \n&b&l/rfu &fto open settings\n&e&l/rfumove &fto move gui\n&9&l/rfudiscord &ffor official server\n")

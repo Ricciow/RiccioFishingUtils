@@ -446,7 +446,7 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     category: "General Fishing",
     configName: "seacreatureHourUIToggle",
     title: "Sea creatures per hour UI",
-    description: "Shows the status for jawbus",
+    description: "Shows how many creatures you caught per hour",
     subcategory: "Creature Counting",
     value: true
 })
@@ -1133,7 +1133,7 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
 .addSwitch({
     category: "Other",
     configName: "deathItemPhoenixStatusToggle",
-    title: "Phoenix mask status UI",
+    title: "Phoenix status UI",
     description: "Shows the status of phoenix on your screen",
     subcategory: "Death",
     value: true
@@ -1304,7 +1304,6 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
 
 const setting = new Settings("RiccioFishingUtils", config, "settings/ColorScheme.json")
 .addMarkdown("§9Changelog", FileLib.read("RiccioFishingUtils", "changelog.md"))
-.setCommand("rfu", ["ricciofishingutils"]) 
 .setSize(90, 90)
 .setPos(5, 5)
 .apply()
