@@ -2,316 +2,6 @@ import Settings from "../../AmaterasuModded/core/Settings"
 import DefaultConfig from "../../Amaterasu/core/DefaultConfig"
 
 const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
-
-.addSwitch({
-    category: "Chat Commands",
-    configName: "partyCommands",
-    title: "Toggle Party Commands",
-    description: "Enable the party commands",
-    subcategory: "Party Commands",
-    value : true
-})
-.addSwitch({
-    category: "Chat Commands",
-    configName: "partyJoinHelp",
-    title: "New Member Help Command",
-    description: "Runs the help command whenever a new player joins",
-    subcategory: "Party Commands",
-    value: false
-})
-.addSwitch({
-    category: "Chat Commands",
-    configName: "partyJoinHelpLeader",
-    title: "● Leader Only New Member Help",
-    description: "Only triggers the New Member Help if you`re party leader",
-    subcategory: "Party Commands",
-    value: true,
-    shouldShow: data => data.partyJoinHelp
-})
-.addMultiCheckbox({
-    category: "Chat Commands",
-    subcategory: "Party Commands",
-    configName: "commandsMultiCheckbox",
-    title: "Enabled Commands",
-    description: "Toggle the commands",
-    placeHolder: "Commands",
-    options: [
-        {
-            configName: "partyHelp",
-            title: "Help",
-            value: true
-        },
-        {
-            configName: "partyInvite",
-            title: "Invite",
-            value: true
-        },
-        {
-            configName: "partyWarp",
-            title: "Warp",
-            value: true
-        },
-        {
-            configName: "partyToggleWarp",
-            title: "Togglewarp",
-            value: true
-        },
-        {
-            configName: "partyTransfer",
-            title: "Transfer",
-            value: true
-        },
-        {
-            configName: "partyAllinvite",
-            title: "Allinvite",
-            value: true
-        },
-        {
-            configName: "partyCoords",
-            title: "Coords",
-            value: true
-        }
-    ]
-})
-.addSwitch({
-    category: "Chat Commands",
-    configName: "partyWarpMuted",
-    title: "Warp on Im muted!",
-    description: "Makes it so the im muted message warps the party",
-    subcategory: "Party Commands",
-    value: false
-})
-.addSlider({
-    category: "Chat Commands",
-    configName: "partyCooldown",
-    title: "Command Cooldown",
-    description: "Cooldown between commands in seconds, default: 1s",
-    options: [0, 60],
-    value: 1,
-    subcategory: "General Commands"
-})
-.addTextInput({
-    category: "Chat Commands",
-    configName: "partyPrefix",
-    title: "Command Prefix",
-    description: "The prefix used for commands, default: !",
-    value: "!",
-    placeHolder: "",
-    subcategory: "General Commands"
-})
-.addTextInput({
-    category: "Chat Commands",
-    configName: "partyBlacklist",
-    title: "Command Blacklist",
-    description: "players who wont be able to use chat commands, use commas to separate names, example: steve,alex,joe",
-    value: "",
-    placeHolder: "",
-    subcategory: "General Commands"
-})
-.addMultiCheckbox({
-    category: "Chat Commands",
-    subcategory: "Info Commands",
-    configName: "infoCommandsMultiCheckbox",
-    title: "Information Commands",
-    description: "Toggle the information commands",
-    placeHolder: "Commands",
-    options: [
-       {
-            configName: "infoJawbus",
-            title: "jawbusinfo",
-            value: true
-       },
-       {
-            configName: "infoThunder",
-            title: "thunderinfo",
-            value: true
-       },
-       {
-        configName: "infoVial",
-        title: "vialinfo",
-        value: true
-       }
-    ]
-})
-.addTextParagraph({
-    category: "Chat Commands",
-    subcategory: "Info Commands",
-    configName: "infoCommandsParagraph",
-    title: "About the commands",
-    description: "The information commands show time since last, average and count since last."
-})
-.addSwitch({
-    category: "Crystal Hollows Fishing",
-    configName: "wormToggle",
-    title: "Toggle Worm Counter",
-    description: "Enables the worm fishing counters\nMust be on if you want to use any features below",
-    subcategory: "Worm Fishing",
-    value: true
-})
-.addSwitch({
-    category: "Crystal Hollows Fishing",
-    configName: "wormMessageToggle",
-    title: "Toggle worm party messages",
-    description: "Sends messages whenever a certain number of worms is spawned",
-    subcategory: "Worm Fishing",
-    value: false
-})
-.addSlider({
-    category: "Crystal Hollows Fishing",
-    configName: "wormLimit",
-    title: "● Worm number message alert",
-    description: "Set the number of worms needed to send the message\nif you use 59 ur weird ¯\\_(ツ)_/¯",
-    options: [1, 60],
-    value: 60,
-    subcategory: "Worm Fishing",
-    shouldShow: data => data.wormMessageToggle
-})
-.addTextInput({
-    category: "Crystal Hollows Fishing",
-    configName: "wormMessage",
-    title: "● Worm party message",
-    description: "Customize the worm cap message.\n write ([number]) to show the worm count, write ([time]) to show the time it took",
-    value: "Worm cap reached! ([number]) worms in ([time])",
-    placeHolder: "",
-    subcategory: "Worm Fishing",
-    shouldShow: data => data.wormMessageToggle
-})
-.addSwitch({
-    category: "Crystal Hollows Fishing",
-    configName: "wormTitleToggle",
-    title: "Alert worm count on screen",
-    description: "Sends the message in the middle of screen through titles",
-    subcategory: "Worm Fishing",
-    value: true
-})
-.addSlider({
-    category: "Crystal Hollows Fishing",
-    configName: "wormTitleLimit",
-    title: "● Worm number title alert",
-    description: "Set the number of worms needed to show the title message",
-    options: [1, 60],
-    value: 60,
-    subcategory: "Worm Fishing",
-    shouldShow: data => data.wormTitleToggle
-})
-.addTextInput({
-    category: "Crystal Hollows Fishing",
-    configName: "wormTitleMessage",
-    title: "● Worm Cap Title message",
-    description: "Customize the worm count title message.\n write ([number]) to show the worm count, write ([time]) to show the time it took",
-    value: "&cWorm cap reached!",
-    placeHolder: "",
-    subcategory: "Worm Fishing",
-    shouldShow: data => data.wormTitleToggle
-})
-.addTextInput({
-    category: "Crystal Hollows Fishing",
-    configName: "wormTitleMessageSubtitle",
-    title: "● Worm Cap Title message subtitle",
-    description: "Customize the text below the title message.\n write ([number]) to show the worm count, write ([time]) to show the time it took",
-    value: "&c([number]) worms in ([time])!",
-    placeHolder: "",
-    subcategory: "Worm Fishing",
-    shouldShow: data => data.wormTitleToggle
-})
-.addSwitch({
-    category: "Crystal Hollows Fishing",
-    configName: "wormSoundToggle",
-    title: "Toggle worm count Sound",
-    description: "Plays a sound when there is a certain number of worms",
-    subcategory: "Worm Fishing",
-    value: true
-})
-.addSwitch({
-    category: "Crystal Hollows Fishing",
-    configName: "wormNametagToggle",
-    title: "Hide worm nametag",
-    description: "Hides the worms nametags, you wont know the hp tho ¯\\_(ツ)_/¯",
-    subcategory: "Worm Fishing",
-    value: false
-})
-.addSlider({
-    category: "Crystal Hollows Fishing",
-    configName: "wormSoundLimit",
-    title: "● Worm number sound",
-    description: "Set the number of worms needed to play the sound",
-    options: [1, 60],
-    value: 60,
-    subcategory: "Worm Fishing",
-    shouldShow: data => data.wormSoundToggle
-})
-.addTextInput({
-    category: "Crystal Hollows Fishing",
-    configName: "wormSound",
-    title: "● Worm Sound",
-    description: "Customize the worm count sound, Default: random.orb",
-    value: "random.orb",
-    placeHolder: "",
-    subcategory: "Worm Fishing",
-    shouldShow: data => data.wormSoundToggle
-})
-.addSlider({
-    category: "Crystal Hollows Fishing",
-    configName: "wormSoundVolume",
-    title: "● Worm sound volume",
-    description: "The volume of the worm count sound",
-    options: [0.001, 1],
-    value: 1,
-    subcategory: "Worm Fishing",
-    shouldShow: data => data.wormSoundToggle
-})
-.addSlider({
-    category: "Crystal Hollows Fishing",
-    configName: "wormSoundPitch",
-    title: "● Worm sound pitch",
-    description: "The pitch of the worm count sound",
-    options: [0, 200],
-    value: 100,
-    subcategory: "Worm Fishing",
-    shouldShow: data => data.wormSoundToggle
-})
-.addSwitch({
-    category: "Deployables",
-    configName: "totemToggle",
-    title: "Toggle corruption totem tracker",
-    description: "Enable corruption totem utils\nMust be on if you want to use any features below",
-    subcategory: "Corruption Totem",
-    value: true
-})
-.addSwitch({
-    category: "Deployables",
-    configName: "totemTitleToggle",
-    title: "Alert Totem Expired on Screen",
-    description: "Sends the message in the middle of screen through titles",
-    subcategory: "Corruption Totem",
-    value: true
-})
-.addTextInput({
-    category: "Deployables",
-    configName: "totemTitleMessage",
-    title: "● Totem Expired Title message",
-    description: "Customize the totem expired title message.",
-    value: "&5Corruption Totem Expired!",
-    placeHolder: "",
-    subcategory: "Corruption Totem",
-    shouldShow: data => data.totemTitleToggle
-})
-.addSwitch({
-    category: "Deployables",
-    configName: "totemMessageToggle",
-    title: "Toggle corruption totem expire messages",
-    description: "Sends messages whenever the corruption totem expires",
-    subcategory: "Corruption Totem",
-    value: false
-})
-.addSwitch({
-    category: "Deployables",
-    configName: "totemTimerToggle",
-    title: "Toggle corruption totem timer",
-    description: "Shows the corruption totem timer on your screen\n/rfumove to move it",
-    subcategory: "Corruption Totem",
-    value: true
-})
 .addSwitch({
     category: "General Fishing",
     configName: "seaCreatureCounterToggle",
@@ -490,7 +180,7 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     category: "General Fishing",
     configName: "doubleHookRandomToggle",
     title: "● Toggle random messages",
-    description: "Makes double hook messages random from the list of messages\n&8Older ([random]) in the messages still works.",
+    description: "Makes double hook messages random from the list of messages.",
     subcategory: "Double Hook",
     value: false,
     shouldShow: data => data.doubleHookMessageToggle
@@ -518,181 +208,6 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Hides the dh/creature chat messages",
     subcategory: "Other Settings",
     value: false
-})
-.addSwitch({
-    category: "Deployables",
-    configName: "fluxToggle",
-    title: "Toggle power orb tracker",
-    description: "Enable power orb utils\nMust be on if you want to use any features below",
-    subcategory: "Power Orbs",
-    value: true
-})
-.addSwitch({
-    category: "Deployables",
-    configName: "fluxTitleToggle",
-    title: "Alert power orb expired on screen",
-    description: "Sends the message in the middle of screen through titles",
-    subcategory: "Power Orbs",
-    value: true
-})
-.addTextInput({
-    category: "Deployables",
-    configName: "fluxTitleMessage",
-    title: "● Power orb expired title message",
-    description: "Customize the power orb expired title message.",
-    value: "&dPower Orb Expired!",
-    placeHolder: "",
-    subcategory: "Power Orbs",
-    shouldShow: data => data.fluxTitleToggle
-})
-.addSwitch({
-    category: "Deployables",
-    configName: "fluxMessageToggle",
-    title: "Toggle power orb expired messages",
-    description: "Sends messages whenever the power orb expires",
-    subcategory: "Power Orbs",
-    value: false
-})
-.addSwitch({
-    category: "Deployables",
-    configName: "fluxTimerToggle",
-    title: "Toggle power orb timer",
-    description: "Shows the power orb timer on your screen\n/rfumove to move it",
-    subcategory: "Power Orbs",
-    value: true
-})
-.addSwitch({
-    category: "Deployables",
-    configName: "flareToggle",
-    title: "Toggle flare tracker",
-    description: "Enable flare utils\nMust be on if you want to use any features below",
-    subcategory: "Flares",
-    value: true
-})
-.addSwitch({
-    category: "Deployables",
-    configName: "flareTitleToggle",
-    title: "Alert flare expired on screen",
-    description: "Sends the message in the middle of screen through titles",
-    subcategory: "Flares",
-    value: true
-})
-.addTextInput({
-    category: "Deployables",
-    configName: "flareTitleMessage",
-    title: "● Flare expired title message",
-    description: "Customize the flare expired title message.",
-    value: "&6Flare Expired!",
-    placeHolder: "",
-    subcategory: "Flares",
-    shouldShow: data => data.flareTitleToggle
-})
-.addSwitch({
-    category: "Deployables",
-    configName: "flareMessageToggle",
-    title: "Toggle flare expired messages",
-    description: "Sends messages whenever the flare expires",
-    subcategory: "Flares",
-    value: false
-})
-.addSwitch({
-    category: "Deployables",
-    configName: "flareTimerToggle",
-    title: "Toggle flare timer",
-    description: "Shows the flare timer on your screen\n/rfumove to move it",
-    subcategory: "Flares",
-    value: true
-})
-.addTextInput({
-    category: "Deployables",
-    configName: "deployableMessage",
-    title: "Deployable chat message",
-    description: "Customize the deployable expired message. Write ([deployable]) to show the deployable's name",
-    value: "([tableflip]) ([deployable]) Expired!",
-    placeHolder: "",
-    subcategory: "All Deployables"
-})
-.addSwitch({
-    category: "Deployables",
-    configName: "deployableSoundToggle",
-    title: "Toggle deployable sound",
-    description: "Plays a sound when a flare expires",
-    subcategory: "All Deployables", 
-    value: false
-})
-.addTextInput({
-    category: "Deployables",
-    configName: "deployableSound",
-    title: "● Deployable expired sound",
-    description: "Customize the deployable expired sound, Default: mob.irongolem.death",
-    value: "mob.irongolem.death",
-    placeHolder: "",
-    subcategory: "All Deployables",
-    shouldShow: data => data.deployableSoundToggle
-})
-.addSlider({
-    category: "Deployables",
-    configName: "deployableSoundVolume",
-    title: "● Deployable sound volume",
-    description: "The volume of the deployable expired sound",
-    options: [0.001, 1],
-    value: 1,
-    subcategory: "All Deployables",
-    shouldShow: data => data.deployableSoundToggle
-})
-.addSlider({
-    category: "Deployables",
-    configName: "deployableSoundPitch",
-    title: "● Deployable sound pitch",
-    description: "The pitch of the deployable expired sound",
-    options: [0, 200],
-    value: 100,
-    subcategory: "All Deployables",
-    shouldShow: data => data.deployableSoundToggle
-})
-.addSwitch({
-    category: "Deployables",
-    configName: "deployableHideToggle",
-    title: "Hide UI if not present",
-    description: "Hides the UI if there is no deployable",
-    subcategory: "All Deployables",
-    value: false
-})
-.addSwitch({
-    category: "Player Stats",
-    configName: "manaTitleToggle",
-    title: "Alert when mana goes below a percentage",
-    description: "Sends the message in the middle of screen through titles",
-    subcategory: "Mana",
-    value: true
-})
-.addSlider({
-    category: "Player Stats",
-    configName: "manaWarnPercentage",
-    title: "● Mana percentage",
-    description: "The percentage needed for the title message",
-    options: [0.001, 1],
-    value: 0.3,
-    subcategory: "Mana",
-    shouldShow: data => data.manaTitleToggle
-})
-.addTextInput({
-    category: "Player Stats",
-    configName: "manaTitleMessage",
-    title: "● Mana low Title message",
-    description: "Customize the mana low title message.",
-    value: "&b&lMana low!",
-    placeHolder: "",
-    subcategory: "Mana",
-    shouldShow: data => data.manaTitleToggle
-})
-.addSwitch({
-    category: "Pets",
-    configName: "petDisplayToggle",
-    title: "Toggle pet display",
-    description: "Shows the currently equipped pet on your screen\n/rfumove to move it",
-    subcategory: "Pet Display",
-    value: true
 })
 .addSwitch({
     category: "Crimson Fishing",
@@ -1005,6 +520,297 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     value: false
 })
 .addSwitch({
+    category: "Crystal Hollows Fishing",
+    configName: "wormToggle",
+    title: "Toggle Worm Counter",
+    description: "Enables the worm fishing counters\nMust be on if you want to use any features below",
+    subcategory: "Worm Fishing",
+    value: true
+})
+.addSwitch({
+    category: "Crystal Hollows Fishing",
+    configName: "wormMessageToggle",
+    title: "Toggle worm party messages",
+    description: "Sends messages whenever a certain number of worms is spawned",
+    subcategory: "Worm Fishing",
+    value: false
+})
+.addSlider({
+    category: "Crystal Hollows Fishing",
+    configName: "wormLimit",
+    title: "● Worm number message alert",
+    description: "Set the number of worms needed to send the message\nif you use 59 ur weird ¯\\_(ツ)_/¯",
+    options: [1, 60],
+    value: 60,
+    subcategory: "Worm Fishing",
+    shouldShow: data => data.wormMessageToggle
+})
+.addTextInput({
+    category: "Crystal Hollows Fishing",
+    configName: "wormMessage",
+    title: "● Worm party message",
+    description: "Customize the worm cap message.\n write ([number]) to show the worm count, write ([time]) to show the time it took",
+    value: "Worm cap reached! ([number]) worms in ([time])",
+    placeHolder: "",
+    subcategory: "Worm Fishing",
+    shouldShow: data => data.wormMessageToggle
+})
+.addSwitch({
+    category: "Crystal Hollows Fishing",
+    configName: "wormTitleToggle",
+    title: "Alert worm count on screen",
+    description: "Sends the message in the middle of screen through titles",
+    subcategory: "Worm Fishing",
+    value: true
+})
+.addSlider({
+    category: "Crystal Hollows Fishing",
+    configName: "wormTitleLimit",
+    title: "● Worm number title alert",
+    description: "Set the number of worms needed to show the title message",
+    options: [1, 60],
+    value: 60,
+    subcategory: "Worm Fishing",
+    shouldShow: data => data.wormTitleToggle
+})
+.addTextInput({
+    category: "Crystal Hollows Fishing",
+    configName: "wormTitleMessage",
+    title: "● Worm Cap Title message",
+    description: "Customize the worm count title message.\n write ([number]) to show the worm count, write ([time]) to show the time it took",
+    value: "&cWorm cap reached!",
+    placeHolder: "",
+    subcategory: "Worm Fishing",
+    shouldShow: data => data.wormTitleToggle
+})
+.addTextInput({
+    category: "Crystal Hollows Fishing",
+    configName: "wormTitleMessageSubtitle",
+    title: "● Worm Cap Title message subtitle",
+    description: "Customize the text below the title message.\n write ([number]) to show the worm count, write ([time]) to show the time it took",
+    value: "&c([number]) worms in ([time])!",
+    placeHolder: "",
+    subcategory: "Worm Fishing",
+    shouldShow: data => data.wormTitleToggle
+})
+.addSwitch({
+    category: "Crystal Hollows Fishing",
+    configName: "wormSoundToggle",
+    title: "Toggle worm count Sound",
+    description: "Plays a sound when there is a certain number of worms",
+    subcategory: "Worm Fishing",
+    value: true
+})
+.addSwitch({
+    category: "Crystal Hollows Fishing",
+    configName: "wormNametagToggle",
+    title: "Hide worm nametag",
+    description: "Hides the worms nametags, you wont know the hp tho ¯\\_(ツ)_/¯",
+    subcategory: "Worm Fishing",
+    value: false
+})
+.addSlider({
+    category: "Crystal Hollows Fishing",
+    configName: "wormSoundLimit",
+    title: "● Worm number sound",
+    description: "Set the number of worms needed to play the sound",
+    options: [1, 60],
+    value: 60,
+    subcategory: "Worm Fishing",
+    shouldShow: data => data.wormSoundToggle
+})
+.addTextInput({
+    category: "Crystal Hollows Fishing",
+    configName: "wormSound",
+    title: "● Worm Sound",
+    description: "Customize the worm count sound, Default: random.orb",
+    value: "random.orb",
+    placeHolder: "",
+    subcategory: "Worm Fishing",
+    shouldShow: data => data.wormSoundToggle
+})
+.addSlider({
+    category: "Crystal Hollows Fishing",
+    configName: "wormSoundVolume",
+    title: "● Worm sound volume",
+    description: "The volume of the worm count sound",
+    options: [0.001, 1],
+    value: 1,
+    subcategory: "Worm Fishing",
+    shouldShow: data => data.wormSoundToggle
+})
+.addSlider({
+    category: "Crystal Hollows Fishing",
+    configName: "wormSoundPitch",
+    title: "● Worm sound pitch",
+    description: "The pitch of the worm count sound",
+    options: [0, 200],
+    value: 100,
+    subcategory: "Worm Fishing",
+    shouldShow: data => data.wormSoundToggle
+})
+.addSwitch({
+    category: "Trophy Fishing",
+    configName: "sulphurRightClickToggle",
+    title: "Show sulphur range on right click",
+    description: "Shows the range of the sulphur block when right clicking it, click again to stop showing\nFun fact: it actually makes sense now!",
+    subcategory: "Sulphur Block",
+    value: true
+})
+.addSwitch({
+    category: "Trophy Fishing",
+    configName: "goldenTimerToggle",
+    title: "Golden Fish Timer",
+    description: "A golden fish timer!",
+    subcategory: "Golden Fish",
+    value: true
+})
+.addSwitch({
+    category: "Trophy Fishing",
+    configName: "trophyHideUIToggle",
+    title: "Hide UI if not relevant - Trophy Fishing",
+    description: "Hides the UIs in this page if not fishing",
+    subcategory: "Other Settings",
+    value: false
+})
+.addSwitch({
+    category: "Chat Commands",
+    configName: "partyCommands",
+    title: "Toggle Party Commands",
+    description: "Enable the party commands",
+    subcategory: "Party Commands",
+    value : true
+})
+.addSwitch({
+    category: "Chat Commands",
+    configName: "partyJoinHelp",
+    title: "New Member Help Command",
+    description: "Runs the help command whenever a new player joins",
+    subcategory: "Party Commands",
+    value: false
+})
+.addSwitch({
+    category: "Chat Commands",
+    configName: "partyJoinHelpLeader",
+    title: "● Leader Only New Member Help",
+    description: "Only triggers the New Member Help if you`re party leader",
+    subcategory: "Party Commands",
+    value: true,
+    shouldShow: data => data.partyJoinHelp
+})
+.addMultiCheckbox({
+    category: "Chat Commands",
+    subcategory: "Party Commands",
+    configName: "commandsMultiCheckbox",
+    title: "Enabled Commands",
+    description: "Toggle the commands",
+    placeHolder: "Commands",
+    options: [
+        {
+            configName: "partyHelp",
+            title: "Help",
+            value: true
+        },
+        {
+            configName: "partyInvite",
+            title: "Invite",
+            value: true
+        },
+        {
+            configName: "partyWarp",
+            title: "Warp",
+            value: true
+        },
+        {
+            configName: "partyToggleWarp",
+            title: "Togglewarp",
+            value: true
+        },
+        {
+            configName: "partyTransfer",
+            title: "Transfer",
+            value: true
+        },
+        {
+            configName: "partyAllinvite",
+            title: "Allinvite",
+            value: true
+        },
+        {
+            configName: "partyCoords",
+            title: "Coords",
+            value: true
+        }
+    ]
+})
+.addSwitch({
+    category: "Chat Commands",
+    configName: "partyWarpMuted",
+    title: "Warp on Im muted!",
+    description: "Makes it so the im muted message warps the party",
+    subcategory: "Party Commands",
+    value: false
+})
+.addSlider({
+    category: "Chat Commands",
+    configName: "partyCooldown",
+    title: "Command Cooldown",
+    description: "Cooldown between commands in seconds, default: 1s",
+    options: [0, 60],
+    value: 1,
+    subcategory: "General Commands"
+})
+.addTextInput({
+    category: "Chat Commands",
+    configName: "partyPrefix",
+    title: "Command Prefix",
+    description: "The prefix used for commands, default: !",
+    value: "!",
+    placeHolder: "",
+    subcategory: "General Commands"
+})
+.addTextInput({
+    category: "Chat Commands",
+    configName: "partyBlacklist",
+    title: "Command Blacklist",
+    description: "players who wont be able to use chat commands, use commas to separate names, example: steve,alex,joe",
+    value: "",
+    placeHolder: "",
+    subcategory: "General Commands"
+})
+.addMultiCheckbox({
+    category: "Chat Commands",
+    subcategory: "Info Commands",
+    configName: "infoCommandsMultiCheckbox",
+    title: "Information Commands",
+    description: "Toggle the information commands",
+    placeHolder: "Commands",
+    options: [
+       {
+            configName: "infoJawbus",
+            title: "jawbusinfo",
+            value: true
+       },
+       {
+            configName: "infoThunder",
+            title: "thunderinfo",
+            value: true
+       },
+       {
+        configName: "infoVial",
+        title: "vialinfo",
+        value: true
+       }
+    ]
+})
+.addTextParagraph({
+    category: "Chat Commands",
+    subcategory: "Info Commands",
+    configName: "infoCommandsParagraph",
+    title: "About the commands",
+    description: "The information commands show time since last, average and count since last."
+})
+.addSwitch({
     category: "Rare Drops",
     configName: "vialMessageToggle",
     title: "Toggle radioactive vial message",
@@ -1079,6 +885,195 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     shouldShow: data => data.dropsMessageToggle
 })
 .addSwitch({
+    category: "Deployables",
+    configName: "totemToggle",
+    title: "Toggle corruption totem tracker",
+    description: "Enable corruption totem utils\nMust be on if you want to use any features below",
+    subcategory: "Corruption Totem",
+    value: true
+})
+.addSwitch({
+    category: "Deployables",
+    configName: "totemTitleToggle",
+    title: "Alert Totem Expired on Screen",
+    description: "Sends the message in the middle of screen through titles",
+    subcategory: "Corruption Totem",
+    value: true
+})
+.addTextInput({
+    category: "Deployables",
+    configName: "totemTitleMessage",
+    title: "● Totem Expired Title message",
+    description: "Customize the totem expired title message.",
+    value: "&5Corruption Totem Expired!",
+    placeHolder: "",
+    subcategory: "Corruption Totem",
+    shouldShow: data => data.totemTitleToggle
+})
+.addSwitch({
+    category: "Deployables",
+    configName: "totemMessageToggle",
+    title: "Toggle corruption totem expire messages",
+    description: "Sends messages whenever the corruption totem expires",
+    subcategory: "Corruption Totem",
+    value: false
+})
+.addSwitch({
+    category: "Deployables",
+    configName: "totemTimerToggle",
+    title: "Toggle corruption totem timer",
+    description: "Shows the corruption totem timer on your screen\n/rfumove to move it",
+    subcategory: "Corruption Totem",
+    value: true
+})
+.addSwitch({
+    category: "Deployables",
+    configName: "fluxToggle",
+    title: "Toggle power orb tracker",
+    description: "Enable power orb utils\nMust be on if you want to use any features below",
+    subcategory: "Power Orbs",
+    value: true
+})
+.addSwitch({
+    category: "Deployables",
+    configName: "fluxTitleToggle",
+    title: "Alert power orb expired on screen",
+    description: "Sends the message in the middle of screen through titles",
+    subcategory: "Power Orbs",
+    value: true
+})
+.addTextInput({
+    category: "Deployables",
+    configName: "fluxTitleMessage",
+    title: "● Power orb expired title message",
+    description: "Customize the power orb expired title message.",
+    value: "&dPower Orb Expired!",
+    placeHolder: "",
+    subcategory: "Power Orbs",
+    shouldShow: data => data.fluxTitleToggle
+})
+.addSwitch({
+    category: "Deployables",
+    configName: "fluxMessageToggle",
+    title: "Toggle power orb expired messages",
+    description: "Sends messages whenever the power orb expires",
+    subcategory: "Power Orbs",
+    value: false
+})
+.addSwitch({
+    category: "Deployables",
+    configName: "fluxTimerToggle",
+    title: "Toggle power orb timer",
+    description: "Shows the power orb timer on your screen\n/rfumove to move it",
+    subcategory: "Power Orbs",
+    value: true
+})
+.addSwitch({
+    category: "Deployables",
+    configName: "flareToggle",
+    title: "Toggle flare tracker",
+    description: "Enable flare utils\nMust be on if you want to use any features below",
+    subcategory: "Flares",
+    value: true
+})
+.addSwitch({
+    category: "Deployables",
+    configName: "flareTitleToggle",
+    title: "Alert flare expired on screen",
+    description: "Sends the message in the middle of screen through titles",
+    subcategory: "Flares",
+    value: true
+})
+.addTextInput({
+    category: "Deployables",
+    configName: "flareTitleMessage",
+    title: "● Flare expired title message",
+    description: "Customize the flare expired title message.",
+    value: "&6Flare Expired!",
+    placeHolder: "",
+    subcategory: "Flares",
+    shouldShow: data => data.flareTitleToggle
+})
+.addSwitch({
+    category: "Deployables",
+    configName: "flareMessageToggle",
+    title: "Toggle flare expired messages",
+    description: "Sends messages whenever the flare expires",
+    subcategory: "Flares",
+    value: false
+})
+.addSwitch({
+    category: "Deployables",
+    configName: "flareTimerToggle",
+    title: "Toggle flare timer",
+    description: "Shows the flare timer on your screen\n/rfumove to move it",
+    subcategory: "Flares",
+    value: true
+})
+.addTextInput({
+    category: "Deployables",
+    configName: "deployableMessage",
+    title: "Deployable chat message",
+    description: "Customize the deployable expired message. Write ([deployable]) to show the deployable's name",
+    value: "([tableflip]) ([deployable]) Expired!",
+    placeHolder: "",
+    subcategory: "All Deployables"
+})
+.addSwitch({
+    category: "Deployables",
+    configName: "deployableSoundToggle",
+    title: "Toggle deployable sound",
+    description: "Plays a sound when a flare expires",
+    subcategory: "All Deployables", 
+    value: false
+})
+.addTextInput({
+    category: "Deployables",
+    configName: "deployableSound",
+    title: "● Deployable expired sound",
+    description: "Customize the deployable expired sound, Default: mob.irongolem.death",
+    value: "mob.irongolem.death",
+    placeHolder: "",
+    subcategory: "All Deployables",
+    shouldShow: data => data.deployableSoundToggle
+})
+.addSlider({
+    category: "Deployables",
+    configName: "deployableSoundVolume",
+    title: "● Deployable sound volume",
+    description: "The volume of the deployable expired sound",
+    options: [0.001, 1],
+    value: 1,
+    subcategory: "All Deployables",
+    shouldShow: data => data.deployableSoundToggle
+})
+.addSlider({
+    category: "Deployables",
+    configName: "deployableSoundPitch",
+    title: "● Deployable sound pitch",
+    description: "The pitch of the deployable expired sound",
+    options: [0, 200],
+    value: 100,
+    subcategory: "All Deployables",
+    shouldShow: data => data.deployableSoundToggle
+})
+.addSwitch({
+    category: "Deployables",
+    configName: "deployableHideToggle",
+    title: "Hide UI if not present",
+    description: "Hides the UI if there is no deployable",
+    subcategory: "All Deployables",
+    value: false
+})
+.addSwitch({
+    category: "Pets",
+    configName: "petDisplayToggle",
+    title: "Toggle pet display",
+    description: "Shows the currently equipped pet on your screen\n/rfumove to move it",
+    subcategory: "Pet Display",
+    value: true
+})
+.addSwitch({
     category: "Pets",
     configName: "petTitleToggle",
     title: "Toggle pet level up titles",
@@ -1105,6 +1100,34 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     placeHolder: "",
     subcategory: "Pet Level Up",
     shouldShow: data => data.petTitleToggle
+})
+.addSwitch({
+    category: "Player Stats",
+    configName: "manaTitleToggle",
+    title: "Alert when mana goes below a percentage",
+    description: "Sends the message in the middle of screen through titles",
+    subcategory: "Mana",
+    value: true
+})
+.addSlider({
+    category: "Player Stats",
+    configName: "manaWarnPercentage",
+    title: "● Mana percentage",
+    description: "The percentage needed for the title message",
+    options: [0.001, 1],
+    value: 0.3,
+    subcategory: "Mana",
+    shouldShow: data => data.manaTitleToggle
+})
+.addTextInput({
+    category: "Player Stats",
+    configName: "manaTitleMessage",
+    title: "● Mana low Title message",
+    description: "Customize the mana low title message.",
+    value: "&b&lMana low!",
+    placeHolder: "",
+    subcategory: "Mana",
+    shouldShow: data => data.manaTitleToggle
 })
 .addSwitch({
     category: "Other",
@@ -1277,34 +1300,22 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     subcategory: "Other Settings",
     value: true
 })
-.addSwitch({
-    category: "Trophy Fishing",
-    configName: "sulphurRightClickToggle",
-    title: "Show sulphur range on right click",
-    description: "Shows the range of the sulphur block when right clicking it, click again to stop showing\nFun fact: it actually makes sense now!",
-    subcategory: "Sulphur Block",
-    value: true
-})
-.addSwitch({
-    category: "Trophy Fishing",
-    configName: "goldenTimerToggle",
-    title: "Golden Fish Timer",
-    description: "A golden fish timer!",
-    subcategory: "Golden Fish",
-    value: true
-})
-.addSwitch({
-    category: "Trophy Fishing",
-    configName: "trophyHideUIToggle",
-    title: "Hide UI if not relevant - Trophy Fishing",
-    description: "Hides the UIs in this page if not fishing",
-    subcategory: "Other Settings",
-    value: false
-})
+
+const order = ["General Fishing", "Crimson Fishing", "Crystal Hollows Fishing", "Trophy Fishing", "Chat Commands", "Rare Drops", "Deployables", "Pets", "Player Stats", "Other"] 
+const orderMap = new Map(order.map((value, index) => [value, index]))
 
 const setting = new Settings("RiccioFishingUtils", config, "settings/ColorScheme.json")
 .addMarkdown("§9Changelog", FileLib.read("RiccioFishingUtils", "changelog.md"))
 .setSize(90, 90)
+.setCategorySort((a, b) => {
+    a = a.category
+    b = b.category
+
+    const indexA = orderMap.has(a) ? orderMap.get(a) : Infinity;
+    const indexB = orderMap.has(b) ? orderMap.get(b) : Infinity;
+
+    return indexA - indexB;
+})
 .setPos(5, 5)
 .apply()
 
