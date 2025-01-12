@@ -1308,4 +1308,11 @@ const setting = new Settings("RiccioFishingUtils", config, "settings/ColorScheme
 .setPos(5, 5)
 .apply()
 
+register("command", (val) => {
+    if(val === 'move') {
+        return ChatLib.command("rfumove", true)
+    }
+    setting.openGui()
+}).setName("rfu").setAliases("ricciofishingutils")
+
 export default () => setting.settings
