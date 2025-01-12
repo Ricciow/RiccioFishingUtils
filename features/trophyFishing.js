@@ -111,7 +111,7 @@ register("step", () => {
             GoldenFishData.Hidden = false
             guiManager.updateElementData("GoldenFishTimer", GoldenFishData)
         }
-        else if(!seaCreatureData.GOLDEN["Cooking"] && 180000-(Date.now()-seaCreatureData.GOLDEN["LastCast"]) > 0 && (Player.asPlayerMP()?.getDimension() == -1)) {
+        else if(seaCreatureData.GOLDEN["Cooking"] && 180000-(Date.now()-seaCreatureData.GOLDEN["LastCast"]) > 0 && (Player.asPlayerMP()?.getDimension() == -1)) {
             //Hide if not relevant ON, you are Fishing, You are in the crimson isle
             GoldenFishData.Hidden = false
             guiManager.updateElementData("GoldenFishTimer", GoldenFishData)

@@ -86,7 +86,7 @@ register('step', () => {
             fluxData.Hidden = false
             guiManager.updateElementData("PowerOrbTimer", fluxData)
         }
-        else if (fluxTime != "No flux") {
+        else if (fluxTime != "No Orb") {
             //Hide if not relevant ON, if there is an Orb
             fluxData.Hidden = false
             guiManager.updateElementData("PowerOrbTimer", fluxData)
@@ -149,7 +149,7 @@ register('step', () => {
                 seaCreatureDataUI.Hidden = false
                 guiManager.updateElementData("SeaCreatureCount", seaCreatureDataUI)
             }
-            else if (SeaCreatures > 0 || (Date.now() - seaCreatureDataUI.CATCHES["LastCatch"] < 60000*settings().seacreatureHourResetTime)) {
+            else if (SeaCreatures > 0 || (Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings().seacreatureHourResetTime)) {
                 //Hide if not relevant ON, you are Fishing
                 seaCreatureDataUI.Hidden = false
                 guiManager.updateElementData("SeaCreatureCount", seaCreatureDataUI)
