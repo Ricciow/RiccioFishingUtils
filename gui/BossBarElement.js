@@ -107,6 +107,12 @@ class HealthBar {
         .setWidth((this.width * this.scale).pixels())
         .setHeight((this.height * this.scale).pixels())
 
+        this.bar
+        .setRadius((this.height * this.scale * 5 / 9).pixels())
+
+        this.healthBar
+        .setRadius((this.height * this.scale * 5 / 9).pixels())
+
         this.spacer
         .setWidth((this.width * this.scale).pixels())
         .setHeight((4 * this.scale).pixels())
