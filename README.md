@@ -27,4 +27,6 @@ Give feedback or just chat with others on our Discord
 * **Feature Suggestions:** Feel free to tell your ideas in `#suggestions` channel for new features and improvements to the mod.
 * **Chatting:** Chat with other RFU users in `#general` channel.
 
+## Install/Update Guide:
+[Click Here](https://github.com/Ricciow/RiccioFishingUtils/wiki/Manual-Install-Update)
 ---
