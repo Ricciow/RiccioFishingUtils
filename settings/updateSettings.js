@@ -218,9 +218,9 @@ const updateSettingsRegister = register("worldLoad", () => {
             new Message(
                 new TextComponent(`\n&5[&b&lRFU&5] &e&lRfu has updated to a new settings system!\n&a&l[Click to convert old settings]`)
                 .setHover("show_text", "&cThis may lag a bit and will take a while if you have modified a lot of settings from its original state")
-                .setClick("run_command", "rfurunconfigconversion"),
+                .setClick("run_command", "/rfurunconfigconversion"),
                 new TextComponent(`\n&c&l[Click to not see this again]\n`)
-                .setClick("run_command", "rfusetsettingstoupdated"),
+                .setClick("run_command", "/rfusetsettingstoupdated"),
             )
         )
     }
