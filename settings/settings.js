@@ -34,7 +34,7 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     configName: "commandsMultiCheckbox",
     title: "Enabled Commands",
     description: "Toggle the commands",
-    placeHolder: "Commands:",
+    placeHolder: "Commands",
     options: [
         {
             configName: "partyHelp",
@@ -114,7 +114,7 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     configName: "infoCommandsMultiCheckbox",
     title: "Information Commands",
     description: "Toggle the information commands",
-    placeHolder: "Commands:",
+    placeHolder: "Commands",
     options: [
        {
             configName: "infoJawbus",
@@ -712,31 +712,30 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     subcategory: "Boss Bar",
     shouldShow: data => data.bossHealthBarToggle
 })
-.addToggle({
+.addMultiCheckbox({
     category: "Crimson Fishing",
-    configName: "jawbusHealthBarToggle",
-    title: "● Toggle jawbus health bar",
-    description: "Shows a health bar for jawbus on the boss bar",
     subcategory: "Boss Bar",
-    value: true,
-    shouldShow: data => data.bossHealthBarToggle
-})
-.addToggle({
-    category: "Crimson Fishing",
-    configName: "thunderHealthBarToggle",
-    title: "● Toggle thunder health bar",
-    description: "Shows a health bar for thunder on the boss bar",
-    subcategory: "Boss Bar",
-    value: true,
-    shouldShow: data => data.bossHealthBarToggle
-})
-.addToggle({
-    category: "Crimson Fishing",
-    configName: "plhlegblastHealthBarToggle",
-    title: "● Toggle plhlegblast health bar",
-    description: "Shows a health bar for plhlegblast on the boss bar",
-    subcategory: "Boss Bar",
-    value: true,
+    configName: "bossBarMultiCheckbox",
+    title: "Boss Health bars",
+    description: "Choose which mobs will have their health bar displayed.",
+    placeHolder: "Bosses",
+    options: [
+        {
+            configName: "jawbusHealthBarToggle",
+            title: "Jawbus",
+            value: true,       
+        },
+        {
+            configName: "thunderHealthBarToggle",
+            title: "Thunder",
+            value: true
+        },
+        {
+            configName: "plhlegblastHealthBarToggle",
+            title: "Plhlegblast",
+            value: true
+        }
+    ],
     shouldShow: data => data.bossHealthBarToggle
 })
 .addSwitch({
@@ -908,31 +907,30 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     subcategory: "Mythic Creatures Detection",
     value: true
 })
-.addToggle({
+.addMultiCheckbox({
     category: "Crimson Fishing",
-    configName: "plhlegblastDetectionToggle",
-    title: "● Plhlegblast Detection",
-    description: "Warns you if there is a plhlegblast nearby",
     subcategory: "Mythic Creatures Detection",
-    value: true,
-    shouldShow: data => data.mythicDetectionToggle
-})
-.addToggle({
-    category: "Crimson Fishing",
-    configName: "jawbusDetectionToggle",
-    title: "● Jawbus Detection",
-    description: "Warns you if there is a jawbus nearby",
-    subcategory: "Mythic Creatures Detection",
-    value: true,
-    shouldShow: data => data.mythicDetectionToggle
-})
-.addToggle({
-    category: "Crimson Fishing",
-    configName: "thunderDetectionToggle",
-    title: "● Thunder Detection",
-    description: "Warns you if there is a thunder nearby",
-    subcategory: "Mythic Creatures Detection",
-    value: true,
+    configName: "bossDetectionMultiCheckbox",
+    title: "Boss Detection",
+    description: "Choose which mobs will have their health bar displayed.",
+    placeHolder: "Bosses",
+    options: [
+        {
+            configName: "jawbusDetectionToggle",
+            title: "Jawbus",
+            value: true,       
+        },
+        {
+            configName: "thunderDetectionToggle",
+            title: "Thunder",
+            value: true
+        },
+        {
+            configName: "plhlegblastDetectionToggle",
+            title: "Plhlegblast",
+            value: true
+        }
+    ],
     shouldShow: data => data.mythicDetectionToggle
 })
 .addTextInput({
@@ -972,31 +970,30 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     subcategory: "Mythic Creatures Lootsharing",
     value: true
 })
-.addToggle({
+.addMultiCheckbox({
     category: "Crimson Fishing",
-    configName: "mythicLootsharePlhlegblastToggle",
-    title: "● Plhlegblast lootshare range",
-    description: "shows you the lootshare range if there is a plhlegblast nearby",
     subcategory: "Mythic Creatures Lootsharing",
-    value: true,
-    shouldShow: data => data.mythicLootshareToggle
-})
-.addToggle({
-    category: "Crimson Fishing",
-    configName: "mythicLootshareJawbusToggle",
-    title: "● Jawbus lootshare range",
-    description: "shows you the lootshare range if there is a jawbus nearby",
-    subcategory: "Mythic Creatures Lootsharing",
-    value: true,
-    shouldShow: data => data.mythicLootshareToggle
-})
-.addToggle({
-    category: "Crimson Fishing",
-    configName: "mythicLootshareThunderToggle",
-    title: "● Thunder lootshare range",
-    description: "shows you the lootshare range if there is a thunder nearby",
-    subcategory: "Mythic Creatures Lootsharing",
-    value: true,
+    configName: "mythicLootshareMultiCheckbox",
+    title: "Boss Lootshares",
+    description: "Choose which mobs will have their lootshare range displayed.",
+    placeHolder: "Bosses",
+    options: [
+        {
+            configName: "mythicLootshareJawbusToggle",
+            title: "Jawbus",
+            value: true,       
+        },
+        {
+            configName: "mythicLootshareThunderToggle",
+            title: "Thunder",
+            value: true
+        },
+        {
+            configName: "mythicLootsharePlhlegblastToggle",
+            title: "Plhlegblast",
+            value: true
+        }
+    ],
     shouldShow: data => data.mythicLootshareToggle
 })
 .addSwitch({
@@ -1025,40 +1022,35 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     subcategory: "Radioactive Vial",
     shouldShow: data => data.vialMessageToggle
 })
-.addToggle({
+.addMultiCheckbox({
     category: "Rare Drops",
-    configName: "vialPartyChatToggle",
-    title: "● Party Chat",
-    description: "The message will be sent to party chat",
     subcategory: "Radioactive Vial",
-    value: true,
-    shouldShow: data => data.vialMessageToggle
-})
-.addToggle({
-    category: "Rare Drops",
-    configName: "vialGuildChatToggle",
-    title: "● Guild Chat",
-    description: "The message will also be sent to guild chat",
-    subcategory: "Radioactive Vial",
-    value: true,
-    shouldShow: data => data.vialMessageToggle
-})
-.addToggle({
-    category: "Rare Drops",
-    configName: "vialAllChatToggle",
-    title: "● All Chat",
-    description: "The message will also be sent to all chat",
-    subcategory: "Radioactive Vial",
-    value: false,
-    shouldShow: data => data.vialMessageToggle
-})
-.addToggle({
-    category: "Rare Drops",
-    configName: "vialCoopChatToggle",
-    title: "● Coop Chat",
-    description: "The message will also be sent to coop chat",
-    subcategory: "Radioactive Vial",
-    value: false,
+    configName: "vialChatCheckbox",
+    title: "Chats to send",
+    description: "Choose which chats will have the vial message sent to.",
+    placeHolder: "Chats",
+    options: [
+        {
+            configName: "vialPartyChatToggle",
+            title: "Party Chat",
+            value: true,       
+        },
+        {
+            configName: "vialGuildChatToggle",
+            title: "Guild Chat",
+            value: true,
+        },
+        {
+            configName: "vialAllChatToggle",
+            title: "All Chat",
+            value: false
+        }, 
+        {
+            configName: "vialCoopChatToggle",
+            title: "Coop Chat",
+            value: false
+        }
+    ],
     shouldShow: data => data.vialMessageToggle
 })
 .addSwitch({
