@@ -508,7 +508,7 @@ register('step', () => {
         if(Timer == '!!!') {
             rodTimerData.Text = funniFaces((rodTexts[1]).replace("([time])", ` `))
         }
-        else if((/\d\.\d/).test(Timer)){
+        else if((/^\d\.\d$/).test(Timer)){
             rodTimerData.Text = funniFaces((rodTexts[0]).replace("([time])", `${Timer}`));
         }
         else {
