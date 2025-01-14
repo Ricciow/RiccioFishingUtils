@@ -2,6 +2,8 @@
   RiccioFishingUtils 
   
   Chattriggers Module for Hypixel SkyBlock
+
+  ![rfu](https://raw.githubusercontent.com/Ricciow/RiccioFishingUtils/refs/heads/main/assets/rfulogo.png)
 </h1>
 
 <div align="center">
