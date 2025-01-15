@@ -79,7 +79,7 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
 })
 .addSwitch({
     category: "General Fishing",
-    configName: "seaCreatureCounterUiToggle",
+    configName: "seaCreatureCounterUIToggle",
     title: "Sea Creature Counter UI",
     description: "Shows the amount of sea creatures on your screen",
     subcategory: "Creature Counting",

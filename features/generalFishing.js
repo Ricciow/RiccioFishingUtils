@@ -139,7 +139,7 @@ register('step', () => {
     }
     //
     if (settings().seaCreatureCounterToggle) {
-        if(settings().seaCreatureCounterUiToggle) {
+        if(settings().seaCreatureCounterUIToggle) {
             //Sea creature counter render
             let seaCreatureDataUI = guiManager.getElementData("SeaCreatureCount")
             seaCreatureDataUI.Times["(1)"] = [SeaCreatures]

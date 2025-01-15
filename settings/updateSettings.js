@@ -88,7 +88,7 @@ function convertOldConfigToNew() {
 
     //General Fishing
     setConfigValue("General Fishing", "seaCreatureCounterToggle", oldValues.seaCreatureCounterToggle)
-    setConfigValue("General Fishing", "seaCreatureCounterUiToggle", oldValues.seaCreatureCounterUiToggle)
+    setConfigValue("General Fishing", "seaCreatureCounterUIToggle", oldValues.seaCreatureCounterUiToggle)
     setConfigValue("General Fishing", "seaCreatureCountWorms", oldValues.seaCreatureCountWorms)
     setConfigValue("General Fishing", "seaCreatureSoundToggle", oldValues.seaCreatureSoundToggle)
     setConfigValue("General Fishing", "seaCreatureSoundLimit", oldValues.seaCreatureSoundLimit)

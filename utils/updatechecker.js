@@ -13,24 +13,30 @@ function compareVersions(version1, version2) {
     return false;
 }
 
+try {
+    releases = JSON.parse(FileLib.getUrlContent("https://api.github.com/repos/ricciow/RiccioFishingUtils/releases"))
+}
+catch (error) {
+    console.log(`Github rate limited or ct version outdated: v${com.chattriggers.ctjs.Reference.MODVERSION}`)
+}
+
+const latestRelease = releases ? releases[0] : undefined;
+const latestVersion = latestRelease?.name.substring(1);
+const downloadLink = latestRelease?.html_url;
+const latestReleaseAvailable = compareVersions(version, latestVersion??"0.0.0")
+
 export function checkIfUpdate() {
-    if(!compareVersions(com.chattriggers.ctjs.Reference.MODVERSION, "2.2.1")) {
-        releases = JSON.parse(FileLib.getUrlContent("https://api.github.com/repos/ricciow/RiccioFishingUtils/releases"))
-        const latestRelease = releases[0];
-        const latestVersion = latestRelease.name.substring(1);
-        return compareVersions(version, latestVersion)
-    }
-    return false
+    return latestReleaseAvailable
+}
+
+export function getDownloadLink() {
+    return downloadLink
 }
 
 function checkIfUpdateText(announceUpToDate = false) {
     //Verify if ctjs is in version 2.2.1 or later
-    if(!compareVersions(com.chattriggers.ctjs.Reference.MODVERSION, "2.2.1")) {
-        releases = JSON.parse(FileLib.getUrlContent("https://api.github.com/repos/ricciow/RiccioFishingUtils/releases"))
-        const latestRelease = releases[0];
-        const latestVersion = latestRelease.name.substring(1);
-        if (compareVersions(version, latestVersion)) {
-            const downloadLink = latestRelease.html_url;
+    if(!compareVersions(com.chattriggers.ctjs.Reference.MODVERSION, "2.2.1")) { 
+        if (latestReleaseAvailable) {
             ChatLib.chat(
                 new TextComponent(`&5[&b&lRFU&5] &9&lNew RFU Release: &fv${latestVersion} &a&l[Download]`)
                 .setClick("open_url", downloadLink)
@@ -51,7 +57,7 @@ function checkIfUpdateText(announceUpToDate = false) {
 const latestwarn = register('worldLoad', () => {
     setTimeout(() => {
         checkIfUpdateText()
-    }, 2000);
+    }, 1000);
     latestwarn.unregister()
 })
 
