@@ -49,97 +49,109 @@ register('command', () => {
 }).setName("disablesulphurrange")
 
 
+let goldenFishData = {
+    startTime: 564004800000,        // Start Time
+    lastCast: 564004800000,         // Last Cast
+    cooking: false,                 // Timer Active
+    rodCast: false,                 // Rod Cast
+    golding: false                  // Golden Fish Spawned
+}
+
+const timeToReset = 8 * 60 * 1000   //8 minutes
+const timeToCast = 3 * 60 * 1000    //3 minutes
+const timeToAlert = 30 * 1000       //30s
+
 register("step", () => {
     if(settings().goldenTimerToggle) {
-        if(Player.asPlayerMP() != null){
-            if(Player.asPlayerMP().getDimension() == -1){
-                now = Date.now();
-                if(!Golding) {
-                    if (Player.getPlayer().field_71104_cf) {
-                        if(now - seaCreatureData.GOLDEN["LastCast"] > 180000 || seaCreatureData.GOLDEN["Cooking"] == false) {
-                            seaCreatureData.GOLDEN["StartTime"] = now;
-                        }
-                        seaCreatureData.GOLDEN["LastCast"] = now;
-                        seaCreatureData.GOLDEN["Cooking"] = true;
+        if(Player.asPlayerMP()?.getDimension() == -1){
+            now = Date.now();
+            if(!goldenFishData.golding) {
+                if (Player.getPlayer().field_71104_cf) {
+                    if(now - goldenFishData.lastCast > timeToCast || goldenFishData.cooking == false) {
+                        goldenFishData.startTime = now;
                     }
-                    else if (now - seaCreatureData.GOLDEN["LastCast"] > 180000) {
-                        seaCreatureData.GOLDEN["Cooking"] = false;
+                    if(!goldenFishData.rodCast) {
+                        goldenFishData.lastCast = now;
                     }
+                    goldenFishData.rodCast = true
+                    goldenFishData.cooking = true;
+                }
+                else {
+                    if (now - goldenFishData.lastCast > timeToCast) {
+                        goldenFishData.cooking = false;
+                    }
+                    goldenFishData.rodCast = false
                 }
             }
         }
 
-        //Golden Fish Render
-        let GoldenFishData = guiManager.getElementData("GoldenFishTimer")
-        if(seaCreatureData.GOLDEN["Cooking"] && !Golding) {
-            time = 480000 + seaCreatureData.GOLDEN["StartTime"];
-            timeCast = 180000 + seaCreatureData.GOLDEN["LastCast"];
+        //? Golden Fish Render
+        let goldenFishUI = guiManager.getElementData("GoldenFishTimer")
+        if(goldenFishData.cooking && !goldenFishData.golding) {
+            let time = timeToReset + goldenFishData.startTime;
+            let timeCast = timeToCast + goldenFishData.lastCast;
 
             logicalTime = time - Date.now()
             logicalTimeCast = timeCast - Date.now()
 
             if(logicalTime > 0) {
-                GoldenFishData.Times["(1)"] = time
+                goldenFishUI.Times["(1)"] = time
             }
             else {
-                GoldenFishData.Times["(1)"] = ["&c&lSpawnable Now"]
+                goldenFishUI.Times["(1)"] = ["&c&lSpawnable Now"]
             }
 
-            if (!Player.getPlayer().field_71104_cf && logicalTimeCast > 30000) {
-                GoldenFishData.Times["(2)"] = timeCast
-            }
-            else if(logicalTimeCast <= 30000) {
-                GoldenFishData.Times["(2)"] = ["&c&lCast NOW!"]
+            if (logicalTimeCast > timeToAlert) {
+                goldenFishUI.Times["(2)"] = timeCast
             }
             else {
-                GoldenFishData.Times["(2)"] = ["&a&lCasting"]
+                goldenFishUI.Times["(2)"] = ["&c&lCast NOW!"]
             }
             
         }
         
-        if(Golding) {
-            GoldenFishData.Times["(1)"] = ["&c&lGo get NOW!"]
-            GoldenFishData.Times["(2)"] = ["3m 0s"]
+        if(goldenFishData.golding) {
+            goldenFishUI.Times["(1)"] = ["&c&lGo get NOW!"]
+            goldenFishUI.Times["(2)"] = ["3m 0s"]
         }
-        else if(!seaCreatureData.GOLDEN["Cooking"]) {
-            GoldenFishData.Times["(1)"] = ["8m 0s"]
-            GoldenFishData.Times["(2)"] = ["3m 0s"]
+        else if(!goldenFishData.cooking) {
+            goldenFishUI.Times["(1)"] = ["8m 0s"]
+            goldenFishUI.Times["(2)"] = ["3m 0s"]
         }
 
         if(!settings().trophyHideUIToggle) {
             //Hide if not relevant OFF
-            GoldenFishData.Hidden = false
-            guiManager.updateElementData("GoldenFishTimer", GoldenFishData)
+            goldenFishUI.Hidden = false
+            guiManager.updateElementData("GoldenFishTimer", goldenFishUI)
         }
-        else if(seaCreatureData.GOLDEN["Cooking"] && 180000-(Date.now()-seaCreatureData.GOLDEN["LastCast"]) > 0 && (Player.asPlayerMP()?.getDimension() == -1)) {
+        else if(goldenFishData.cooking && timeToCast-(Date.now()-goldenFishData.lastCast) > 0 && (Player.asPlayerMP()?.getDimension() == -1)) {
             //Hide if not relevant ON, you are Fishing, You are in the crimson isle
-            GoldenFishData.Hidden = false
-            guiManager.updateElementData("GoldenFishTimer", GoldenFishData)
+            goldenFishUI.Hidden = false
+            guiManager.updateElementData("GoldenFishTimer", goldenFishUI)
         }
         else {
             //Hide if not relevant ON, you arent fishing in ci
-            GoldenFishData.Hidden = true
-            guiManager.updateElementData("GoldenFishTimer", GoldenFishData)
+            goldenFishUI.Hidden = true
+            guiManager.updateElementData("GoldenFishTimer", goldenFishUI)
         }
     } 
 }).setFps(3)
 
-let Golding = false;
 register("chat", () => {
-    Golding = true;
+    goldenFishData.golding = true;
 }).setCriteria("You spot a Golden Fish surface from beneath the lava!")
 
 register("chat", (rarity) => {
-    Golding = false;
-    seaCreatureData.GOLDEN["Cooking"] = false;
+    goldenFishData.golding = false;
+    goldenFishData.cooking = false;
 }).setCriteria("TROPHY FISH! You caught a Golden Fish ${rarity}.")
 
 register("chat", (rarity) => {
-    Golding = false
-    seaCreatureData.GOLDEN["Cooking"] = false;
+    goldenFishData.golding = false
+    goldenFishData.cooking = false;
 }).setCriteria("The Golden Fish swims back beneath the lava...")
 
 register("worldunload", () => {
-    Golding = false
-    seaCreatureData.GOLDEN["Cooking"] = false;
+    goldenFishData.golding = false
+    goldenFishData.cooking = false;
 });
