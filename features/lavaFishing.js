@@ -59,98 +59,115 @@ let ThunderTime = Date.now()
 register("step", () => {
     bossCount = [];
     MythicScs = [];
-    if(Player.asPlayerMP() != null){
-        if(Player.asPlayerMP().getDimension() == -1){
-            foundMythic = false;
-            World.getAllEntities().forEach(mob => {
-                mob_name = mob.name.replace(colorsRegex, "");
-                if(mob_name != undefined){
-                    if(settings().jawbusHealthBarToggle) {
-                        if (mob_name.includes("Lord Jawbus")){
-                            let jawbusHealthStrTemp = mob_name.split("[Lv600] Lord Jawbus ")[1];
-                            let jawbusHealthTemp = 0
-                            if (jawbusHealthStrTemp.includes("M/")) {
-                                jawbusHealthTemp = parseFloat(jawbusHealthStrTemp.replace(/k|❤/, "").split("/")[0]);
-                            }
-                            else if (jawbusHealthStrTemp.includes("k/")) {
-                                jawbusHealthTemp = parseFloat(jawbusHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000;
-                            }
-                            else {
-                                jawbusHealthTemp = parseFloat(jawbusHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000000;
-                            }
-                            let jawbusMaxHealthTemp = parseFloat(jawbusHealthStrTemp.replace(/M|❤/, "").split("/")[1]);
-                            jawbusHealthStrTemp = "§l" + jawbusHealthStrTemp.split(" ")[0];
-                            let newJawbus = Object.assign({
-                                "HPLabel" : jawbusHealthStrTemp,
-                                "HPPercentage" : (jawbusHealthTemp/jawbusMaxHealthTemp)*100
-                            }, BaseJawbus)
-                            bossCount.push(newJawbus);
+    if(Player.asPlayerMP()?.getDimension() == -1){
+        foundMythic = false;
+        World.getAllEntities().forEach(mob => {
+            mob_name = mob.name.replace(colorsRegex, "");
+            if(mob_name != undefined){
+                if(settings().jawbusHealthBarToggle) {
+                    if (mob_name.includes("Lord Jawbus")){
+                        let jawbusHealthStrTemp = mob_name.split("[Lv600] Lord Jawbus ")[1];
+                        let jawbusHealthTemp = 0
+                        if (jawbusHealthStrTemp.includes("M/")) {
+                            jawbusHealthTemp = parseFloat(jawbusHealthStrTemp.replace(/k|❤/, "").split("/")[0]);
                         }
-                    }
-                    if(settings().thunderHealthBarToggle) {
-                        if (mob_name.includes("Thunder ")){
-                            let thunderHealthStrTemp = mob_name.split("[Lv400] Thunder ")[1];
-                            let thunderHealthTemp = 0
-                            if (thunderHealthStrTemp.includes("M/")) {
-                                thunderHealthTemp = parseFloat(thunderHealthStrTemp.replace(/k|❤/, "").split("/")[0]);
-                            }
-                            else if (thunderHealthStrTemp.includes("k/")) {
-                                thunderHealthTemp = parseFloat(thunderHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000;
-                            }
-                            else {
-                                thunderHealthTemp = parseFloat(thunderHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000000;
-                            }
-                            let thunderMaxHealthTemp = parseFloat(thunderHealthStrTemp.replace(/M|❤/, "").split("/")[1]);
-                            thunderHealthStrTemp = "§l" + thunderHealthStrTemp.split(" ")[0];
-                            let newThunder = Object.assign({
-                                "HPLabel" : thunderHealthStrTemp,
-                                "HPPercentage" : (thunderHealthTemp/thunderMaxHealthTemp)*100
-                            }, BaseThunder)
-                            bossCount.push(newThunder);
+                        else if (jawbusHealthStrTemp.includes("k/")) {
+                            jawbusHealthTemp = parseFloat(jawbusHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000;
                         }
-                    }
-                    if(settings().plhlegblastHealthBarToggle) {
-                        if (mob_name.includes("Plhlegblast ")){
-                            let plhlegblastHealthStrTemp = mob_name.split("[Lv300] Plhlegblast ")[1];
-                            let plhlegblastHealthTemp = 0
-                            if (plhlegblastHealthStrTemp.includes("M/")) {
-                                plhlegblastHealthTemp = parseFloat(plhlegblastHealthStrTemp.replace(/k|❤/, "").split("/")[0]);
-                            }
-                            else if (plhlegblastHealthStrTemp.includes("k/")) {
-                                plhlegblastHealthTemp = parseFloat(plhlegblastHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000;
-                            }
-                            else {
-                                plhlegblastHealthTemp = parseFloat(plhlegblastHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000000;
-                            }
-                            let plhlegblastMaxHealthTemp = parseFloat(plhlegblastHealthStrTemp.replace(/M|❤/, "").split("/")[1]);
-                            plhlegblastHealthStrTemp = "§l" + plhlegblastHealthStrTemp;
-                            let newPlhlegblast = Object.assign({
-                                "HPLabel" : plhlegblastHealthStrTemp,
-                                "HPPercentage" : (plhlegblastHealthTemp/plhlegblastMaxHealthTemp)*100
-                            }, BasePlhegblast)
-                            bossCount.push(newPlhlegblast);
+                        else {
+                            jawbusHealthTemp = parseFloat(jawbusHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000000;
                         }
+                        let jawbusMaxHealthTemp = parseFloat(jawbusHealthStrTemp.replace(/M|❤/, "").split("/")[1]);
+                        jawbusHealthStrTemp = "§l" + jawbusHealthStrTemp.split(" ")[0];
+                        let newJawbus = Object.assign({
+                            "HPLabel" : jawbusHealthStrTemp,
+                            "HPPercentage" : (jawbusHealthTemp/jawbusMaxHealthTemp)*100
+                        }, BaseJawbus)
+                        bossCount.push(newJawbus);
                     }
-                    if (mythicRegex.test(mob_name)){
-                        if(!mythicDetected){
-                            if(mob_name == 'Squid'){
-                                if(settings().mythicDetectionToggle&&settings().plhlegblastDetectionToggle){
-                                    MythicDetectTitle = funniFaces(settings().mythicDetectionMessage).replace('([mob])',`Plhlegblast`);
-                                    Client.showTitle(MythicDetectTitle, "", settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
-                                    mythicDetected = true;
-                                    if(settings().mythicDetectionSoundToggle){
-                                        try {
-                                            MythicDetectSound.setVolume(settings().mythicDetectionSoundVolume).play();
-                                        }
-                                        catch (error) {
-                                            console.log("Sound playing no workie, prob sounds refreshed\n", error);
-                                        }
+                }
+                if(settings().thunderHealthBarToggle) {
+                    if (mob_name.includes("Thunder ")){
+                        let thunderHealthStrTemp = mob_name.split("[Lv400] Thunder ")[1];
+                        let thunderHealthTemp = 0
+                        if (thunderHealthStrTemp.includes("M/")) {
+                            thunderHealthTemp = parseFloat(thunderHealthStrTemp.replace(/k|❤/, "").split("/")[0]);
+                        }
+                        else if (thunderHealthStrTemp.includes("k/")) {
+                            thunderHealthTemp = parseFloat(thunderHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000;
+                        }
+                        else {
+                            thunderHealthTemp = parseFloat(thunderHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000000;
+                        }
+                        let thunderMaxHealthTemp = parseFloat(thunderHealthStrTemp.replace(/M|❤/, "").split("/")[1]);
+                        thunderHealthStrTemp = "§l" + thunderHealthStrTemp.split(" ")[0];
+                        let newThunder = Object.assign({
+                            "HPLabel" : thunderHealthStrTemp,
+                            "HPPercentage" : (thunderHealthTemp/thunderMaxHealthTemp)*100
+                        }, BaseThunder)
+                        bossCount.push(newThunder);
+                    }
+                }
+                if(settings().plhlegblastHealthBarToggle) {
+                    if (mob_name.includes("Plhlegblast ")){
+                        let plhlegblastHealthStrTemp = mob_name.split("[Lv300] Plhlegblast ")[1];
+                        let plhlegblastHealthTemp = 0
+                        if (plhlegblastHealthStrTemp.includes("M/")) {
+                            plhlegblastHealthTemp = parseFloat(plhlegblastHealthStrTemp.replace(/k|❤/, "").split("/")[0]);
+                        }
+                        else if (plhlegblastHealthStrTemp.includes("k/")) {
+                            plhlegblastHealthTemp = parseFloat(plhlegblastHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000;
+                        }
+                        else {
+                            plhlegblastHealthTemp = parseFloat(plhlegblastHealthStrTemp.replace(/M|❤/, "").split("/")[0])/1000000;
+                        }
+                        let plhlegblastMaxHealthTemp = parseFloat(plhlegblastHealthStrTemp.replace(/M|❤/, "").split("/")[1]);
+                        plhlegblastHealthStrTemp = "§l" + plhlegblastHealthStrTemp;
+                        let newPlhlegblast = Object.assign({
+                            "HPLabel" : plhlegblastHealthStrTemp,
+                            "HPPercentage" : (plhlegblastHealthTemp/plhlegblastMaxHealthTemp)*100
+                        }, BasePlhegblast)
+                        bossCount.push(newPlhlegblast);
+                    }
+                }
+                if (mythicRegex.test(mob_name)){
+                    if(!mythicDetected){
+                        if(mob_name == 'Squid'){
+                            if(settings().mythicDetectionToggle&&settings().plhlegblastDetectionToggle){
+                                MythicDetectTitle = funniFaces(settings().mythicDetectionMessage).replace('([mob])',`Plhlegblast`);
+                                Client.showTitle(MythicDetectTitle, "", settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
+                                mythicDetected = true;
+                                if(settings().mythicDetectionSoundToggle){
+                                    try {
+                                        MythicDetectSound.setVolume(settings().mythicDetectionSoundVolume).play();
+                                    }
+                                    catch (error) {
+                                        console.log("Sound playing no workie, prob sounds refreshed\n", error);
                                     }
                                 }
                             }
-                            else if(mob_name == 'Iron Golem'){
-                                if(settings().mythicDetectionToggle&&settings().jawbusDetectionToggle){
-                                    MythicDetectTitle = funniFaces(settings().mythicDetectionMessage).replace('([mob])',`Lord Jawbus`);
+                        }
+                        else if(mob_name == 'Iron Golem'){
+                            if(settings().mythicDetectionToggle&&settings().jawbusDetectionToggle){
+                                MythicDetectTitle = funniFaces(settings().mythicDetectionMessage).replace('([mob])',`Lord Jawbus`);
+                                Client.showTitle(MythicDetectTitle, "", settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
+                                if(settings().mythicDetectionSoundToggle){
+                                    try {
+                                        MythicDetectSound.setVolume(settings().mythicDetectionSoundVolume).play();
+                                    }
+                                    catch (error) {
+                                        console.log("Sound playing no workie, prob sounds refreshed\n", error);
+                                    }
+                                }
+                            }
+                            mythicDetected = true;
+                            jawby = true
+                            JawbusTime = Date.now()
+                        }
+                        else if(mob_name == 'Guardian'){
+                            if(mob.getWidth() > 1.5){
+                                if(settings().mythicDetectionToggle&&settings().thunderDetectionToggle){
+                                    MythicDetectTitle = funniFaces(settings().mythicDetectionMessage).replace('([mob])',`Thunder`);
                                     Client.showTitle(MythicDetectTitle, "", settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
                                     if(settings().mythicDetectionSoundToggle){
                                         try {
@@ -162,62 +179,43 @@ register("step", () => {
                                     }
                                 }
                                 mythicDetected = true;
-                                jawby = true
-                                JawbusTime = Date.now()
+                                thunda = true
+                                ThunderTime = Date.now()
                             }
-                            else if(mob_name == 'Guardian'){
-                                if(mob.getWidth() > 1.5){
-                                    if(settings().mythicDetectionToggle&&settings().thunderDetectionToggle){
-                                        MythicDetectTitle = funniFaces(settings().mythicDetectionMessage).replace('([mob])',`Thunder`);
-                                        Client.showTitle(MythicDetectTitle, "", settings().titleFadeIn, settings().titleDuration, settings().titleFadeOut);
-                                        if(settings().mythicDetectionSoundToggle){
-                                            try {
-                                                MythicDetectSound.setVolume(settings().mythicDetectionSoundVolume).play();
-                                            }
-                                            catch (error) {
-                                                console.log("Sound playing no workie, prob sounds refreshed\n", error);
-                                            }
-                                        }
-                                    }
-                                    mythicDetected = true;
-                                    thunda = true
-                                    ThunderTime = Date.now()
-                                }
-                            }
-                        }
-                        if(mob_name == 'Guardian'){
-                            if(mob.getWidth() > 1.5){
-                                foundMythic = true; 
-                                if(settings().mythicLootshareThunderToggle) {
-                                    MythicScs.push([mob.x, mob.y, mob.z]);
-                                }
-                            }
-                        }
-                        else if(mob_name == 'Iron Golem'){
-                            if(settings().mythicLootshareJawbusToggle) {
-                                MythicScs.push([mob.x, mob.y, mob.z]);
-                            }
-                            foundMythic = true; 
-                        }
-                        else if(mob_name == 'Squid') {
-                            if(settings().mythicLootsharePlhlegblastToggle) {
-                                MythicScs.push([mob.x, mob.y, mob.z]);
-                            }
-                            foundMythic = true; 
                         }
                     }
+                    if(mob_name == 'Guardian'){
+                        if(mob.getWidth() > 1.5){
+                            foundMythic = true; 
+                            if(settings().mythicLootshareThunderToggle) {
+                                MythicScs.push([mob.x, mob.y, mob.z]);
+                            }
+                        }
+                    }
+                    else if(mob_name == 'Iron Golem'){
+                        if(settings().mythicLootshareJawbusToggle) {
+                            MythicScs.push([mob.x, mob.y, mob.z]);
+                        }
+                        foundMythic = true; 
+                    }
+                    else if(mob_name == 'Squid') {
+                        if(settings().mythicLootsharePlhlegblastToggle) {
+                            MythicScs.push([mob.x, mob.y, mob.z]);
+                        }
+                        foundMythic = true; 
+                    }
                 }
-            }); 
-            if(mythicDetected && !foundMythic) {
-                mythicDetected = false;
-                if(jawby) {
-                    jawby = false
-                    ChatLib.chat(`&f&lJawbus took &e&l${readableTime(Date.now()-JawbusTime, true)}&f&l to kill!`)
-                }
-                if(thunda) {
-                    thunda = false
-                    ChatLib.chat(`&f&lThunder took &e&l${readableTime(Date.now()-ThunderTime, true)}&f&l to kill!`)
-                }
+            }
+        }); 
+        if(mythicDetected && !foundMythic) {
+            mythicDetected = false;
+            if(jawby) {
+                jawby = false
+                ChatLib.chat(`&f&lJawbus took &e&l${readableTime(Date.now()-JawbusTime, true)}&f&l to kill!`)
+            }
+            if(thunda) {
+                thunda = false
+                ChatLib.chat(`&f&lThunder took &e&l${readableTime(Date.now()-ThunderTime, true)}&f&l to kill!`)
             }
         }
     }

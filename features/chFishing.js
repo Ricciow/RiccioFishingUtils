@@ -154,14 +154,6 @@ register('step', () => {
     }
 }).setFps(8);
 
-register('command', () => {
-    World.getAllEntities().forEach(mob => {
-        ChatLib.chat(mob);
-        ChatLib.chat(mob.getName());
-        ChatLib.chat(mob.getTicksExisted());
-    });
-}).setName('entitiesalivelol');
-
 register("renderEntity", (entity, pos, partialTick, event) => {
     if(settings().wormNametagToggle) {
         if(entity != null) {
