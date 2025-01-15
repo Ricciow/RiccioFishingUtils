@@ -135,7 +135,7 @@ register("step", () => {
             guiManager.updateElementData("GoldenFishTimer", goldenFishUI)
         }
     } 
-}).setFps(3)
+}).setFps(6)
 
 register("chat", () => {
     goldenFishData.golding = true;
