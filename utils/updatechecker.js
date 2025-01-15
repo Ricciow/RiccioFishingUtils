@@ -51,7 +51,7 @@ function checkIfUpdateText(announceUpToDate = false) {
 const latestwarn = register('worldLoad', () => {
     setTimeout(() => {
         checkIfUpdateText()
-    }, 5000);
+    }, 2000);
     latestwarn.unregister()
 })
 
