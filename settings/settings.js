@@ -22,7 +22,7 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
         return checkIfUpdate()
     },
     onClick() {
-        java.awt.Desktop.getDesktop().browse(new java.net.URI("https://github.com/Ricciow/RiccioFishingUtils/releases"));
+        java.awt.Desktop.getDesktop().browse(new java.net.URI("https://github.com/Ricciow/RiccioFishingUtils/releases/latest"));
     }
 })
 .addButton({
