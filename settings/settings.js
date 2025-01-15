@@ -2,6 +2,58 @@ import Settings from "../../AmaterasuModded/core/Settings"
 import DefaultConfig from "../../Amaterasu/core/DefaultConfig"
 
 const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
+.addTextParagraph({
+    category: "RFU",
+    subcategory: null,
+    configName: "introduction",
+    title: "Introduction",
+    description: "Welcome to RFU, your latest and greatest fishing mod <3",
+    centered: true
+})
+.addButton({
+    category: "RFU",
+    subcategory: null,
+    configName: "moveUI",
+    title: "Move UI",
+    description: "Use this to edit the UI, you can use the scroll wheel to resize stuff and you can select an area to move multiple stuff!",
+    placeHolder: "Open UI Editor",
+    onClick() {
+        ChatLib.command("rfumove", true)
+    }
+})
+.addButton({
+    category: "RFU",
+    subcategory: null,
+    configName: "joinDiscord",
+    title: "&9&lDiscord",
+    description: "Come hang out, report bugs and make suggestions for the mod!",
+    placeHolder: "Join Discord",
+    onClick() {
+        java.awt.Desktop.getDesktop().browse(new java.net.URI("https://discord.gg/JfrXm6TqXz"));
+    }
+})
+.addButton({
+    category: "RFU",
+    subcategory: null,
+    configName: "joinGithub",
+    title: "&8&lGitHub",
+    description: "Help contribute to this great mod!",
+    placeHolder: "Open GitHub",
+    onClick() {
+        java.awt.Desktop.getDesktop().browse(new java.net.URI("https://github.com/Ricciow/RiccioFishingUtils"));
+    }
+})
+.addButton({
+    category: "RFU",
+    subcategory: null,
+    configName: "redirectChangelog",
+    title: "&eChangelog",
+    description: "Read the latest patches so you know what changed!",
+    placeHolder: "Open Changelog",
+    onClick(setting) {
+        setting.redirect("§eChangelog")
+    }
+})
 .addSwitch({
     category: "General Fishing",
     configName: "seaCreatureCounterToggle",
@@ -1301,11 +1353,11 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     value: true
 })
 
-const order = ["General Fishing", "Crimson Fishing", "Crystal Hollows Fishing", "Trophy Fishing", "Chat Commands", "Rare Drops", "Deployables", "Pets", "Player Stats", "Other"] 
+const order = ["RFU", "General Fishing", "Crimson Fishing", "Crystal Hollows Fishing", "Trophy Fishing", "Chat Commands", "Rare Drops", "Deployables", "Pets", "Player Stats", "Other"] 
 const orderMap = new Map(order.map((value, index) => [value, index]))
 
 const setting = new Settings("RiccioFishingUtils", config, "settings/ColorScheme.json")
-.addMarkdown("§9Changelog", FileLib.read("RiccioFishingUtils", "changelog.md"))
+.addMarkdown("§eChangelog", FileLib.read("RiccioFishingUtils", "changelog.md"))
 .setSize(90, 90)
 .setCategorySort((a, b) => {
     a = a.category
