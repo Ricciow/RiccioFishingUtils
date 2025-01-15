@@ -13,7 +13,17 @@ function compareVersions(version1, version2) {
     return false;
 }
 
-function checkIfUpdate(announceUpToDate = false) {
+export function checkIfUpdate() {
+    if(!compareVersions(com.chattriggers.ctjs.Reference.MODVERSION, "2.2.1")) {
+        releases = JSON.parse(FileLib.getUrlContent("https://api.github.com/repos/ricciow/RiccioFishingUtils/releases"))
+        const latestRelease = releases[0];
+        const latestVersion = latestRelease.name.substring(1);
+        return compareVersions(version, latestVersion)
+    }
+    return false
+}
+
+function checkIfUpdateText(announceUpToDate = false) {
     //Verify if ctjs is in version 2.2.1 or later
     if(!compareVersions(com.chattriggers.ctjs.Reference.MODVERSION, "2.2.1")) {
         releases = JSON.parse(FileLib.getUrlContent("https://api.github.com/repos/ricciow/RiccioFishingUtils/releases"))
@@ -39,8 +49,8 @@ function checkIfUpdate(announceUpToDate = false) {
 }
 
 const latestwarn = register('worldLoad', () => {
-    checkIfUpdate()
+    checkIfUpdateText()
     latestwarn.unregister()
 })
 
-register("command", () => checkIfUpdate(true)).setName("rfucheckupdate")
+register("command", () => checkIfUpdateText(true)).setName("rfucheckupdate")

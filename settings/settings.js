@@ -1,5 +1,6 @@
 import Settings from "../../AmaterasuModded/core/Settings"
 import DefaultConfig from "../../Amaterasu/core/DefaultConfig"
+import { checkIfUpdate } from "../utils/updatechecker"
 
 const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
 .addTextParagraph({
@@ -9,6 +10,20 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     title: "Introduction",
     description: "Welcome to RFU, your latest and greatest fishing mod <3",
     centered: true
+})
+.addButton({
+    category: "RFU",
+    subcategory: null,
+    configName: "newUpdateButton",
+    title: "&b&lNew Update!",
+    description: "Rfu has a new Update!",
+    placeHolder: "Download Website",
+    shouldShow() {
+        return checkIfUpdate()
+    },
+    onClick() {
+        java.awt.Desktop.getDesktop().browse(new java.net.URI("https://github.com/Ricciow/RiccioFishingUtils/releases"));
+    }
 })
 .addButton({
     category: "RFU",
