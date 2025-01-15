@@ -8,7 +8,7 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     subcategory: null,
     configName: "introduction",
     title: "Introduction",
-    description: "Welcome to RFU, your latest and greatest fishing mod <3\n\nYou can also nudge the Sliders with a/d and use w/s to increase/reduce the size of the nudge.",
+    description: "Welcome to RFU, your latest and greatest fishing mod <3\nUI is only updated once you close the settings.\nYou can also nudge the Sliders with a/d and use w/s to increase/reduce the size of the nudge.",
     centered: true
 })
 .addButton({
