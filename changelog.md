@@ -3,7 +3,7 @@
 - Changed config system to AmaterasuModded
 - Inverted Changelog
 - Revamped loading messages
-- Bossbar now stays with rounded edges when being scaled
+- Bossbar now scales without being modified
 - Fixed Hide if not relevant General not working
 - Fixed Hide if not relevant Deployables not working on Power Orbs
 - Fixed Hide if not relevant Trophy fishing not working

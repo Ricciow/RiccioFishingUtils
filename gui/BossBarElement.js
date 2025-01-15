@@ -66,7 +66,7 @@ class HealthBar {
         .setHeight((100).percent())
         .setChildOf(this.barContainer)
 
-        const healthBarContainer = new UIContainer()
+        this.healthBarContainer = new UIContainer()
         .setX(new CenterConstraint)
         .setY((1).pixels())
         .setWidth(new SubtractiveConstraint((100).percent(), (2).pixels()))
@@ -77,7 +77,7 @@ class HealthBar {
         .setX((0).pixels())
         .setY(new CenterConstraint)
         .setHeight((100).percent())
-        .setChildOf(healthBarContainer)
+        .setChildOf(this.healthBarContainer)
 
         this.hp = new UIText()
         .setX(new AdditiveConstraint(new SiblingConstraint, (1).pixels()))
@@ -112,6 +112,11 @@ class HealthBar {
 
         this.healthBar
         .setRadius((this.height * this.scale * 5 / 9).pixels())
+
+        this.healthBarContainer
+        .setY((1 * this.scale).pixels())
+        .setWidth(new SubtractiveConstraint((100).percent(), (2 * this.scale).pixels()))
+        .setHeight(new SubtractiveConstraint((100).percent(), (2 * this.scale).pixels()))
 
         this.spacer
         .setWidth((this.width * this.scale).pixels())
