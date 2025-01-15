@@ -55,6 +55,6 @@ export function updateUI() {
     Manager.updateElement("BossBar", settings().bossHealthBarToggle && playerData.GUI["Toggle"], undefined, undefined, settings().BossHealthBarLength)
 }
 
-settings().getConfig().onClose(() => {
+settings().getConfig().onCloseGui(() => {
     updateUI()
 })
