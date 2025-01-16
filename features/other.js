@@ -94,6 +94,11 @@ register("chat", () => {
 }).setCriteria("Second Wind Activated! Your Spirit Mask saved your life!");
 
 register("command", () => {
+    settings().getConfig().openGui()
+    settings().getConfig().redirect("§eChangelog")
+}).setName("rfupatchnotes");
+
+register("command", () => {
     ChatLib.say(`x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
 }).setName("coords");
 
