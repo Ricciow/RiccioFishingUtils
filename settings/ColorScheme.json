@@ -2,9 +2,9 @@
     "Button": {
         "background": {
             "color": [
-                0,
-                0,
-                0,
+                90,
+                90,
+                90,
                 80
             ],
             "outlineColor": [
@@ -113,9 +113,9 @@
     "TextInput": {
         "background": {
             "color": [
-                0,
-                0,
-                0,
+                90,
+                90,
+                90,
                 80
             ],
             "outlineColor": [
@@ -220,9 +220,9 @@
                 80
             ],
             "disabledColor": [
-                0,
-                0,
-                0,
+                90,
+                90,
+                90,
                 80
             ],
             "outlineColor": [
@@ -742,9 +742,9 @@
         },
         "selectionbackground": {
             "color": [
-                0,
-                0,
-                0,
+                90,
+                90,
+                90,
                 80
             ],
             "outlineColor": [
@@ -794,9 +794,9 @@
         },
         "optionsbackground": {
             "color": [
-                0,
-                0,
-                0,
+                90,
+                90,
+                90,
                 80
             ],
             "outlineColor": [
@@ -889,9 +889,9 @@
         },
         "optionsbackground": {
             "color": [
-                255,
-                255,
-                255,
+                90,
+                90,
+                90,
                 80
             ],
             "outlineColor": [
@@ -914,9 +914,9 @@
         },
         "placeholderbackground": {
             "color": [
-                0,
-                0,
-                0,
+                90,
+                90,
+                90,
                 80
             ],
             "outlineColor": [
@@ -1013,9 +1013,9 @@
     "Amaterasu": {
         "background": {
             "color": [
-                4,
-                71,
-                102,
+                4, 
+                71, 
+                102, 
                 120
             ],
             "outlineColor": [

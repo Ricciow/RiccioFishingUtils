@@ -69,6 +69,33 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
         setting.redirect("§eChangelog")
     }
 })
+// .addColorPicker({ postponed until amaterasumodded gets updated
+//     category: "RFU",
+//     configName: "bgColor",
+//     subcategory: "Background",
+//     title: "Change Background Color",
+//     description: "Changes the color and alpha of the background",
+//     value: [4, 71, 102, 120],
+// })
+// .addButton({
+//     category: "RFU",
+//     subcategory: "Background",
+//     subcategory: null,
+//     configName: "applyBg",
+//     title: "Apply Changes",
+//     placeHolder: "Apply",
+//     onClick(setting) {
+//         const scheme = JSON.parse(FileLib.read("RiccioFishingUtils", "settings/ColorScheme.json"))
+
+//         console.log(setting.settings.bgColor)
+//         scheme.Amaterasu.background.color = setting.settings.bgColor
+
+//         FileLib.write("RiccioFishingUtils", "settings/ColorScheme.json", JSON.stringify(scheme, null, 4))
+
+//         setting.setScheme("settings/ColorScheme.json")
+//         setting.apply()
+//     }
+// })
 .addSwitch({
     category: "General Fishing",
     configName: "seaCreatureCounterToggle",
