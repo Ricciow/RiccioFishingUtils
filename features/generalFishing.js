@@ -724,7 +724,8 @@ register('step', () => {
 }).setFps(1);
 
 const magicFindRegex = /Magic Find (I|II|III|IV|V|VI|VII|VIII|IX|X|1|2|3|4|5|6|7|8|9|10)/
-const ImportantDropsRender = {"Enchanted Book":[0,0],
+const ImportantDropsRender = {
+                        "Enchanted Book":[0,0],
                         "Slug Boots":[15,5000], 
                         "Moogma Leggings":[20,10000],
                         "Flaming Chestplate":[25,25000],
@@ -743,21 +744,29 @@ const ImportantDropsRender = {"Enchanted Book":[0,0],
                         "Magma Lord Leggings": [0, 0],
                         "Magma Lord Boots": [0, 0]};
 
+const items = new (Java.type('java.util.WeakHashMap'))();
+
 register('renderslot', (slot, gui, event) => {
     if(settings().renderItems) {
         if(slot != null) {
-            item = slot.getItem()
-            if (item != null) {
-                piece = false
-                Object.keys(ImportantDropsRender).forEach(drop => {
-                    if(item.getName().includes(drop)) {
-                        piece = true
+            let item = slot.getItem()
+            if (item) {
+                const stack = item.itemStack;
+                let lore = items.get(stack);
+                if(!lore) {
+                    piece = false
+                    Object.keys(ImportantDropsRender).forEach(drop => {
+                        if(item.getName().includes(drop)) {
+                            piece = true
+                        }
+                    })
+                    if(piece) {
+                        lore = item.getLore().reduce((all, now) => all + `\n${now}`, ``);
+                        items.put(stack, lore)
                     }
-                })
-                if(piece) {
-                    lore = item.getLore().reduce((all, now) => all + `\n${now}`, ``);
+                }
+                if(lore) {
                     magicFindRegex.lastIndex = 0;
-                    if(!lore) return
                     if(lore.includes("Blazing Fortune") && magicFindRegex.test(lore)) {
                         if(settings().renderItemsBg) Renderer.drawRect(Renderer.color(0, 225, 255, 100), slot.getDisplayX(), slot.getDisplayY(), 16, 16);
                         ItemText = new Text(`&b&lBf &3&lMf`, slot.getDisplayX()+2, slot.getDisplayY()+15).setShadow(true).setScale(0.4);
