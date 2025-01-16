@@ -859,6 +859,14 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
 })
 .addSwitch({
     category: "Chat Commands",
+    configName: "partyAutoRejoin",
+    title: "Auto Rejoin Party",
+    description: "Automatically rejoins a party when kicked in togglewarp",
+    subcategory: "Party Commands",
+    value: true
+})
+.addSwitch({
+    category: "Chat Commands",
     configName: "partyJoinHelp",
     title: "New Member Help Command",
     description: "Runs the help command whenever a new player joins",

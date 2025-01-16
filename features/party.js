@@ -554,3 +554,18 @@ register("chat", (user, event) => {
         }
     }
 }).setCriteria("From ${user}: Hey! I'm currently muted and am unable to message right now.")
+
+let lastkick
+register('chat', (user) => {
+    if(settings().partyAutoRejoin) {
+        user = removeRankTag(user)
+        lastkick = Date.now()
+    }
+}).setCriteria("You have been kicked from the party by ${user} ")
+
+register('chat', (user) => {
+    if(settings().partyAutoRejoin) {
+        user = removeRankTag(user)
+        if(lastkick) if((Date.now() - lastkick) < 10000) ChatLib.command(`p join ${user}`)
+    }
+}).setCriteria("-----------------------------------------------------\n${user} has invited you to join their party!\nYou have 60 seconds to accept. Click here to join!\n-----------------------------------------------------")
