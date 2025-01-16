@@ -718,10 +718,119 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
 })
 .addSwitch({
     category: "Trophy Fishing",
+    configName: "trophySendMessage",
+    title: "Send chat messages on Diamond",
+    description: "Enable sending messages when you catch a diamond trophy fish",
+    subcategory: "General",
+    value: true
+})
+.addMultiCheckbox({
+    category: "Trophy Fishing",
+    configName: "trophyMessagesMultiCheckbox",
+    title: "Tfish message triggers",
+    description: "Choose which trophy fish will trigger the message",
+    placeHolder: "Tfishes",
+    subcategory: "General",
+    options: [
+        {
+            configName: "skitterMessage",
+            title: "Sulphur Skitter",
+            value: true
+        },
+        {
+            configName: "blobfishMessage",
+            title: "Blobfish",
+            value: true
+        },
+        {
+            configName: "obfuscated1Message",
+            title: "Obfuscated 1",
+            value: true
+        },
+        {
+            configName: "hotflounderMessage",
+            title: "Steaming-Hot Flounder",
+            value: true
+        },
+        {
+            configName: "gusherMessage",
+            title: "Gusher",
+            value: true
+        },
+        {
+            configName: "obfuscated2Message",
+            title: "Obfuscated 2",
+            value: true
+        },
+        {
+            configName: "slugfishMessage",
+            title: "Slugfish",
+            value: true
+        },
+        {
+            configName: "flyfishMessage",
+            title: "Flyfish",
+            value: true
+        },
+        {
+            configName: "obfuscated3Message",
+            title: "Obfuscated 3",
+            value: true
+        },
+        {
+            configName: "vanilleMessage",
+            title: "Vanille",
+            value: true
+        },
+        {
+            configName: "lavahorseMessage",
+            title: "Lavahorse",
+            value: true
+        },
+        {
+            configName: "manaRayMessage",
+            title: "Mana Ray",
+            value: true
+        },
+        {
+            configName: "volcstoneMessage",
+            title: "Volcanic Stonefish",
+            value: true
+        },
+        {
+            configName: "skeletonFishMessage",
+            title: "Skeleton Fish",
+            value: true
+        },
+        {
+            configName: "moldfinMessage",
+            title: "Moldfin",
+            value: true
+        },
+        {
+            configName: "soulFishMessage",
+            title: "Soul Fish",
+            value: true
+        },
+        {
+            configName: "karateMessage",
+            title: "Karate",
+            value: true
+        },
+        {
+            configName: "goldenFishMessage",
+            title: "Golden Fish",
+            value: true
+        }
+    ],
+    shouldShow: data => data.trophySendMessage
+})
+.addSwitch({
+    category: "Trophy Fishing",
     configName: "sulphurRightClickToggle",
     title: "Show sulphur range on right click",
     description: "Shows the range of the sulphur block when right clicking it, click again to stop showing\nFun fact: it actually makes sense now!",
-    subcategory: "Sulphur Block",
+    subcategory: "Sulphur",
     value: true
 })
 .addSwitch({

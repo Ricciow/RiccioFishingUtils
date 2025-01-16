@@ -2,6 +2,7 @@ import settings from "../settings/settings";
 import RenderLib from "../../RenderLib"
 import { seaCreatureData , playerData} from "../data/data";
 import guiManager from "../gui/guiManager";
+import { sendMsg } from "../utils/functions";
 
 let x = 0;
 let y = 0;
@@ -155,3 +156,30 @@ register("worldunload", () => {
     goldenFishData.golding = false
     goldenFishData.cooking = false;
 });
+
+const settingParam = {
+    "Sulphur Skitter": "skitterMessage",
+    "Blobfish": "blobfishMessage",
+    "Obfuscated 1": "obfuscated1Message",
+    "Steaming-Hot Flounder": "hotflounderMessage",
+    "Gusher": "gusherMessage",
+    "Obfuscated 2": "obfuscated2Message",
+    "Slugfish": "slugfishMessage",
+    "Flyfish": "flyfishMessage",
+    "Obfuscated 3": "obfuscated3Message",
+    "Vanille": "vanilleMessage",
+    "Lavahorse": "lavahorseMessage",
+    "Mana Ray": "manaRayMessage",
+    "Volcanic Stonefish": "volcstoneMessage",
+    "Skeleton Fish": "skeletonFishMessage",
+    "Moldfin": "moldfinMessage",
+    "Soul Fish": "soulFishMessage",
+    "Karate Fish": "karateMessage",
+    "Golden Fish": "goldenFishMessage"
+}
+
+register("chat", (tfish) => {
+    if(settings()[settingParam[tfish]] && settings().trophySendMessage) {
+        sendMsg(`TROPHY FISH! You caught a ${tfish} DIAMOND.`)
+    }
+}).setCriteria("TROPHY FISH! You caught a ${tfish} DIAMOND.")

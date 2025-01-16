@@ -8,6 +8,7 @@
 - Fixed Hide if not relevant Deployables not working on Power Orbs
 - Fixed Hide if not relevant Trophy fishing not working
 - Fixed Golden Fish Timer to now properly take into account rod casting.
+- Added option to send message upon getting Diamond Trophy Fish
 # V0.2.6
 - Added new github version alert.
 # V0.2.5
