@@ -13,6 +13,8 @@ function compareVersions(version1, version2) {
     return false;
 }
 
+let releases
+
 try {
     releases = JSON.parse(FileLib.getUrlContent("https://api.github.com/repos/ricciow/RiccioFishingUtils/releases"))
 }
