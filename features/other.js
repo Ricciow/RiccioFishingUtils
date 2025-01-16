@@ -93,12 +93,6 @@ register("chat", () => {
     spiritMaskUseTime = Date.now()
 }).setCriteria("Second Wind Activated! Your Spirit Mask saved your life!");
 
-const patchnotes = `- Added /rfuaddvial count, which adds a vial to /vials\n- Added /rfusetvialcount count, which sets the count to a number\n- Made vial drops get copied to clipboard\n- Hid the vanilla fishing rod timer when the setting is on\n- Fixed sc counter timer being weird on worms with count worms anyways off\n- Added inventory full debrief\n- Added thunder bottle full title/message\n- Made pet display show pet levels when equipping them manually\n- Made pet display also now show rarity correctly\n- Removed pet display customization :(\n- Added inventory attributes/enchants display for lava fishing items\n- Added /rfuunrendercoords command\n- Made coords unrender automatically when leaving island\n- Added rendering coords if someone sends them on chat\n- Removed a test message on /stream\n- Added !allinv and !ai alias to !allinvite\n- Merged totem/power orb/flare expired sounds\n- Added jawbusinfo, thunderinfo and vialinfo chat command\n- Made chat commands blacklist case insensitive\n- Added a click to party person message in guild chat and when getting booped\n- Added an actual setting for the random dh messages, was too confusing before...\n- Added a timer to vanquisher/thunder invulnerability\n- Added settings to most UIs to toggle them off if they're not relevant.\n- Added more checks to the pet leveling up on the display so it displays accurately\n- Added an option to hide worms nametags in crystal hollows\n- Added checks so !warp doesn't warp when on a private island or on a low player count nether lobby (8 or less)\n- Added golden fish timer\n- Added a space in the Y of the /coords command so it works better with other mods\n- Added you've been here messages when joining a repeated lobby\n- Added a setting to hide creature messages/dh messages\n- Added drop messages for drops you don't usually see (also drop air for the funni)\n- Added an option to make the im muted message warp party.\n- Removed pet level up subtitle :(\n- Reformatted /rfubossstats and now shows last time caught\n-V0.1.1\n- Improved performance\n-Fixed a bug where worm health would not be displayed at all\n- Made Cast until more sensical`;
-
-register("command", () => {
-    ChatLib.chat(patchnotes);
-}).setName("rfupatchnotes");
-
 register("command", () => {
     ChatLib.say(`x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
 }).setName("coords");
