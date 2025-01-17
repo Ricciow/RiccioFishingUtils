@@ -60,12 +60,14 @@ function checkIfUpdateText(announceUpToDate = false) {
                 ChatLib.chat(
                     new TextComponent(`&5[&b&lRFU&5] &9&lNew RFU Release: &fv${latestVersion} &a&l[Download Link]`)
                     .setClick("open_url", downloadLink)
+                    .setHover("show_text", "Click to open the download website")
                 )
             }
             else {
                 ChatLib.chat(
                     new TextComponent(`&5[&b&lRFU&5] &9&lNew RFU Release: &fv${latestVersion} &a&l[Download]`)
                     .setClick("run_command", "/rfudownloadnewestversion")
+                    .setHover("show_text", "Click to automatically update RFU.")
                 )
             }
         }
