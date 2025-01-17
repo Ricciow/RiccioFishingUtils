@@ -117,8 +117,10 @@ function downloadFile(url, destination) {
     destination.getParentFile().mkdirs();
     connection = com.chattriggers.ctjs.CTJS.INSTANCE.makeWebRequest(url)
 
-    rbc = Channels.newChannel(connection.getInputStream());
+    const is = connection.getInputStream()
+    rbc = Channels.newChannel(is);
     fos = new FileOutputStream(destination);
     fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
     fos.close()
+    is.close()
 };
