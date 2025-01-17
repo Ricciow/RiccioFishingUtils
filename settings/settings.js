@@ -1,6 +1,6 @@
 import Settings from "../../AmaterasuModded/core/Settings"
 import DefaultConfig from "../../Amaterasu/core/DefaultConfig"
-import { checkIfUpdate } from "../utils/updatechecker"
+import { checkIfUpdate, getDirectDownloadLink, updateModule } from "../utils/update/updatechecker"
 
 const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
 .addTextParagraph({
@@ -19,11 +19,33 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Rfu has a new Update!",
     placeHolder: "Download Website",
     shouldShow() {
-        return checkIfUpdate()
+        return checkIfUpdate() && getDirectDownloadLink() === undefined
     },
     onClick() {
         java.awt.Desktop.getDesktop().browse(new java.net.URI("https://github.com/Ricciow/RiccioFishingUtils/releases/latest"));
     }
+})
+.addButton({
+    category: "RFU",
+    subcategory: null,
+    configName: "newUpdateDownloadButton",
+    title: "&b&lNew Update!",
+    description: "Rfu has a new Update!",
+    placeHolder: "Download",
+    shouldShow() {
+        return checkIfUpdate() && getDirectDownloadLink() !== undefined
+    },
+    onClick() {
+        updateModule()
+    }
+})
+.addSwitch({
+    category: "RFU",
+    configName: "autoUpdate",
+    title: "Toggle Auto Updating",
+    description: "Toggle wether RFU should auto update",
+    subcategory: null,
+    value: true
 })
 .addButton({
     category: "RFU",

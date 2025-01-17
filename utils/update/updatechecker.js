@@ -28,7 +28,7 @@ const downloadLink = latestRelease?.html_url;
 const latestReleaseAvailable = compareVersions(version, latestVersion??"0.0.0")
 
 let assets
-if(true) {
+if(latestReleaseAvailable) {
     const assetsUrl = latestRelease.assets_url
     try {
         assets = JSON.parse(FileLib.getUrlContent(assetsUrl))
@@ -49,7 +49,7 @@ export function getDownloadLink() {
 }
 
 export function getDirectDownloadLink() {
-    
+    return downloadUrl
 }
 
 function checkIfUpdateText(announceUpToDate = false) {
@@ -93,15 +93,20 @@ register("command", () => checkIfUpdateText(true)).setName("rfucheckupdate")
 const tempZip = Config.modulesFolder + "/RiccioFishingUtils/RiccioFishingUtils.zip"
 
 register("command", () => {
+    updateModule()
+}).setName("rfudownloadnewestversion")
+
+export function updateModule() {
     if(downloadUrl) {
         downloadFile(downloadUrl, tempZip)
         FileLib.unzip(tempZip, Config.modulesFolder)
         FileLib.delete(tempZip)
+        ChatLib.command('ct reload', true)
     }
     else {
         ChatLib.chat("No download url found")
     }
-}).setName("rfudownloadnewestversion")
+}
 
 const FileOutputStream = Java.type("java.io.FileOutputStream")
 const File = Java.type("java.io.File")
