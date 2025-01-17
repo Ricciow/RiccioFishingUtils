@@ -4,6 +4,7 @@
 - Added Pick Command
 - Removed mixendmod conversion
 - Added auto updater
+- Fixed rod timer not being the same when moving
 # V0.2.7
 - Made keybindfix Work
 - Changed config system to AmaterasuModded

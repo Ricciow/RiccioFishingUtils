@@ -53,6 +53,11 @@ export function updateUI() {
 
     //BossBar
     Manager.updateElement("BossBar", settings().bossHealthBarToggle && playerData.GUI["Toggle"], undefined, undefined, settings().BossHealthBarLength)
+
+    //Rod Timer
+    let rodTimerData = Manager.getElementData("RodTimer")
+    rodTimerData.Placeholder = settings().rodTimerUI.split("|")[1]
+    Manager.updateElementData("RodTimer", rodTimerData)
 }
 
 settings().getConfig().onCloseGui(() => {
