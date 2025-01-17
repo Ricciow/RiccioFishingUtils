@@ -23,10 +23,6 @@ import { seaCreatureData } from "../../data/data";
 
 // commandManager.addCommand(exampleCommand);
 
-register("command", () => {
-    console.log(JSON.stringify(partyTracker.PARTY))
-}).setName("rfutestcommandslols")
-
 //? Help
 
 export function help(manager, name, parameter = undefined) {
