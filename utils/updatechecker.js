@@ -96,7 +96,7 @@ register("command", () => {
     if(downloadUrl) {
         downloadFile(downloadUrl, tempZip)
         FileLib.unzip(tempZip, Config.modulesFolder)
-        FileLib.delete(Config.modulesFolder + tempZip)
+        FileLib.delete(tempZip)
     }
     else {
         ChatLib.chat("No download url found")
