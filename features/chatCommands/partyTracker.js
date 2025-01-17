@@ -8,6 +8,12 @@ class partyTracker {
     constructor() {
         this.PARTY = playerData.PARTY
 
+        if(!this.PARTY.logOff) this.PARTY.logOff = 564004800000
+        if(!this.PARTY.inParty) this.PARTY.inParty = false
+        if(!this.PARTY.isLeader) this.PARTY.isLeader = false
+        if(!this.PARTY.members) this.PARTY.members = []
+        if(!this.PARTY.warpExcluded) this.PARTY.warpExcluded = []
+
         register("chat", () => {
             this.PARTY.inParty = true;
         }).setCriteria("Party > ${*}: ${*}");
