@@ -19,24 +19,15 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Rfu has a new Update!",
     placeHolder: "Download Website",
     shouldShow() {
-        return checkIfUpdate() && getDirectDownloadLink() === undefined
+        return checkIfUpdate()
     },
     onClick() {
-        java.awt.Desktop.getDesktop().browse(new java.net.URI("https://github.com/Ricciow/RiccioFishingUtils/releases/latest"));
-    }
-})
-.addButton({
-    category: "RFU",
-    subcategory: null,
-    configName: "newUpdateDownloadButton",
-    title: "&b&lNew Update!",
-    description: "Rfu has a new Update!",
-    placeHolder: "Download",
-    shouldShow() {
-        return checkIfUpdate() && getDirectDownloadLink() !== undefined
-    },
-    onClick() {
-        updateModule()
+        if(getDirectDownloadLink()) {
+            updateModule()
+        }
+        else {
+            java.awt.Desktop.getDesktop().browse(new java.net.URI("https://github.com/Ricciow/RiccioFishingUtils/releases/latest"));
+        }
     }
 })
 .addSwitch({
