@@ -58,7 +58,7 @@ function checkIfUpdateText(announceUpToDate = false) {
         if (latestReleaseAvailable) {
             if(!downloadUrl) {
                 ChatLib.chat(
-                    new TextComponent(`&5[&b&lRFU&5] &9&lNew RFU Release: &fv${latestVersion} &a&l[Download Url]`)
+                    new TextComponent(`&5[&b&lRFU&5] &9&lNew RFU Release: &fv${latestVersion} &a&l[Download Link]`)
                     .setClick("open_url", downloadLink)
                 )
             }
