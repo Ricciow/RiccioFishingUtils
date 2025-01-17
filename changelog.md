@@ -5,6 +5,7 @@
 - Removed mixendmod conversion
 - Added auto updater
 - Fixed rod timer not being the same when moving
+- Added a command to see version: /rfuversion
 # V0.2.7
 - Made keybindfix Work
 - Changed config system to AmaterasuModded
