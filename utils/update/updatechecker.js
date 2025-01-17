@@ -103,6 +103,7 @@ export function updateModule() {
         downloadFile(downloadUrl, tempZip)
         FileLib.unzip(tempZip, Config.modulesFolder)
         FileLib.delete(tempZip)
+        ChatLib.chat("&5[&b&lRFU&5] &e&lYour RFU has been updated! &6Reloading...")
         ChatLib.command('ct reload', true)
     }
 }
