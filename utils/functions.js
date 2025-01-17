@@ -249,6 +249,17 @@ export function splitMsg(msg, size) {
 
     if (!split) return [];
     if (split.length === 1) return split;
-    
+
     return split;
+}
+
+export function sendPartyMessage(msg) {
+    let splitted = splitMsg(message, 97)
+    let timeout = 0
+    splitted.forEach((message) => {
+        setTimeout(() => {
+            ChatLib.command(`pc ${message}`);
+        }, timeout);
+        timeout += 250
+    })
 }
