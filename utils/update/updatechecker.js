@@ -124,3 +124,7 @@ function downloadFile(url, destination) {
     fos.close()
     is.close()
 };
+
+register("command", () => {
+    ChatLib.chat(`&5[&b&lRFU&5] &f&lYou're on version &e&lv${version}`)
+}).setName("rfuversion")

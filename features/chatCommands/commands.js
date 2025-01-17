@@ -87,7 +87,7 @@ commandManager.addCommand({
 commandManager.addCommand({
     triggers: ["togglewarp", "tw"],      
     parameters: 1,            
-    leaderOnly: false,        
+    leaderOnly: true,        
     memberOnly: false,        
     selfTrigger: true,            
     description: `Invite someone to the party! Usage: ${settings().partyPrefix}invite username`,          
@@ -319,7 +319,7 @@ commandManager.addCommand({
 
 //?JawbusInfo
 commandManager.addCommand({
-    triggers: ["jawbusinfo", "ji"],   
+    triggers: ["jawbusinfo", "jawinfo", "ji"],   
     parameters: 1,            
     leaderOnly: false,        
     memberOnly: false,        
@@ -334,7 +334,7 @@ commandManager.addCommand({
 
 //?ThunderInfo
 commandManager.addCommand({
-    triggers: ["thunderinfo", "ti"],   
+    triggers: ["thunderinfo", "thuninfo", "ti"],   
     parameters: 1,            
     leaderOnly: false,        
     memberOnly: false,        
@@ -343,7 +343,7 @@ commandManager.addCommand({
     checkFunc: () => settings().infoThunder,
     func(manager, name, param) {
         if(param) if(!playerName.toLowerCase().includes(param.toLowerCase())) return
-        ChatLib.command(`pc Catches since last Jawbus: ${seaCreatureData.CRIMSON.ThunderCount-1}, Last: ${readableTime(Date.now() - seaCreatureData.CRIMSON.ThunderTime)}, avg: ${getAverageFromList(seaCreatureData.CRIMSON.ThunderAllCount)}`);
+        ChatLib.command(`pc Catches since last Thunder: ${seaCreatureData.CRIMSON.ThunderCount-1}, Last: ${readableTime(Date.now() - seaCreatureData.CRIMSON.ThunderTime)}, avg: ${getAverageFromList(seaCreatureData.CRIMSON.ThunderAllCount)}`);
     }
 })
 
@@ -355,7 +355,7 @@ commandManager.addCommand({
     memberOnly: false,        
     selfTrigger: true,            
     description: `Tells you the amount of own jawbusses since last, the last time, and the average for Vials.`,          
-    checkFunc: () => settings().infoThunder,
+    checkFunc: () => settings().infoVial,
     func(manager, name, param) {
         if(param) if(!playerName.toLowerCase().includes(param.toLowerCase())) return
         ChatLib.command(`pc Own jawbusses since last Vial: ${seaCreatureData.DROPS.RadioactiveVial}, Last: ${readableTime(Date.now() - seaCreatureData.DROPS.RadioactiveVialTime)}, avg: ${getVialAverage()}`);
