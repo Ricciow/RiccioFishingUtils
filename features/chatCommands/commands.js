@@ -30,13 +30,14 @@ register("command", () => {
 //? Help
 
 export function help(manager, name, parameter = undefined) {
+    console.log(parameter, checkIfUser(parameter))
     if(!parameter && partyTracker.PARTY.isLeader || checkIfUser(parameter)) {
         //General Help
         let commands = manager.commands.filter(({ leaderOnly, memberOnly, checkFunc }) => (leaderOnly && partyTracker.PARTY.isLeader || !leaderOnly && !memberOnly || memberOnly && !partyTracker.PARTY.isLeader) && checkFunc()).map(({ triggers }) => triggers[0]);
         let message = `Enabled Commands: ${commands.join(", ")}`;
         sendPartyMessage(message)
     }
-    else {
+    else if(!partyTracker.PARTY.members.includes(parameter)){
         let command = manager.commands.find(({ triggers }) => triggers?.some(trigger => trigger === parameter));
         if(command) {
             sendPartyMessage(`(${parameter}) ${command.description} Triggers: ${command.triggers.join(", ")}`);

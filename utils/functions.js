@@ -253,7 +253,7 @@ export function splitMsg(msg, size) {
     return split;
 }
 
-export function sendPartyMessage(msg) {
+export function sendPartyMessage(message) {
     let splitted = splitMsg(message, 97)
     let timeout = 0
     splitted.forEach((message) => {
