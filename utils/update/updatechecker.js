@@ -38,7 +38,7 @@ if(latestReleaseAvailable) {
     }
 }
 
-const downloadUrl = assets[0]?.browser_download_url
+const downloadUrl = assets ? assets[0].browser_download_url : undefined
 
 export function checkIfUpdate() {
     return latestReleaseAvailable
@@ -58,13 +58,13 @@ function checkIfUpdateText(announceUpToDate = false) {
         if (latestReleaseAvailable) {
             if(!downloadUrl) {
                 ChatLib.chat(
-                    new TextComponent(`&5[&b&lRFU&5] &9&lNew RFU Release: &fv${latestVersion} &a&l[Download]`)
+                    new TextComponent(`&5[&b&lRFU&5] &9&lNew RFU Release: &fv${latestVersion} &a&l[Download Url]`)
                     .setClick("open_url", downloadLink)
                 )
             }
             else {
                 ChatLib.chat(
-                    new TextComponent(`&5[&b&lRFU&5] &9&lNew RFU Release: &fv${latestVersion} &a&l[Auto Download]`)
+                    new TextComponent(`&5[&b&lRFU&5] &9&lNew RFU Release: &fv${latestVersion} &a&l[Download]`)
                     .setClick("run_command", "/rfudownloadnewestversion")
                 )
             }
@@ -102,9 +102,6 @@ export function updateModule() {
         FileLib.unzip(tempZip, Config.modulesFolder)
         FileLib.delete(tempZip)
         ChatLib.command('ct reload', true)
-    }
-    else {
-        ChatLib.chat("No download url found")
     }
 }
 
