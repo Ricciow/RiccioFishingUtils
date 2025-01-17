@@ -951,6 +951,11 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
             configName: "partyCoords",
             title: "Coords",
             value: true
+        },
+        {
+            configName: "partyPick",
+            title: "Pick",
+            value: true
         }
     ]
 })
@@ -997,21 +1002,26 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     description: "Toggle the information commands",
     placeHolder: "Commands",
     options: [
-       {
+        {
+            configName: "infoPlhleg",
+            title: "plhleginfo",
+            value: true
+        },
+        {
             configName: "infoJawbus",
             title: "jawbusinfo",
             value: true
-       },
-       {
+        },
+        {
             configName: "infoThunder",
             title: "thunderinfo",
             value: true
-       },
-       {
-        configName: "infoVial",
-        title: "vialinfo",
-        value: true
-       }
+        },
+        {
+            configName: "infoVial",
+            title: "vialinfo",
+            value: true
+        }
     ]
 })
 .addTextParagraph({

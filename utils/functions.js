@@ -20,6 +20,10 @@ export function checkIfUser(ign){
     }
 }
 
+export function removeFromArray(array, item) {
+    array.splice(array.indexOf(item), 1)
+}
+
 export function checkBlacklist(ign){
     let Blacklisted = false;
     ign = removeRankTag(ign);
@@ -220,3 +224,22 @@ export function getVialAverage() {
     let average = sum/(drops.length > 0 ? drops.length : 1)
     return Math.ceil(average)
 }
+
+//Thx to Bloom
+const triggers = []
+export function registerWhen(triggertype, func, checkFunc) {
+    let trigger = register(triggertype, func)
+    triggers.push([trigger.unregister(), checkFunc])
+    return trigger
+}
+
+register("tick", () => {
+    triggers.forEach(([trigger, func]) => {
+        if (func()) {
+            trigger.register()
+        }
+        else {
+            trigger.unregister()
+        }
+    })
+})

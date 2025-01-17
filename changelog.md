@@ -1,3 +1,8 @@
+# V0.2.8
+- Reworked Party Commands
+- Added PlhegInfo Command
+- Added Pick Command
+- Removed mixendmod conversion
 # V0.2.7
 - Made keybindfix Work
 - Changed config system to AmaterasuModded

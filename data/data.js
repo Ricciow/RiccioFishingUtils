@@ -4,7 +4,9 @@ export let playerData = new PogObject('RiccioFishingUtils', {
     "PARTY": {
         "logOff": 564004800000,
         "inParty": false,
-        "isLeader": false
+        "isLeader": false,
+        "members": [],
+        "warpExcluded": []
     },
     "SETTINGS": {
         "WarnBait": true,
