@@ -30,7 +30,7 @@ register("command", () => {
 //? Help
 
 export function help(manager, name, parameter = undefined) {
-    if(!parameter) {
+    if(!parameter && partyTracker.PARTY.isLeader || checkIfUser(parameter)) {
         //General Help
         let commands = manager.commands.filter(({ leaderOnly, memberOnly, checkFunc }) => (leaderOnly && partyTracker.PARTY.isLeader || !leaderOnly && !memberOnly || memberOnly && !partyTracker.PARTY.isLeader) && checkFunc()).map(({ triggers }) => triggers[0]);
         let message = `Enabled Commands: ${commands.join(", ")}`;
@@ -38,7 +38,7 @@ export function help(manager, name, parameter = undefined) {
     }
     else {
         let command = manager.commands.find(({ triggers }) => triggers?.some(trigger => trigger === parameter));
-        if(command && command?.checkFunc()) {
+        if(command) {
             sendPartyMessage(`(${parameter}) ${command.description} Triggers: ${command.triggers.join(", ")}`);
         }
         else {
@@ -55,7 +55,7 @@ commandManager.addCommand({
     selfTrigger: true,              
     description: "Know what a command does!",          
     checkFunc: () => settings().partyHelp,            
-    func: help                   
+    func: help                      
 })
 
 //? Invite
