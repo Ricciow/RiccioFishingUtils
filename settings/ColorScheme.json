@@ -145,16 +145,16 @@
         },
         "mouseEnterAnimation": {
             "color": [
-                0,
-                0,
-                0,
-                80
+                128,
+                128,
+                128,
+                255
             ],
             "placeholderColor": [
-                120,
-                120,
-                120,
-                255
+                170,
+                170,
+                170,
+                80
             ],
             "type": "OUT_EXP",
             "time": 0.5
