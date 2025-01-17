@@ -3,6 +3,7 @@
 - Added PlhegInfo Command
 - Added Pick Command
 - Removed mixendmod conversion
+- Added auto updater
 # V0.2.7
 - Made keybindfix Work
 - Changed config system to AmaterasuModded
