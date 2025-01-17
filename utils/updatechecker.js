@@ -27,6 +27,19 @@ const latestVersion = latestRelease?.name.substring(1);
 const downloadLink = latestRelease?.html_url;
 const latestReleaseAvailable = compareVersions(version, latestVersion??"0.0.0")
 
+let assets
+if(true) {
+    const assetsUrl = latestRelease.assets_url
+    try {
+        assets = JSON.parse(FileLib.getUrlContent(assetsUrl))
+    } 
+    catch(error) {
+        console.log(`Github rate limited or ct version outdated: v${com.chattriggers.ctjs.Reference.MODVERSION}`)
+    }
+}
+
+const downloadUrl = assets[0]?.browser_download_url
+
 export function checkIfUpdate() {
     return latestReleaseAvailable
 }
@@ -35,14 +48,26 @@ export function getDownloadLink() {
     return downloadLink
 }
 
+export function getDirectDownloadLink() {
+    
+}
+
 function checkIfUpdateText(announceUpToDate = false) {
     //Verify if ctjs is in version 2.2.1 or later
     if(!compareVersions(com.chattriggers.ctjs.Reference.MODVERSION, "2.2.1")) { 
         if (latestReleaseAvailable) {
-            ChatLib.chat(
-                new TextComponent(`&5[&b&lRFU&5] &9&lNew RFU Release: &fv${latestVersion} &a&l[Download]`)
-                .setClick("open_url", downloadLink)
-            )
+            if(!downloadUrl) {
+                ChatLib.chat(
+                    new TextComponent(`&5[&b&lRFU&5] &9&lNew RFU Release: &fv${latestVersion} &a&l[Download]`)
+                    .setClick("open_url", downloadLink)
+                )
+            }
+            else {
+                ChatLib.chat(
+                    new TextComponent(`&5[&b&lRFU&5] &9&lNew RFU Release: &fv${latestVersion} &a&l[Auto Download]`)
+                    .setClick("run_command", "/rfudownloadnewestversion")
+                )
+            }
         }
         else if(announceUpToDate) {
             ChatLib.chat("&5[&b&lRFU&5] &9You're on the latest version!")
@@ -64,3 +89,30 @@ const latestwarn = register('worldLoad', () => {
 })
 
 register("command", () => checkIfUpdateText(true)).setName("rfucheckupdate")
+
+
+register("command", () => {
+    if(downloadUrl) {
+        downloadFile(downloadUrl, Config.modulesFolder + "/RiccioFishingUtils/RiccioFishingUtils.zip")
+        FileLib.unzip(Config.modulesFolder + "/RiccioFishingUtils/RiccioFishingUtils.zip", Config.modulesFolder)
+    }
+    else {
+        ChatLib.chat("No download url found")
+    }
+}).setName("rfudownloadnewestversion")
+
+const FileOutputStream = Java.type("java.io.FileOutputStream")
+const File = Java.type("java.io.File")
+const Channels = Java.type("java.nio.channels.Channels")
+const Long = Java.type("java.lang.Long")
+
+function downloadFile(url, destination) {
+    destination = new File(destination);
+    destination.getParentFile().mkdirs();
+    connection = com.chattriggers.ctjs.CTJS.INSTANCE.makeWebRequest(url)
+
+    rbc = Channels.newChannel(connection.getInputStream());
+    fos = new FileOutputStream(destination);
+    fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+    fos.close()
+};
