@@ -16,8 +16,8 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     subcategory: null,
     configName: "newUpdateButton",
     title: "&b&lNew Update!",
-    description: "Rfu has a new Update!",
-    placeHolder: "Download Website",
+    description: "Rfu has a new Update! This will automatically update if possible, if not it'll open the download link",
+    placeHolder: "Download",
     shouldShow() {
         return checkIfUpdate()
     },
