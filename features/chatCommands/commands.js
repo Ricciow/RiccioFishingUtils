@@ -1,7 +1,7 @@
 import commandManager from "./commandManager";
 import settings from "../../settings/settings";
 import partyTracker from "./partyTracker";
-import { checkIfUser, getAverageFromList, getVialAverage, readableTime, removeFromArray, removeRankTag } from "../../utils/functions";
+import { checkIfUser, getAverageFromList, getVialAverage, readableTime, removeFromArray, removeRankTag, splitMsg } from "../../utils/functions";
 import { playerName } from "../../data/constants";
 import skyblock from "../../utils/skyblock";
 import { seaCreatureData } from "../../data/data";
@@ -34,11 +34,18 @@ export function help(manager, name, parameter = undefined) {
         //General Help
         let commands = manager.commands.filter(({ leaderOnly, memberOnly, checkFunc }) => (leaderOnly && partyTracker.PARTY.isLeader || !leaderOnly && !memberOnly || memberOnly && !partyTracker.PARTY.isLeader) && checkFunc()).map(({ triggers }) => triggers[0]);
         let message = `Enabled Commands: ${commands.join(", ")}`;
-        ChatLib.command(`pc ${message}`);
+        let splitted = splitMsg(message, 97)
+        let timeout = 0
+        splitted.forEach((message) => {
+            setTimeout(() => {
+                ChatLib.command(`pc ${message}`);
+            }, timeout);
+            timeout += 250
+        })
     }
     else {
         let command = manager.commands.find(({ triggers }) => triggers?.some(trigger => trigger === parameter));
-        if(command) {
+        if(command && command?.checkFunc()) {
             ChatLib.command(`pc (${parameter}) ${command.description} Triggers: ${command.triggers.join(", ")}`);
         }
         else {
