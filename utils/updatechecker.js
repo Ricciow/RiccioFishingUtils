@@ -90,11 +90,13 @@ const latestwarn = register('worldLoad', () => {
 
 register("command", () => checkIfUpdateText(true)).setName("rfucheckupdate")
 
+const tempZip = Config.modulesFolder + "/RiccioFishingUtils/RiccioFishingUtils.zip"
 
 register("command", () => {
     if(downloadUrl) {
-        downloadFile(downloadUrl, Config.modulesFolder + "/RiccioFishingUtils/RiccioFishingUtils.zip")
-        FileLib.unzip(Config.modulesFolder + "/RiccioFishingUtils/RiccioFishingUtils.zip", Config.modulesFolder)
+        downloadFile(downloadUrl, tempZip)
+        FileLib.unzip(tempZip, Config.modulesFolder)
+        FileLib.delete(Config.modulesFolder + tempZip)
     }
     else {
         ChatLib.chat("No download url found")
