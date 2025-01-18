@@ -219,7 +219,7 @@ register('messageSent', (message, event) => {
 commandManager.addCommand({
     triggers: ["warp", "w"],      
     parameters: 0,            
-    leaderOnly: false,        
+    leaderOnly: true,        
     memberOnly: false,        
     selfTrigger: true,            
     description: `Warps the party!`,          
