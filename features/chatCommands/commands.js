@@ -247,11 +247,8 @@ commandManager.addCommand({
                 }
             }
         }
-        else {
-            if(name != playerName) ChatLib.command(`p transfer ${name}`)
-            else if(partyTracker.PARTY.isLeader){
-                sendPartyMessage(`Usage: ${settings().partyPrefix}transfer username`)
-            }
+        else if(name != playerName) {
+            ChatLib.command(`p transfer ${name}`)
         }
     }
 })
