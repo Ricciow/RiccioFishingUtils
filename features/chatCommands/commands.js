@@ -27,13 +27,13 @@ import { seaCreatureData } from "../../data/data";
 
 export function help(manager, name, parameter = undefined) {
     console.log(parameter, checkIfUser(parameter))
-    if(!parameter && partyTracker.PARTY.isLeader || checkIfUser(parameter)) {
+    if(!parameter && partyTracker.isLeader || checkIfUser(parameter)) {
         //General Help
-        let commands = manager.commands.filter(({ leaderOnly, memberOnly, checkFunc }) => (leaderOnly && partyTracker.PARTY.isLeader || !leaderOnly && !memberOnly || memberOnly && !partyTracker.PARTY.isLeader) && checkFunc()).map(({ triggers }) => triggers[0]);
+        let commands = manager.commands.filter(({ leaderOnly, memberOnly, checkFunc }) => (leaderOnly && partyTracker.isLeader || !leaderOnly && !memberOnly || memberOnly && !partyTracker.isLeader) && checkFunc()).map(({ triggers }) => triggers[0]);
         let message = `Enabled Commands: ${commands.join(", ")}`;
         sendPartyMessage(message)
     }
-    else if(!partyTracker.PARTY.members.includes(parameter)){
+    else if(!partyTracker.members.includes(parameter) && parameter){
         let command = manager.commands.find(({ triggers }) => triggers?.some(trigger => trigger === parameter));
         if(command) {
             sendPartyMessage(`(${parameter}) ${command.description} Triggers: ${command.triggers.join(", ")}`);
@@ -95,12 +95,12 @@ commandManager.addCommand({
         if(checkIfUser(name)) {
             if(param) {
                 if(partyTracker.PARTY["members"].map((player) => player.toLowerCase()).includes(param.toLowerCase())) {
-                    if(partyTracker.PARTY.warpExcluded.includes(param)) {
-                        removeFromArray(partyTracker.PARTY.warpExcluded, param)
+                    if(partyTracker.warpExcluded.includes(param)) {
+                        removeFromArray(partyTracker.warpExcluded, param)
                         sendPartyMessage(`${param} can now be warped.`)
                     }
                     else {
-                        partyTracker.PARTY.warpExcluded.push(param)
+                        partyTracker.warpExcluded.push(param)
                         sendPartyMessage(`${param} can not be warped until you leave or the party is disbanded.`)
                     }
                 }
@@ -117,12 +117,12 @@ commandManager.addCommand({
                 sendPartyMessage("Only party leader can enable togglewarp for others.")
             }
             else {
-                if(partyTracker.PARTY.warpExcluded.includes(name)) {
-                    removeFromArray(partyTracker.PARTY.warpExcluded, name)
+                if(partyTracker.warpExcluded.includes(name)) {
+                    removeFromArray(partyTracker.warpExcluded, name)
                     sendPartyMessage("You can now be warped.")
                 }
                 else {
-                    partyTracker.PARTY.warpExcluded.push(name)
+                    partyTracker.warpExcluded.push(name)
                     sendPartyMessage("You can not be warped until you leave or the party is disbanded.")
                 }
             }
@@ -153,19 +153,19 @@ export function warp(manager, name, ignoreConditions = false) {
     }
     lastSelfTrigger = false;
     if(skyblock.map != 'Private Island' && skyblock.playerCount > 8|| ignoreConditions) {
-        if(partyTracker.PARTY.warpExcluded.length == 0) {
+        if(partyTracker.warpExcluded.length == 0) {
             warpParty()
         }
         else {
             timeout = 0
-            partyTracker.PARTY.warpExcluded.forEach(person => {
+            partyTracker.warpExcluded.forEach(person => {
                 needJoin.push(person)
                 setTimeout(() => {
                     ChatLib.command(`p kick ${person}`)
                 }, timeout);
                 timeout += 500;
             });
-            partyTracker.PARTY.warpExcluded = []
+            partyTracker.warpExcluded = []
             setTimeout(() => {
                 warpParty()
             }, timeout);
@@ -199,7 +199,7 @@ register("chat", (user) => {
     user = removeRankTag(user).toLowerCase();
     if(needJoin.includes(user)) {
         removeFromArray(needJoin, user)
-        partyTracker.PARTY.warpExcluded.push(user)
+        partyTracker.warpExcluded.push(user)
     }
 }).setCriteria("${user} joined the party.");
 
@@ -239,7 +239,7 @@ commandManager.addCommand({
     func(manager, name, parameter) {
         if(parameter) {
             if(parameter != playerName) {
-                if(partyTracker.PARTY.members.map((player) => player.toLowerCase()).includes(parameter.toLowerCase())) {
+                if(partyTracker.members.map((player) => player.toLowerCase()).includes(parameter.toLowerCase())) {
                     ChatLib.command(`p transfer ${parameter}`);
                 }   
                 else {

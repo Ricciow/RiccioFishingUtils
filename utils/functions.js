@@ -12,12 +12,10 @@ export function removeRankTag(ign){
 }
 
 export function checkIfUser(ign){
-    if(ign.toLowerCase() == playerName.toLowerCase()){
+    if(ign?.toLowerCase() == playerName.toLowerCase()){
         return true
     }
-    else{
-        return false
-    }
+    return false
 }
 
 export function removeFromArray(array, item) {
