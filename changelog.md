@@ -8,7 +8,7 @@
 - Added a command to see version: /rfuversion
 - Added a color selector for settings background
 - Fixed imports for Linux
-- Added a <>< next to the nametag of anyone who contributes to the mod
+- Added a fish next to the nametag of anyone who contributes to the mod
 # V0.2.7
 - Made keybindfix Work
 - Changed config system to AmaterasuModded

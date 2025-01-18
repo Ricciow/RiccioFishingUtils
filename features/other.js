@@ -195,8 +195,10 @@ register("step", () => {
 }).setFps(3)
 
 const Contributors = {
-    'ricciow': "§3§l<><"
+    'ricciow': "§3><((^>"
 }
+
+const players = new (Java.type('java.util.WeakHashMap'))();
 
 register("renderEntity", (entity, position, partialTicks, event) => {
     if (entity.getClassName() == "EntityOtherPlayerMP") {
@@ -204,7 +206,15 @@ register("renderEntity", (entity, position, partialTicks, event) => {
         if(!playerObj) return
         let name = playerObj.getName()
         if(Contributors[name]) {
-            let newname = new TextComponent(name + " " + Contributors[name])
+            let newname = players.get(playerObj.player)
+            if(!newname) {
+                let displayName = playerObj.getDisplayName()
+                let newnamestr = displayName.getText().split(" ").find(text => new RegExp(name, 'g').test(text))
+                console.log(displayName, newnamestr)
+                newname = new TextComponent(newnamestr + " " + Contributors[name])
+                console.log("Created a new Key")
+                players.put(playerObj.player, newname)
+            }
             playerObj.setNametagName(newname)
         }
     } 
