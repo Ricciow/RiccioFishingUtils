@@ -96,6 +96,7 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     subcategory: null,
     configName: "applyBg",
     title: "Apply Changes",
+    description: "Confirm the changes to the BG color.",
     placeHolder: "Apply",
     onClick(setting) {
         const scheme = JSON.parse(FileLib.read("RiccioFishingUtils", "settings/ColorScheme.json"))
