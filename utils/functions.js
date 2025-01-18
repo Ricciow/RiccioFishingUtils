@@ -261,3 +261,11 @@ export function sendPartyMessage(message) {
         timeout += 250
     })
 }
+
+/**
+ * Gets the lore of an item without messing up skyhanni.
+ * @param {Item} item 
+ */
+export function getLore(item) {
+    return item.getNBT().toObject().tag.display.Lore
+}

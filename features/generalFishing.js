@@ -1,6 +1,6 @@
 import settings from "../settings/settings";
 import { playerData , seaCreatureData} from "../data/data";
-import { readableTime, funniFaces, makeRegexFromList, readableTime, sendMsg, getRandomInt, readableQuantity} from "../utils/functions";
+import { readableTime, funniFaces, makeRegexFromList, readableTime, sendMsg, getRandomInt, readableQuantity, getLore} from "../utils/functions";
 import { Chats , seaCreatures, seaCreaturesNW, Bobber, seaCreatureMessages, colorsRegex, ArmorStand, Firework} from "../data/constants";
 import guiManager from "../gui/guiManager";
 import settings from "../settings/settings";
@@ -761,7 +761,7 @@ register('renderslot', (slot, gui, event) => {
                         }
                     })
                     if(piece) {
-                        lore = item.getNBT().toObject().getTag("tag").getTag("display").toObject().Lore.reduce((all, now) => all + `\n${now}`, ``);
+                        lore = getLore(item).reduce((all, now) => all + `\n${now}`, ``);
                         items.put(stack, lore)
                     }
                 }
