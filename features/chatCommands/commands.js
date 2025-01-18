@@ -12,7 +12,7 @@ import { seaCreatureData } from "../../data/data";
 
 // exampleCommand = {
 //     triggers: ["test1"],             //All triggers for the command (must be lowercased)
-//     parameters: 1,                   //Number of parameters for command
+//     parameters: 1,                   //Number of parameters for command -1 = any amount
 //     leaderOnly: false,               //Self explanatory
 //     memberOnly: false,               //Self explanatory
 //     selfTrigger: false,              //Trigger the command on self, will delay the command a bit
