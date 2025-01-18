@@ -193,3 +193,19 @@ register("step", () => {
         }
     }
 }).setFps(3)
+
+const Contributors = {
+    'ricciow': "§3§l<><"
+}
+
+register("renderEntity", (entity, position, partialTicks, event) => {
+    if (entity.getClassName() == "EntityOtherPlayerMP") {
+        let playerObj = World.getPlayerByName(entity.getName())
+        if(!playerObj) return
+        let name = playerObj.getName()
+        if(Contributors[name]) {
+            let newname = new TextComponent(name + " " + Contributors[name])
+            playerObj.setNametagName(newname)
+        }
+    } 
+})
