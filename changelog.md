@@ -6,6 +6,8 @@
 - Added auto updater
 - Fixed rod timer not being the same when moving
 - Added a command to see version: /rfuversion
+- Added a color selector for settings background
+- Fixed imports for Linux
 # V0.2.7
 - Made keybindfix Work
 - Changed config system to AmaterasuModded
