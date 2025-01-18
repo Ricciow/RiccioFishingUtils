@@ -1,4 +1,4 @@
-import { BaseElement } from "../../SimpleOverlays/elements/baseElement"
+import { BaseElement } from "../../SimpleOverlays/elements/BaseElement"
 import { UICTText } from "../../SimpleOverlays/utils"
 
 export class DataTextElement extends BaseElement {
