@@ -210,9 +210,7 @@ register("renderEntity", (entity, position, partialTicks, event) => {
             if(!newname) {
                 let displayName = playerObj.getDisplayName()
                 let newnamestr = displayName.getText().split(" ").find(text => new RegExp(name, 'g').test(text))
-                console.log(displayName, newnamestr)
                 newname = new TextComponent(newnamestr + " " + Contributors[name])
-                console.log("Created a new Key")
                 players.put(playerObj.player, newname)
             }
             playerObj.setNametagName(newname)
