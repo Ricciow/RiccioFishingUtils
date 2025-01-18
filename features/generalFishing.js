@@ -761,7 +761,7 @@ register('renderslot', (slot, gui, event) => {
                         }
                     })
                     if(piece) {
-                        lore = item.getLore().reduce((all, now) => all + `\n${now}`, ``);
+                        lore = item.getNBT().toObject().getTag("tag").getTag("display").toObject().Lore.reduce((all, now) => all + `\n${now}`, ``);
                         items.put(stack, lore)
                     }
                 }
