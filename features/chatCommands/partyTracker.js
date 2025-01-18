@@ -183,7 +183,12 @@ class partyTracker {
                 }
             }
         });
+
+        register("command", () => {
+            console.log(JSON.stringify(this.PARTY, null, 4))
+        }).setName("rfupartyinfo")
     }
+
 
     save() {
         playerData.PARTY = this.PARTY
