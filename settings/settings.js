@@ -981,6 +981,23 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     subcategory: "Party Commands",
     value: false
 })
+.addTextInput({
+    category: "Chat Commands",
+    configName: "partyInviteKeyword",
+    title: "Invite Keyword",
+    description: "The keyword that will trigger the autoinvite or show a click to invite message, Default: Boop!",
+    value: "Boop!",
+    placeHolder: "",
+    subcategory: "Party Commands"
+})
+.addSwitch({
+    category: "Chat Commands",
+    configName: "partyAutoInviteToggle",
+    title: "Auto invite",
+    description: "Enable auto invite to automatically party someone when you get dm'ed the keyword!",
+    subcategory: "Party Commands",
+    value: false
+})
 .addSlider({
     category: "Chat Commands",
     configName: "partyCooldown",

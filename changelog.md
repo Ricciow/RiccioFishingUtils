@@ -1,3 +1,6 @@
+# v0.2.10
+- Added an autoInvite on keyword option
+- Modified the [Click to party] so it only appears with the set keyword
 # V0.2.9
 - Fixed getLore() so it doesnt break skyhanni
 - Fixed party Commands

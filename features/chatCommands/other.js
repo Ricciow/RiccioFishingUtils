@@ -31,10 +31,14 @@ register("chat", (user, message) => {
         if(partyTracker.PARTY.members.includes(user)) warp(commandManager, user)
         else ChatLib.command("r You're not on the party smh.")
     }
-    
-    if(message == 'Boop!' || message == 'p me' || message == 'party me' || message == 'lf party') {
-        user = removeRankTag(user);
-        ChatLib.chat(new TextComponent(`&a&l[Click to party ${user}]`).setClickAction('run_command').setClickValue(`/p ${user}`).setHoverAction("show_text").setHoverValue(`/p ${user}`));
+
+    if(message == settings().partyInviteKeyword) {
+        if(settings().partyAutoInviteToggle) {
+            ChatLib.command(`p ${user}`)
+        }
+        else {
+            ChatLib.chat(new TextComponent(`&a&l[Click to party ${user}]`).setClickAction('run_command').setClickValue(`/p ${user}`).setHoverAction("show_text").setHoverValue(`/p ${user}`));
+        }
     }
 }).setCriteria("From ${user}: ${message}")
 
