@@ -1,5 +1,6 @@
 # V0.2.9
 - Fixed getLore() so it doesnt break skyhanni
+- Fixed party Commands
 # V0.2.8
 - Reworked Party Commands
 - Added PlhegInfo Command
