@@ -69,7 +69,7 @@ class commandManager {
                 if(command.selfTrigger && name == playerName) timeout = 100; 
                 setTimeout(() => {
                     //Verify memberOnly and LeaderOnly
-                    if((command.leaderOnly && partyTracker.PARTY.isLeader) || (command.memberOnly && !partyTracker.PARTY.isLeader) || (!command.memberOnly && !command.leaderOnly)) {
+                    if((command.leaderOnly && partyTracker.isLeader) || (command.memberOnly && !partyTracker.isLeader) || (!command.memberOnly && !command.leaderOnly)) {
                         //Verify parameters
                         if(command.parameters > 0) {
                             if(command.parameters == 1) command.func(this, name, parameters[0]);

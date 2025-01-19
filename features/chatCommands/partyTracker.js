@@ -15,6 +15,22 @@ class partyTracker {
         this.members = playerData.PARTY.members??[]
         this.warpExcluded = playerData.PARTY.warpExcluded??[]
 
+        var lastValues = { 
+            logOff: this.logOff,
+            inParty: this.inParty,
+            isLeader: this.isLeader,
+            members: this.members,
+            warpExcluded: this.warpExcluded
+        }
+        const logger = register('step', () => {
+            Object.keys(lastValues).forEach((value) => {
+                if(lastValues[value] !== this[value]) {
+                    ChatLib.chat(`${value}: ${lastValues[value]} -> ${this[value]}`)
+                    lastValues[value] = this[value]
+                }
+            })
+        }).unregister()
+
         register("chat", () => {
             this.inParty = true;
         }).setCriteria("Party > ${*}: ${*}");
@@ -186,8 +202,20 @@ class partyTracker {
         });
 
         register("command", () => {
-            console.log(JSON.stringify(this.PARTY, null, 4))
+            ChatLib.chat(JSON.stringify(this.PARTY, null, 4))
         }).setName("rfupartyinfo")
+
+        let loggerEnabled = false
+        register("command", () => {
+            if(loggerEnabled) {
+                logger.unregister()
+                loggerEnabled = false
+            }
+            else {
+                logger.register()
+                loggerEnabled = true
+            }
+        }).setName("rfutogglelogger")
     }
 
 

@@ -26,7 +26,6 @@ import { seaCreatureData } from "../../data/data";
 //? Help
 
 export function help(manager, name, parameter = undefined) {
-    console.log(parameter, checkIfUser(parameter))
     if(!parameter && partyTracker.isLeader || checkIfUser(parameter)) {
         //General Help
         let commands = manager.commands.filter(({ leaderOnly, memberOnly, checkFunc }) => (leaderOnly && partyTracker.isLeader || !leaderOnly && !memberOnly || memberOnly && !partyTracker.isLeader) && checkFunc()).map(({ triggers }) => triggers[0]);
