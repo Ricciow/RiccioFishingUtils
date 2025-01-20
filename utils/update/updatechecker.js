@@ -10,7 +10,7 @@ function processVersion(version) {
         const verNumber = /\d+/.exec(value)
         return Number(verNumber ? verNumber[0] : 0)
     });
-    //Add a 0 if its a prerelease or a 999 if its not so normal releases have priority over prereleases
+    //Add a the release number if its a prerelease or a 1000 if its not so normal releases have priority over prereleases
     //Will only work until there are 999 prereleases, should be fine
     versionParts.push(prerelease ? prerelease : 1000)
     return versionParts
