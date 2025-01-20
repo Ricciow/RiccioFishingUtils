@@ -1,7 +1,7 @@
 import commandManager from "./commandManager";
 import settings from "../../settings/settings";
 import partyTracker from "./partyTracker";
-import { checkIfUser, getAverageFromList, getVialAverage, readableTime, removeFromArray, removeRankTag, sendPartyMessage, splitMsg } from "../../utils/functions";
+import { checkIfUser, getAverageFromList, getVialAverage, readableTime, registerWhen, removeFromArray, removeRankTag, sendPartyMessage, splitMsg } from "../../utils/functions";
 import { playerName } from "../../data/constants";
 import skyblock from "../../utils/skyblock";
 import { seaCreatureData } from "../../data/data";
@@ -134,6 +134,7 @@ commandManager.addCommand({
 let ignoreNext = false;
 let needJoin = [];
 let lastSelfTrigger = false;
+const checkPlayerCountIslands = ["Crimson Isle"]
 
 function warpParty() {
     ignoreNext = true;
@@ -151,7 +152,8 @@ export function warp(manager, name, ignoreConditions = false) {
         return
     }
     lastSelfTrigger = false;
-    if(skyblock.map != 'Private Island' && skyblock.playerCount > 8|| ignoreConditions) {
+    //Check if they're not on private island and if the playerCount needs to be below 8
+    if(skyblock.map != 'Private Island' && skyblock.playerCount > (checkPlayerCountIslands.includes(skyblock.map) ? 8 : 0) || ignoreConditions) {
         if(partyTracker.warpExcluded.length == 0) {
             warpParty()
         }
@@ -206,14 +208,15 @@ register('command', () => {
     warp(undefined, playerName, true)
 }).setName("rfuconfirmwarp")
 
-register('messageSent', (message, event) => {
+registerWhen('messageSent', (message, event) => {
     if((message.startsWith("/p warp") || message.startsWith("/party warp")) && !ignoreNext) {
         cancel(event)
         warp(undefined, playerName, true);
         return
     }
     ignoreNext = false;
-})
+},
+() => settings().partyCommands && settings().partyWarp)
 
 commandManager.addCommand({
     triggers: ["warp", "w"],      
