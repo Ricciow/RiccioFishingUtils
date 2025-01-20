@@ -1,5 +1,5 @@
 # v0.3.2
-## Pre1
+**Pre1:**
 - Added saving before the update happens so you don't loose any data
 - Disabling party commands or party warp now also disables custom warp as it can break other mods.
 - Added a check to see if player is in crimson isle before saying has a playercount below 8
