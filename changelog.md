@@ -1,3 +1,6 @@
+# v0.3.2
+## Pre1
+- Added saving before the update happens so you don't loose any data
 # v0.3.1
 - Fixed party messages again (mb :dog:)
 # v0.3.0

@@ -1,3 +1,5 @@
+import { seaCreatureData } from "../../data/data";
+import partyTracker from "../../features/chatCommands/partyTracker";
 import settings from "../../settings/settings";
 import { updateModule, checkIfUpdateText, getRFUVersion, updateGithubData } from "./updatechecker";
 
@@ -19,6 +21,8 @@ register("command", () => {
 }).setName("rfucheckupdate")
 
 register("command", () => {
+    seaCreatureData.save()
+    partyTracker.save()
     updateModule()
 }).setName("rfudownloadnewestversion")
 
@@ -27,5 +31,7 @@ register("command", () => {
 }).setName("rfuversion")
 
 if(settings().autoUpdate) {
+    seaCreatureData.save()
+    partyTracker.save()
     updateModule()
 }

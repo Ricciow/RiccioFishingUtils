@@ -67,7 +67,7 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     },
     onClick() {
         if(getDirectDownloadLink()) {
-            updateModule()
+            ChatLib.command("rfudownloadnewestversion", true)
         }
         else {
             java.awt.Desktop.getDesktop().browse(new java.net.URI("https://github.com/Ricciow/RiccioFishingUtils/releases/latest"));

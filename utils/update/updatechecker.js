@@ -115,7 +115,7 @@ export function checkIfUpdateText(announceUpToDate = false) {
 
 const tempZip = Config.modulesFolder + "/RiccioFishingUtils/RiccioFishingUtils.zip"
 
-export function updateModule(prerelease = false) {
+export function updateModule() {
     if(downloadUrl) {
         downloadFile(downloadUrl, tempZip)
         FileLib.unzip(tempZip, Config.modulesFolder)
