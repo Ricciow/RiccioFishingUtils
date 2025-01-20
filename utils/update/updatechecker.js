@@ -21,6 +21,8 @@ let downloadUrl
 
 export function updateGithubData(preRelease = false) {
     let releases
+    let assets
+
     try {
         releases = JSON.parse(FileLib.getUrlContent("https://api.github.com/repos/ricciow/RiccioFishingUtils/releases"))
     }
@@ -40,20 +42,17 @@ export function updateGithubData(preRelease = false) {
         latestVersion = latestRelease.tag_name.substring(1);
         downloadLink = latestRelease.html_url;
         latestReleaseAvailable = true
-    }
-    
-    let assets
-    if(latestReleaseAvailable) {
+        
         const assetsUrl = latestRelease.assets_url
         try {
             assets = JSON.parse(FileLib.getUrlContent(assetsUrl))
+            downloadUrl = assets ? assets[0].browser_download_url : undefined
         } 
         catch(error) {
             console.log(`Github rate limited or ct version outdated: v${com.chattriggers.ctjs.Reference.MODVERSION}`)
         }
     }
     
-    downloadUrl = assets ? assets[0].browser_download_url : undefined
 }
 
 export function checkIfUpdate() {
