@@ -30,12 +30,11 @@ export function updateGithubData(preRelease = false) {
         console.log(`Github rate limited or ct version outdated: v${com.chattriggers.ctjs.Reference.MODVERSION}`)
     }
     
-    
     //Release
     latestRelease = releases?.find(({ prerelease, tag_name }) => prerelease === preRelease && compareVersions(version, tag_name?.substring(1)));
     
     if(!latestRelease) {
-        latestRelease = releases?.find(({ prerelease }) => prerelease === false && compareVersions(version, tag_name?.substring(1)));
+        latestRelease = releases?.find(({ prerelease , tag_name}) => prerelease === false && compareVersions(version, tag_name?.substring(1)));
     }
 
     if(latestRelease) {
