@@ -3,7 +3,7 @@ const version = JSON.parse(FileLib.read("RiccioFishingUtils", "metadata.json")).
 function processVersion(version) {
     let prerelease
     let versionParts = version.split('.').map((value) => {
-        const releaseNumber = /pre(\d{1,2})/.exec(value)
+        const releaseNumber = /pre(\d{1,3})/.exec(value)
         if(releaseNumber) {
             prerelease = releaseNumber[1]
         }
@@ -12,7 +12,7 @@ function processVersion(version) {
     });
     //Add a 0 if its a prerelease or a 999 if its not so normal releases have priority over prereleases
     //Will only work until there are 999 prereleases, should be fine
-    versionParts.push(prerelease ? prerelease : 999)
+    versionParts.push(prerelease ? prerelease : 1000)
     return versionParts
 }
 
