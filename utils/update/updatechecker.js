@@ -30,10 +30,17 @@ export function updateGithubData(preRelease = false) {
     
     
     //Release
-    latestRelease = releases ? releases.find(({ prerelease }) => prerelease === preRelease) : undefined;
-    latestVersion = latestRelease?.tag_name?.substring(1);
-    downloadLink = latestRelease?.html_url;
-    latestReleaseAvailable = compareVersions(version, latestVersion??"0.0.0")
+    latestRelease = releases?.find(({ prerelease, tag_name }) => prerelease === preRelease && compareVersions(version, tag_name?.substring(1)));
+    
+    if(!latestRelease) {
+        latestRelease = releases?.find(({ prerelease }) => prerelease === false && compareVersions(version, tag_name?.substring(1)));
+    }
+
+    if(latestRelease) {
+        latestVersion = latestRelease.tag_name.substring(1);
+        downloadLink = latestRelease.html_url;
+        latestReleaseAvailable = true
+    }
     
     let assets
     if(latestReleaseAvailable) {
