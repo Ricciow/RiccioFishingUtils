@@ -7,6 +7,7 @@ const latestwarn = register('worldLoad', () => {
     setTimeout(() => {
         updateGithubData(settings().releaseBranch === 1)
         checkIfUpdateText()
+        settings().getConfig().apply()
     }, 1000);
     latestwarn.unregister()
 })
