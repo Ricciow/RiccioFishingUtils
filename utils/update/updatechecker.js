@@ -8,7 +8,7 @@ function processVersion(version) {
     });
     //Add a 0 if its a prerelease or a 1 if its not so normal releases have priority over prereleases
     versionParts.push(prerelease ? 0 : 1)
-    return 
+    return versionParts
 }
 
 function compareVersions(version1, version2) {
