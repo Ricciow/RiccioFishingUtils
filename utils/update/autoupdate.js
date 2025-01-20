@@ -15,6 +15,7 @@ const latestwarn = register('worldLoad', () => {
 register("command", () => {
     updateGithubData(settings().releaseBranch === 1)
     checkIfUpdateText(true)
+    settings().getConfig().apply()
 }).setName("rfucheckupdate")
 
 register("command", () => {
