@@ -1,8 +1,8 @@
 import settings from "../settings/settings";
 import { playerData } from "../data/data";
-import { readableTime, funniFaces, generateRandomString, sendMsg} from "../utils/functions";
-import { Chats , Bobber, ArmorStand} from "../data/constants";
+import { readableTime, funniFaces } from "../utils/functions";
 import guiManager from "../gui/guiManager";
+import ChatUtils from "../utils/chatUtils";
 
 //CRYSTAL HOLLOWS
 
@@ -61,7 +61,7 @@ register('step', () =>{
         if(Player.asPlayerMP() != null){
             if(Player.asPlayerMP().distanceTo(totemCoords[0], totemCoords[1], totemCoords[2]) < 27) {
                 if (settings().totemMessageToggle) {
-                    sendMsg(funniFaces(settings().deployableMessage.replace("([deployable])", "Totem")));
+                    ChatUtils.sendMsg(funniFaces(settings().deployableMessage.replace("([deployable])", "Totem")));
                 }
                 if (settings().totemTitleToggle){                     // Totem Title message
                     TotemTitle = `${funniFaces(settings().totemTitleMessage)}`;
@@ -83,7 +83,7 @@ register('step', () =>{
                 CapMessage = CapMessage.replace("([number])", `${aliveWorms}`);
                 CapMessage = CapMessage.replace("([time])", `${readableTime(now - playerData.WORM["Timer"])}`);
                 setTimeout(() => {
-                    sendMsg(CapMessage);
+                    ChatUtils.sendMsg(CapMessage);
                 }, 100);
                 MsgSent = true;
             }

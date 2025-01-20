@@ -1,9 +1,10 @@
 import settings from "../settings/settings";
 import { seaCreatureData, playerData} from "../data/data";
 import { CrimsonCreatures, CrimsonMessages, Chats, MythicDetectSound, colorsRegex, VialRegex} from "../data/constants";
-import { makeRegexFromList ,getAverageFromList, funniFaces, readableTime, sendMsg, getRandomInt, getVialAverage} from "../utils/functions";
+import { makeRegexFromList ,getAverageFromList, funniFaces, readableTime, getRandomInt, getVialAverage} from "../utils/functions";
 import RenderLib from "../../RenderLib";
 import guiManager from "../gui/guiManager";
+import ChatUtils from "../utils/chatUtils";
 
 const BasePlhegblast = {
     "Name":"§lPlhlegblast",
@@ -375,12 +376,12 @@ register("chat", (message, event) => {
                     if(doubleHook){
                         mythicmsg = mythicmsg.replace("([double])", "Double ")
                         setTimeout(() => {
-                            sendMsg(mythicmsg);
+                            ChatUtils.sendMsg(mythicmsg);
                         }, 250);
                     }
                     else {
                         mythicmsg = mythicmsg.replace("([double])", "")   
-                        sendMsg(mythicmsg);
+                        ChatUtils.sendMsg(mythicmsg);
                     }
                 }
             }
@@ -401,12 +402,12 @@ register("chat", (message, event) => {
                     if(doubleHook){
                         mythicmsg = mythicmsg.replace("([double])", "Double ")
                         setTimeout(() => {
-                            sendMsg(mythicmsg);
+                            ChatUtils.sendMsg(mythicmsg);
                         }, 250);
                     }
                     else {
                         mythicmsg = mythicmsg.replace("([double])", "")   
-                        sendMsg(mythicmsg);
+                        ChatUtils.sendMsg(mythicmsg);
                     }
                 }
             }
@@ -431,12 +432,12 @@ register("chat", (message, event) => {
                     if(doubleHook){
                         mythicmsg = mythicmsg.replace("([double])", "Double ")
                         setTimeout(() => {
-                            sendMsg(mythicmsg);
+                            ChatUtils.sendMsg(mythicmsg);
                         }, 400);
                     }
                     else {
                         mythicmsg = mythicmsg.replace("([double])", "")   
-                        sendMsg(mythicmsg);
+                        ChatUtils.sendMsg(mythicmsg);
                     }
                 }
             }
@@ -480,25 +481,25 @@ register("chat", (message, event) => {
         if(settings().vialMessageToggle){
             if(settings().vialPartyChatToggle) {
                 setTimeout(() => {
-                    sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(thisTime-thisTimeLast)).replace("([mf])", Magicfind), 0);
+                    ChatUtils.sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(thisTime-thisTimeLast)).replace("([mf])", Magicfind), 0);
                 }, delay);
                 delay += 500;
             }
             if(settings().vialGuildChatToggle) {
                 setTimeout(() => {
-                    sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(thisTime-thisTimeLast)).replace("([mf])", Magicfind), 1);
+                    ChatUtils.sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(thisTime-thisTimeLast)).replace("([mf])", Magicfind), 1);
                 }, delay);
                 delay += 500;
             }
             if(settings().vialAllChatToggle) {
                 setTimeout(() => {
-                    sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(thisTime-thisTimeLast)).replace("([mf])", Magicfind), 2);
+                    ChatUtils.sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(thisTime-thisTimeLast)).replace("([mf])", Magicfind), 2);
                 }, delay);
                 delay += 500;
             }
             if(settings().vialCoopChatToggle) {
                 setTimeout(() => {
-                    sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(Date.now()-seaCreatureData.DROPS["RadioactiveVialTime"])).replace("([mf])", Magicfind), 5);
+                    ChatUtils.sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(Date.now()-seaCreatureData.DROPS["RadioactiveVialTime"])).replace("([mf])", Magicfind), 5);
                 }, delay);
                 delay += 500;
             }
@@ -515,14 +516,14 @@ register('chat', () => {
     if(Date.now() - seaCreatureData.CATCHES["LastCatch"] < 60000*settings().seacreatureHourResetTime) {
         vanqmsg = `${funniFaces(settings().vanquisherMessage)}`;
         vanqmsg = vanqmsg.replace("([number])", `${seaCreatureData.CRIMSON['VanquisherCount']}`).replace("([time])", `${readableTime(Date.now()-seaCreatureData.CRIMSON['VanquisherTime'])}`).replace("([coords])", `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
-        sendMsg(vanqmsg);
+        ChatUtils.sendMsg(vanqmsg);
         seaCreatureData.CRIMSON['VanquisherAllCount'].push(seaCreatureData.CRIMSON['VanquisherCount']);
         seaCreatureData.CRIMSON['VanquisherCount'] = 0;
     }
     else{
         vanqmsg = `${funniFaces(settings().vanquisherMessage)}`;
         vanqmsg = vanqmsg.replace("([number])", `?`).replace("([time])", `${readableTime(Date.now()-seaCreatureData.CRIMSON['VanquisherTime'])}`).replace("([coords])", `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
-        sendMsg(vanqmsg);
+        ChatUtils.sendMsg(vanqmsg);
     }
     seaCreatureData.CRIMSON['VanquisherTime'] = Date.now();
 }).setCriteria("A Vanquisher is spawning nearby!")

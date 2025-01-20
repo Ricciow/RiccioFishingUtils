@@ -1,9 +1,10 @@
 import settings from "../settings/settings";
 import { playerData , seaCreatureData} from "../data/data";
-import { readableTime, funniFaces, makeRegexFromList, readableTime, sendMsg, getRandomInt, readableQuantity, getLore} from "../utils/functions";
-import { Chats , seaCreatures, seaCreaturesNW, Bobber, seaCreatureMessages, colorsRegex, ArmorStand, Firework} from "../data/constants";
+import { readableTime, funniFaces, makeRegexFromList, readableTime, getRandomInt, readableQuantity, getLore} from "../utils/functions";
+import { seaCreatures, seaCreaturesNW, Bobber, seaCreatureMessages, colorsRegex, ArmorStand, Firework} from "../data/constants";
 import guiManager from "../gui/guiManager";
 import settings from "../settings/settings";
+import ChatUtils from "../utils/chatUtils";
 
 let SeaCreatures = 0;
 let SeaCreaturesNW = 0;
@@ -62,7 +63,7 @@ register('step', () => {
             if(Player.asPlayerMP() != null){
                 if(Player.asPlayerMP().distanceTo(fluxCoords[0], fluxCoords[1], fluxCoords[2]) < 27) {
                     if (settings().fluxMessageToggle) {
-                        sendMsg(funniFaces(settings().deployableMessage.replace("([deployable])", "Power Orb")));
+                        ChatUtils.sendMsg(funniFaces(settings().deployableMessage.replace("([deployable])", "Power Orb")));
                     }
                     if (settings().fluxTitleToggle){                     // Flux Title message
                         fluxTitle = `${funniFaces(settings().fluxTitleMessage)}`;
@@ -104,7 +105,7 @@ register('step', () => {
                 ScMessage = `${funniFaces(settings().seaCreatureMessage)}`;
                 ScMessage = ScMessage.replace("([number])", `${(settings().seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW)}`);
                 ScMessage = ScMessage.replace("([time])", `${readableTime(now - playerData.GENERALFISHING["SeaTimer"])}`);
-                sendMsg(ScMessage);
+                ChatUtils.sendMsg(ScMessage);
                 MsgSent = true;
             }
             else if ((settings().seaCreatureCountWorms ? SeaCreatures : SeaCreaturesNW) <= Math.floor(settings().seaCreatureLimit/2) && MsgSent){
@@ -283,7 +284,7 @@ register('chat', (event) => {
             dhmsg = funniFaces(settings().doubleHookMessage).replace('([random])', '');
         }
         if (dhmsg != ''){
-            sendMsg(dhmsg);
+            ChatUtils.sendMsg(dhmsg);
         }
         else {
             ChatLib.chat("&5[&b&lRFU&5] &4&lYour double hook message is blank! (only you can see this)");
@@ -451,7 +452,7 @@ register('step', () => {
                         if(Player.asPlayerMP() != null) {
                             if(Player.asPlayerMP().distanceTo(FlareCoords[0], FlareCoords[1], FlareCoords[2]) < 40) {
                                 if (settings().flareMessageToggle) {
-                                    sendMsg(funniFaces(settings().deployableMessage.replace("([deployable])", "Flare")));
+                                    ChatUtils.sendMsg(funniFaces(settings().deployableMessage.replace("([deployable])", "Flare")));
                                 }
                                 if (settings().flareTitleToggle){                    
                                     flareTitle = `${funniFaces(settings().flareTitleMessage)}`;
@@ -536,7 +537,7 @@ register('chat', () => {
         flareTime = "No Flare";
         FlareSent = true;
         if (settings().flareMessageToggle) {
-            sendMsg(funniFaces(settings().deployableMessage.replace("([deployable])", "Flare")));
+            ChatUtils.sendMsg(funniFaces(settings().deployableMessage.replace("([deployable])", "Flare")));
         }
         if (settings().flareTitleToggle){                    
             flareTitle = `${funniFaces(settings().flareTitleMessage)}`;

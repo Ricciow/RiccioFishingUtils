@@ -5,7 +5,7 @@ import { checkIfUpdate, getDirectDownloadLink, updateModule } from "../utils/upd
 const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
 .addTextParagraph({
     category: "RFU",
-    subcategory: null,
+    subcategory: "Introduction",
     configName: "introduction",
     title: "Introduction",
     description: "Welcome to RFU, your latest and greatest fishing mod <3\nUI is only updated once you close the settings.\nYou can also nudge the Sliders with a/d and use w/s to increase/reduce the size of the nudge.",
@@ -13,7 +13,51 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
 })
 .addButton({
     category: "RFU",
-    subcategory: null,
+    subcategory: "Introduction",
+    configName: "moveUI",
+    title: "Move UI",
+    description: "Use this to edit the UI, you can use the scroll wheel to resize stuff and you can select an area to move multiple stuff!",
+    placeHolder: "Open UI Editor",
+    onClick() {
+        ChatLib.command("rfumove", true)
+    }
+})
+.addButton({
+    category: "RFU",
+    subcategory: "Introduction",
+    configName: "joinDiscord",
+    title: "&9&lDiscord",
+    description: "Come hang out, report bugs and make suggestions for the mod!",
+    placeHolder: "Join Discord",
+    onClick() {
+        java.awt.Desktop.getDesktop().browse(new java.net.URI("https://discord.gg/JfrXm6TqXz"));
+    }
+})
+.addButton({
+    category: "RFU",
+    subcategory: "Introduction",
+    configName: "joinGithub",
+    title: "&8&lGitHub",
+    description: "Help contribute to this great mod!",
+    placeHolder: "Open GitHub",
+    onClick() {
+        java.awt.Desktop.getDesktop().browse(new java.net.URI("https://github.com/Ricciow/RiccioFishingUtils"));
+    }
+})
+.addButton({
+    category: "RFU",
+    subcategory: "Introduction",
+    configName: "redirectChangelog",
+    title: "&eChangelog",
+    description: "Read the latest patches so you know what changed!",
+    placeHolder: "Open Changelog",
+    onClick(setting) {
+        setting.redirect("§eChangelog")
+    }
+})
+.addButton({
+    category: "RFU",
+    subcategory: "Updates",
     configName: "newUpdateButton",
     title: "&b&lNew Update!",
     description: "Rfu has a new Update! This will automatically update if possible, if not it'll open the download link",
@@ -35,52 +79,17 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     configName: "autoUpdate",
     title: "Toggle Auto Updating",
     description: "Toggle wether RFU should auto update",
-    subcategory: null,
+    subcategory: "Updates",
     value: true
 })
-.addButton({
+.addDropDown({
     category: "RFU",
-    subcategory: null,
-    configName: "moveUI",
-    title: "Move UI",
-    description: "Use this to edit the UI, you can use the scroll wheel to resize stuff and you can select an area to move multiple stuff!",
-    placeHolder: "Open UI Editor",
-    onClick() {
-        ChatLib.command("rfumove", true)
-    }
-})
-.addButton({
-    category: "RFU",
-    subcategory: null,
-    configName: "joinDiscord",
-    title: "&9&lDiscord",
-    description: "Come hang out, report bugs and make suggestions for the mod!",
-    placeHolder: "Join Discord",
-    onClick() {
-        java.awt.Desktop.getDesktop().browse(new java.net.URI("https://discord.gg/JfrXm6TqXz"));
-    }
-})
-.addButton({
-    category: "RFU",
-    subcategory: null,
-    configName: "joinGithub",
-    title: "&8&lGitHub",
-    description: "Help contribute to this great mod!",
-    placeHolder: "Open GitHub",
-    onClick() {
-        java.awt.Desktop.getDesktop().browse(new java.net.URI("https://github.com/Ricciow/RiccioFishingUtils"));
-    }
-})
-.addButton({
-    category: "RFU",
-    subcategory: null,
-    configName: "redirectChangelog",
-    title: "&eChangelog",
-    description: "Read the latest patches so you know what changed!",
-    placeHolder: "Open Changelog",
-    onClick(setting) {
-        setting.redirect("§eChangelog")
-    }
+    configName: "releaseBranch",
+    title: "Update Branch",
+    description: "Select the branch of updates that will be autoupdated to",
+    options: ["Main", "Prerelease"],
+    value: 1,
+    subcategory: "Updates"
 })
 .addColorPicker({
     category: "RFU",

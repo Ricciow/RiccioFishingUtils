@@ -13,35 +13,44 @@ function compareVersions(version1, version2) {
     return false;
 }
 
-let releases
+let latestRelease
+let latestVersion
+let downloadLink
+let latestReleaseAvailable
+let downloadUrl
 
-try {
-    releases = JSON.parse(FileLib.getUrlContent("https://api.github.com/repos/ricciow/RiccioFishingUtils/releases"))
-}
-catch (error) {
-    console.log(`Github rate limited or ct version outdated: v${com.chattriggers.ctjs.Reference.MODVERSION}`)
-}
-
-const latestRelease = releases ? releases[0] : undefined;
-const latestVersion = latestRelease?.name.substring(1);
-const downloadLink = latestRelease?.html_url;
-const latestReleaseAvailable = compareVersions(version, latestVersion??"0.0.0")
-
-let assets
-if(latestReleaseAvailable) {
-    const assetsUrl = latestRelease.assets_url
+export function updateGithubData(preRelease = false) {
+    let releases
     try {
-        assets = JSON.parse(FileLib.getUrlContent(assetsUrl))
-    } 
-    catch(error) {
+        releases = JSON.parse(FileLib.getUrlContent("https://api.github.com/repos/ricciow/RiccioFishingUtils/releases"))
+    }
+    catch (error) {
         console.log(`Github rate limited or ct version outdated: v${com.chattriggers.ctjs.Reference.MODVERSION}`)
     }
+    
+    
+    //Release
+    latestRelease = releases ? releases.find(({ prerelease }) => prerelease === preRelease) : undefined;
+    latestVersion = latestRelease?.tag_name?.substring(1);
+    downloadLink = latestRelease?.html_url;
+    latestReleaseAvailable = compareVersions(version, latestVersion??"0.0.0")
+    
+    let assets
+    if(latestReleaseAvailable) {
+        const assetsUrl = latestRelease.assets_url
+        try {
+            assets = JSON.parse(FileLib.getUrlContent(assetsUrl))
+        } 
+        catch(error) {
+            console.log(`Github rate limited or ct version outdated: v${com.chattriggers.ctjs.Reference.MODVERSION}`)
+        }
+    }
+    
+    downloadUrl = assets ? assets[0].browser_download_url : undefined
 }
 
-const downloadUrl = assets ? assets[0].browser_download_url : undefined
-
 export function checkIfUpdate() {
-    return latestReleaseAvailable
+    return latestReleaseAvailable??false
 }
 
 export function getDownloadLink() {
@@ -52,7 +61,11 @@ export function getDirectDownloadLink() {
     return downloadUrl
 }
 
-function checkIfUpdateText(announceUpToDate = false) {
+export function getRFUVersion() {
+    return version
+}
+
+export function checkIfUpdateText(announceUpToDate = false) {
     //Verify if ctjs is in version 2.2.1 or later
     if(!compareVersions(com.chattriggers.ctjs.Reference.MODVERSION, "2.2.1")) { 
         if (latestReleaseAvailable) {
@@ -83,22 +96,9 @@ function checkIfUpdateText(announceUpToDate = false) {
     }
 }
 
-const latestwarn = register('worldLoad', () => {
-    setTimeout(() => {
-        checkIfUpdateText()
-    }, 1000);
-    latestwarn.unregister()
-})
-
-register("command", () => checkIfUpdateText(true)).setName("rfucheckupdate")
-
 const tempZip = Config.modulesFolder + "/RiccioFishingUtils/RiccioFishingUtils.zip"
 
-register("command", () => {
-    updateModule()
-}).setName("rfudownloadnewestversion")
-
-export function updateModule() {
+export function updateModule(prerelease = false) {
     if(downloadUrl) {
         downloadFile(downloadUrl, tempZip)
         FileLib.unzip(tempZip, Config.modulesFolder)
@@ -125,7 +125,3 @@ function downloadFile(url, destination) {
     fos.close()
     is.close()
 };
-
-register("command", () => {
-    ChatLib.chat(`&5[&b&lRFU&5] &f&lYou're on version &e&lv${version}`)
-}).setName("rfuversion")

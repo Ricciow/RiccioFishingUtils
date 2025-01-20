@@ -120,7 +120,7 @@ register("worldload", () => {
 register("step", () => {
     if(settings().lobbyTracking) {
         if(Looking) {
-            ServerText = TabList.getNames().filter(name => {
+            ServerText = TabList?.getNames()?.filter(name => {
                 if(name.replace(colorsRegex, "").includes("Area: ") || name.replace(colorsRegex, "").includes("Server: ")) return true;
                 else return false;
             }).map(name => {

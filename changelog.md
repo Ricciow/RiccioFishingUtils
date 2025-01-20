@@ -1,7 +1,10 @@
-# v0.2.10
+# v0.3.0
 - Added an autoInvite on keyword option
 - Modified the [Click to party] so it only appears with the set keyword
 - Fixed auto messages not being sent
+- Added an option to select what branch of updates to update to, main or prerelease
+- Modified to use the tag instead of name
+- Fixed an error that would happen when on mc screen
 # V0.2.9
 - Fixed getLore() so it doesnt break skyhanni
 - Fixed party Commands

@@ -1,8 +1,7 @@
 import settings from "../settings/settings";
 import RenderLib from "../../RenderLib"
-import { seaCreatureData , playerData} from "../data/data";
 import guiManager from "../gui/guiManager";
-import { sendMsg } from "../utils/functions";
+import ChatUtils from "../utils/chatUtils";
 
 let x = 0;
 let y = 0;
@@ -180,6 +179,6 @@ const settingParam = {
 
 register("chat", (tfish) => {
     if(settings()[settingParam[tfish]] && settings().trophySendMessage) {
-        sendMsg(`TROPHY FISH! You caught a ${tfish} DIAMOND.`)
+        ChatUtils.sendMsg(`TROPHY FISH! You caught a ${tfish} DIAMOND.`)
     }
 }).setCriteria("TROPHY FISH! You caught a ${tfish} DIAMOND.")
