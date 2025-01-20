@@ -1,3 +1,5 @@
+# v0.3.1
+- Fixed party messages again (mb :dog:)
 # v0.3.0
 - Added an autoInvite on keyword option
 - Modified the [Click to party] so it only appears with the set keyword

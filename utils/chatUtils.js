@@ -1,4 +1,5 @@
 import partyTracker from "../features/chatCommands/partyTracker";
+import settings from "../settings/settings";
 
 export default class ChatUtils {
     /**
