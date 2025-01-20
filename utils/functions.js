@@ -1,6 +1,7 @@
 import settings from "../settings/settings"
 import { playerName } from "../data/constants";
-import { playerData , seaCreatureData } from "../data/data";
+import { seaCreatureData } from "../data/data";
+import partyTracker from "../features/chatCommands/partyTracker";
 
 export function removeRankTag(ign){
     ign = ign.replace("[VIP] ", "");
@@ -164,11 +165,16 @@ export function getAverageFromList(list) {
         return 0;
     }
 }
-//['Party', 'Guild', 'AllChat', 'Party/Local','Local', 'Coop']
+
+/**
+ * Sends a message on a specific chat or the settings, default chat
+ * @param {string} text 
+ * @param {string} chat Party Guild AllChat Party/Local Local Coop
+ */
 export function sendMsg(text, chat = settings().ChatSelected) {
     switch (chat) {
         case 0:
-            if (playerData.PARTY['inParty']) {
+            if (partyTracker.inParty) {
                 ChatLib.command('pc '+text);
             }
             break;
@@ -181,7 +187,7 @@ export function sendMsg(text, chat = settings().ChatSelected) {
             ChatLib.command(text);
             break;
         case 3:
-            playerData.PARTY['inParty'] ? ChatLib.command('pc '+text) : ChatLib.chat(text);
+            partyTracker.inParty ? ChatLib.command('pc '+text) : ChatLib.chat(text);
             break;
         case 4:
             ChatLib.chat(text);
