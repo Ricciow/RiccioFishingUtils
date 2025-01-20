@@ -2,7 +2,7 @@
 **Pre1:**
 - Added saving before the update happens so you don't loose any data
 - Disabling party commands or party warp now also disables custom warp as it can break other mods.
-- Added a check to see if player is in crimson isle before saying has a playercount below 8
+- Added a check to see if player is in crimson isle before saying has a playercount below 8, also send in where else this condition could be added to in the #suggestions channel
 - Fixed party commands not working with SBA's factions/ironman symbol thingy enabled
 # v0.3.1
 - Fixed party messages again (mb :dog:)
