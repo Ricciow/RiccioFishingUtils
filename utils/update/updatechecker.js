@@ -1,8 +1,20 @@
 const version = JSON.parse(FileLib.read("RiccioFishingUtils", "metadata.json")).version
 
+function processVersion(version) {
+    let prerelease = false
+    let versionParts = version.split('.').map((value) => {
+        if(/pre/.test(value)) prerelease = true
+        return Number(/\d+/.exec(value)[0])
+    });
+    //Add a 0 if its a prerelease or a 1 if its not so normal releases have priority over prereleases
+    versionParts.push(prerelease ? 0 : 1)
+    return 
+}
+
 function compareVersions(version1, version2) {
-    const v1Parts = version1.split('.').map(Number);
-    const v2Parts = version2.split('.').map(Number);
+    const v1Parts = processVersion(version1)
+    const v2Parts = processVersion(version2)
+
     const maxLength = Math.max(v1Parts.length, v2Parts.length);
     for (let i = 0; i < maxLength; i++) {
         let v1 = v1Parts[i] || 0; // Default to 0 if part is missing
