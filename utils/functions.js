@@ -11,8 +11,20 @@ export function removeRankTag(ign){
     return ign
 }
 
+/**
+ * Tries to find the username on a string by checking minecraft's username character rules
+ * @param {string} ign 
+ * @returns {string} Found username
+ */
+export function clearUsername(ign) {
+    ign = ign.split(" ").find((name) => /^[a-z_]{3,16}$/ig.test(name))
+    return ign
+}
+
 export function checkIfUser(ign){
-    if(ign?.toLowerCase() == playerName.toLowerCase()){
+    if(!ign) return false
+    ign = clearUsername(ign)
+    if(ign.toLowerCase() == playerName.toLowerCase()){
         return true
     }
     return false

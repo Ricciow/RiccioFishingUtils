@@ -1,7 +1,6 @@
 import settings from "../../settings/settings";
 import partyTracker from "./partyTracker";
-import { removeRankTag } from "../../utils/functions";
-import { playerName } from "../../data/constants";
+import { checkIfUser, clearUsername, removeRankTag } from "../../utils/functions";
 import { registerWhen } from "../../utils/functions";
 
 /**
@@ -24,7 +23,7 @@ class commandManager {
                 name = tempName.shift();
                 message = tempName.reduce((accumulator, currentValue) => accumulator + currentValue + ": ", "") + message;
             }
-            this.verifyCommand(removeRankTag(name), message)
+            this.verifyCommand(clearUsername(name), message)
         },
         () => settings().partyCommands
         ).setCriteria("Party > ${name}: ${message}");
@@ -64,9 +63,9 @@ class commandManager {
     executeCommand(name, command, parameters) {
         if(!verifyBlacklist(name) && this.shouldRun() && command.checkFunc()) {
             //Verify selfTrigger
-            if((!command.selfTrigger && name != playerName) || command.selfTrigger) {
+            if((!command.selfTrigger && checkIfUser(name)) || command.selfTrigger) {
                 timeout = 0;
-                if(command.selfTrigger && name == playerName) timeout = 100; 
+                if(command.selfTrigger && checkIfUser(name)) timeout = 100; 
                 setTimeout(() => {
                     //Verify memberOnly and LeaderOnly
                     if((command.leaderOnly && partyTracker.isLeader) || (command.memberOnly && !partyTracker.isLeader) || (!command.memberOnly && !command.leaderOnly)) {

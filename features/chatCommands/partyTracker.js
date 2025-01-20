@@ -202,7 +202,13 @@ class partyTracker {
         });
 
         register("command", () => {
-            ChatLib.chat(JSON.stringify(this.PARTY, null, 4))
+            ChatLib.chat(JSON.stringify({
+                logOff: this.logOff,
+                inParty: this.inParty,
+                isLeader: this.isLeader,
+                members: this.members,
+                warpExcluded: this.warpExcluded
+            }, null, 4))
         }).setName("rfupartyinfo")
 
         let loggerEnabled = false
