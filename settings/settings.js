@@ -630,6 +630,14 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
 })
 .addSwitch({
     category: "Crimson Fishing",
+    configName: "crimsonHardcoreGamer",
+    title: "Hardcore Gamer Mode",
+    description: "Toggle this on only if you're good against jawbus.",
+    subcategory: "Other Settings",
+    value: false
+})
+.addSwitch({
+    category: "Crimson Fishing",
     configName: "crimsonHideUIToggle",
     title: "Hide UI if not relevant - Crimson",
     description: "Hides the UIs in this page if not fishing in a relevant spot",
