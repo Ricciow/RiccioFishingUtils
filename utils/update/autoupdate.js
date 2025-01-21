@@ -8,7 +8,14 @@ updateGithubData(settings().releaseBranch === 1)
 const latestwarn = register('worldLoad', () => {
     setTimeout(() => {
         updateGithubData(settings().releaseBranch === 1)
-        checkIfUpdateText()
+        if(settings().autoUpdate) {
+            seaCreatureData.save()
+            partyTracker.save()
+            updateModule()
+        }
+        else {
+            checkIfUpdateText()
+        }
         settings().getConfig().apply()
     }, 1000);
     latestwarn.unregister()
@@ -29,9 +36,3 @@ register("command", () => {
 register("command", () => {
     ChatLib.chat(`&5[&b&lRFU&5] &f&lYou're on version &e&lv${getRFUVersion()}`)
 }).setName("rfuversion")
-
-if(settings().autoUpdate) {
-    seaCreatureData.save()
-    partyTracker.save()
-    updateModule()
-}
