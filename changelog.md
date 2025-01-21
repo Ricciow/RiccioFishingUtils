@@ -2,6 +2,7 @@
 **pre1:**
 - Changed autoupdate to trigger when joining a world.
 - Actually fixed data not saving this time
+- /p list now checks if ur leader. (internal)
 # v0.3.2
 - Added saving before the update happens so you don't loose any data
 - Disabling party commands or party warp now also disables custom warp as it can break other mods.

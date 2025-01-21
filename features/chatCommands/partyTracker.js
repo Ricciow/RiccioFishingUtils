@@ -52,7 +52,8 @@ class partyTracker {
         }).setCriteria("You'll be partying with: ${people}");
         
         register("chat", (user) => {
-            if(removeRankTag(user) != playerName) this.members = [removeRankTag(user)]
+            if(!checkIfUser(user)) this.members = [removeRankTag(user)]
+            else this.isLeader = true
         }).setCriteria("Party Leader: ${user} ●");
         
         register("chat", (people) => {
