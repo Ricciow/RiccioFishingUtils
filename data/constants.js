@@ -14,7 +14,8 @@ export const seaCreatures = ['Squid', 'Sea Walker', 'Night Squid', 'Sea Guardian
                              'Scarecrow', 'Nightmare', 'Werewolf', 'Phantom Fisherman', 'Grim Reaper',
                              'Magma Slug', 'Moogma', 'Lava Leech', 'Pyroclastic Worm', 'Lava Flame', 'Fire Eel', 'Taurus', 'Plhlegblast', 'Thunder', 'Lord Jawbus',
                              'Frozen Steve', 'Frosty', 'Grinch', 'Yeti', 'Nutcracker', 'Reindrake',
-                             'Nurse Shark', 'Blue Shark', 'Tiger Shark', 'Great White Shark'];
+                             'Nurse Shark', 'Blue Shark', 'Tiger Shark', 'Great White Shark', 
+                             'Mithril Grubber', 'Large Mithril Grubber', 'Medium Mithril Grubber', 'Bloated Mithril Grubber'];
 
 export const seaCreaturesNW = ['Squid', 'Sea Walker', 'Night Squid', 'Sea Guardian', 'Sea Witch', 'Sea Archer', 'Rider Of The Deep', 'Catfish', 'Carrot King', 'Sea Leech', 'Guardian Defender', 'Deep Sea Protector', 'Water Hydra', 'The Sea Emperor', 'Agarimoo',
                              'Oasis Rabbit', 'Oasis Sheep',
@@ -22,7 +23,7 @@ export const seaCreaturesNW = ['Squid', 'Sea Walker', 'Night Squid', 'Sea Guardi
                              'Scarecrow', 'Nightmare', 'Werewolf', 'Phantom Fisherman', 'Grim Reaper',
                              'Magma Slug', 'Moogma', 'Lava Leech', 'Pyroclastic Worm', 'Lava Flame', 'Fire Eel', 'Taurus', 'Plhlegblast', 'Thunder', 'Lord Jawbus',
                              'Frozen Steve', 'Frosty', 'Grinch', 'Yeti', 'Nutcracker', 'Reindrake',
-                             'Nurse Shark', 'Blue Shark', 'Tiger Shark', 'Great White Shark'];
+                             'Nurse Shark', 'Blue Shark', 'Tiger Shark', 'Great White Shark', 'Mithril Grubber', 'Large Mithril Grubber', 'Medium Mithril Grubber', 'Bloated Mithril Grubber'];
 
 export const seaCreatureMessages = ["A Squid appeared.", "Your Chumcap Bucket trembles, it's an Agarimoo.", "You caught a Sea Walker.", "Pitch darkness reveals a Night Squid.", "You stumbled upon a Sea Guardian.",
                                     "It looks like you've disrupted the Sea Witch's brewing session. Watch out, she's furious!", "You reeled in a Sea Archer.", "The Rider of the Deep has emerged.", "Huh? A Catfish!", "Is this even a fish? It's the Carrot King!",
@@ -37,7 +38,10 @@ export const seaCreatureMessages = ["A Squid appeared.", "Your Chumcap Bucket tr
                                     
                                     "From beneath the lava appears a Magma Slug.", "You hear a faint Moo from the lava... A Moogma appears.", "A small but fearsome Lava Leech emerges.", 
                                     "You feel the heat radiating as a Pyroclastic Worm surfaces.", "A Lava Flame flies out from beneath the lava.", "A Fire Eel slithers out from the depths.", "Taurus and his steed emerge.", "WOAH! A Plhlegblast appeared.", 
-                                    "You hear a massive rumble as Thunder emerges.", "You have angered a legendary creature... Lord Jawbus has arrived.", "A Flaming Worm surfaces from the depths!", "A Lava Blaze has surfaced from the depths!", "A Lava Pigman arose from the depths!"];
+                                    "You hear a massive rumble as Thunder emerges.", "You have angered a legendary creature... Lord Jawbus has arrived.", "A Flaming Worm surfaces from the depths!", "A Lava Blaze has surfaced from the depths!", "A Lava Pigman arose from the depths!",
+                                    
+                                    "A leech of the mines surfaces... you've caught a Mithril Grubber.", "A leech of the mines surfaces... you've caught a Medium Mithril Grubber.",
+                                    "A leech of the mines surfaces... you've caught a Large Mithril Grubber.", "A leech of the mines surfaces... you've caught a Bloated Mithril Grubber."];
 
 export const CrimsonMessages = ['You have angered a legendary creature... Lord Jawbus has arrived.', 'You hear a massive rumble as Thunder emerges.', 
                                 'WOAH! A Plhlegblast appeared.', 'Taurus and his steed emerge.', 'A Fire Eel slithers out from the depths.', 

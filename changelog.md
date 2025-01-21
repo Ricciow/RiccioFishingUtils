@@ -7,6 +7,7 @@
 **pre2:**
 - Fixed hardcore gamer mode not triggering
 - Attribute rendering now renders on Magma Lord Gauntlets
+- Mithril grubber is now accounted for on the trackers.
 # v0.3.2
 - Added saving before the update happens so you don't loose any data
 - Disabling party commands or party warp now also disables custom warp as it can break other mods.
