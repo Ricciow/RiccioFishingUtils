@@ -37,11 +37,34 @@ register("chat", (user, message) => {
             ChatLib.command(`p ${user}`)
         }
         else {
-            ChatLib.chat(new TextComponent(`&a&l[Click to party ${user}]`).setClickAction('run_command').setClickValue(`/p ${user}`).setHoverAction("show_text").setHoverValue(`/p ${user}`));
+            setTimeout(() => {
+                ChatLib.chat(new TextComponent(`&a&l[Click to party ${user}]`)
+                .setClick('run_command', `/p ${user}`)
+                .setHover("show_text", `/p ${user}`));
+            }, 100);
         }
+    }
+
+    if(/^!invite(\s[^\s]+)+$/.test(message)) {
+        let members = [user].concat(message.split(" ").slice(1)).join(" ")
+        setTimeout(() => {
+            ChatLib.chat(new TextComponent(`&a&l[Click to invite ${members}]`)
+            .setClick('run_command', `/rfuinvitepeople ${members}`)
+            .setHover("show_text", `/rfuinvitepeople ${members}`));
+        }, 100);
     }
 }).setCriteria("From ${user}: ${message}")
 
+register("command", (...members) => {
+    ChatLib.command(`w ${members[0]} OK!`)
+    let timeout = 500
+    members.forEach((member) => {
+        setTimeout(() => {
+            ChatLib.command(`p ${member}`)
+        }, timeout);
+        timeout += 500
+    })
+}).setName("rfuinvitepeople")
 
 register("chat", (user) => {
     if(!settings().partyJoinHelp || (settings().partyJoinHelpLeader && !partyTracker.PARTY.isLeader)) return

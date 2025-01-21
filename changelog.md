@@ -9,6 +9,9 @@
 - Attribute rendering now renders on Magma Lord Gauntlets
 - Mithril grubber is now accounted for on the trackers.
 - Added more checks for if a person is in a party or not (internal)
+- Added !invite name name2 name3 name4 dm command, which prompts the other player to accept and invite all those people.
+- Added a 100ms delay before sending the [Click to party] message so it always appears after the message
+- Added a !merge username command, which should attempt to merge the party.
 # v0.3.2
 - Added saving before the update happens so you don't loose any data
 - Disabling party commands or party warp now also disables custom warp as it can break other mods.

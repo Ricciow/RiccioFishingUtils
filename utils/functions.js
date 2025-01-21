@@ -226,7 +226,7 @@ register("tick", () => {
 })
 
 export function splitMsg(msg, size) {
-    const split = msg.match(new RegExp(`.{1,${size}}`, "g"));
+    const split = msg?.match(new RegExp(`.{1,${size}}`, "g"));
 
     if (!split) return [];
     if (split.length === 1) return split;

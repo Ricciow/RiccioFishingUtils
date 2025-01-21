@@ -298,7 +298,70 @@ commandManager.addCommand({
     }
 })
 
-//?PlhlegblastInfo
+//? Merge Party
+
+var mergingParty = false
+var mergingUser = ''
+
+registerWhen("chat", (user) => {
+    if(user.toLowerCase() === mergingUser.toLowerCase()) {
+        ChatLib.command('p disband')
+        mergingParty = false
+    }
+},
+() => settings().partyMerge && mergingParty).setCriteria("From ${user}: OK!")
+
+function mergeParty(username) {
+    mergingUser = username
+    mergingParty = true
+    const members = [...new Set(partyTracker.members)];
+    ChatLib.command(`w ${username} !invite ${members.join(" ")}`)
+    setTimeout(() => {
+        mergingParty = false
+    }, 5000);
+}
+
+registerWhen("command", (username) => {
+    if(!partyTracker.isLeader && !partyTracker.inParty) return
+    sendPartyMessage("Party merge approved!")
+    setTimeout(() => {
+        mergeParty(username)
+    }, 250);
+},
+() => settings().partyMerge).setName("rfupartyapprovemerge")
+
+commandManager.addCommand({
+    triggers: ["mergeparty", "merge", "m"],   
+    parameters: 1,            
+    leaderOnly: false,        
+    memberOnly: false,        
+    selfTrigger: true,            
+    description: `Sends a merge request on that person's dms. Usage: ${settings().partyPrefix}merge username`,          
+    checkFunc: () => settings().partyMerge,
+    func(manager, name, param) {
+        if(!param) {
+            sendPartyMessage("You need to inform me who to merge to!")
+            return
+        }
+        if(partyTracker.members.map((member) => member.toLowerCase()).includes(param.toLowerCase())) {
+            sendPartyMessage("This person is in your party already!")
+            return
+        }
+        if(!checkIfUser(name)) {
+            sendPartyMessage("Waiting for party leader approval.")
+            ChatLib.chat(new TextComponent(`&a&l[Click to confirm Merge]`)
+            .setClick('run_command', `/rfupartyapprovemerge ${param}`)
+            .setHover("show_text", `/rfupartyapprovemerge ${param}`));
+        }
+        else {
+            mergeParty(param)
+        }
+        sendPartyMessage()
+    }
+})
+
+
+//? PlhlegblastInfo
 commandManager.addCommand({
     triggers: ["plhleginfo", "plhlegblastinfo", "pi"],   
     parameters: 1,            
@@ -313,7 +376,7 @@ commandManager.addCommand({
     }
 })
 
-//?JawbusInfo
+//? JawbusInfo
 commandManager.addCommand({
     triggers: ["jawbusinfo", "jawinfo", "ji"],   
     parameters: 1,            
@@ -328,7 +391,7 @@ commandManager.addCommand({
     }
 })
 
-//?ThunderInfo
+//? ThunderInfo
 commandManager.addCommand({
     triggers: ["thunderinfo", "thuninfo", "ti"],   
     parameters: 1,            
@@ -343,7 +406,7 @@ commandManager.addCommand({
     }
 })
 
-//?VialInfo
+//? VialInfo
 commandManager.addCommand({
     triggers: ["vialinfo", "vi"],   
     parameters: 1,            

@@ -987,6 +987,11 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
             configName: "partyPick",
             title: "Pick",
             value: true
+        },
+        {
+            configName: "partyMerge",
+            title: "Merge",
+            value: true
         }
     ]
 })

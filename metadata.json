@@ -2,7 +2,7 @@
     "name": "RiccioFishingUtils",
     "creator": "Riccio",
     "description": "A module focused entirely on fishing utilities",
-    "version": "0.3.3pre1",
+    "version": "0.3.3pre2",
     "entry": "index.js",
     "requires": [
         "PogData",
