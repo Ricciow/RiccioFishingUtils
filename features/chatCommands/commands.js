@@ -299,26 +299,9 @@ commandManager.addCommand({
 })
 
 //? Merge Party
-
-var mergingParty = false
-var mergingUser = ''
-
-registerWhen("chat", (user) => {
-    if(user.toLowerCase() === mergingUser.toLowerCase()) {
-        ChatLib.command('p disband')
-        mergingParty = false
-    }
-},
-() => settings().partyMerge && mergingParty).setCriteria("From ${user}: OK!")
-
 function mergeParty(username) {
-    mergingUser = username
-    mergingParty = true
     const members = [...new Set(partyTracker.members)];
     ChatLib.command(`w ${username} !invite ${members.join(" ")}`)
-    setTimeout(() => {
-        mergingParty = false
-    }, 5000);
 }
 
 registerWhen("command", (username) => {
@@ -333,7 +316,7 @@ registerWhen("command", (username) => {
 commandManager.addCommand({
     triggers: ["mergeparty", "merge", "m"],   
     parameters: 1,            
-    leaderOnly: false,        
+    leaderOnly: true,        
     memberOnly: false,        
     selfTrigger: true,            
     description: `Sends a merge request on that person's dms. Usage: ${settings().partyPrefix}merge username`,          
