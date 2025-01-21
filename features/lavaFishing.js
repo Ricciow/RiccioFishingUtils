@@ -778,4 +778,4 @@ registerWhen('chat', () => {
     seaCreatureData.save()
     Client.getMinecraft().func_71377_b(CrashReport.func_85055_a(new RuntimeException("☠ You were killed by Lord Jawbus."), "hardcore gamer mode"));
 },
-() => settings().crimsonHardcoreGamer).setCriteria('☠ You were killed by Lord Jawbus.')
+() => settings().crimsonHardcoreGamer).setCriteria(' ☠ You were killed by Lord Jawbus.')
