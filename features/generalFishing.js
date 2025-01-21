@@ -743,7 +743,9 @@ const ImportantDropsRender = {
                         "Magma Lord Helmet": [0, 0],
                         "Magma Lord Chestplate": [0, 0],
                         "Magma Lord Leggings": [0, 0],
-                        "Magma Lord Boots": [0, 0]};
+                        "Magma Lord Boots": [0, 0],
+                        "Magma Lord Gauntlet": [0, 0]
+}
 
 const items = new (Java.type('java.util.WeakHashMap'))();
 
