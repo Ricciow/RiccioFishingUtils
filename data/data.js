@@ -83,3 +83,9 @@ export let seaCreatureData = new PogObject('RiccioFishingUtils', {
         "Cooking": false
     }
 }, 'data/seaCreatureData.json');
+
+//Save the data on unload
+register("worldUnload", () => {
+    seaCreatureData.save()
+    playerData.save()
+})
