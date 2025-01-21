@@ -1,5 +1,11 @@
 const version = JSON.parse(FileLib.read("RiccioFishingUtils", "metadata.json")).version
 
+/**
+ * Processes a version number in a way where "x.y.z" => [x, y, z, 1000]
+ * or if there's a pre number "x.y.zprew" => [x,y,z,w]
+ * @param {String} version 
+ * @returns {Number[]}
+ */
 function processVersion(version) {
     let prerelease
     let versionParts = version.split('.').map((value) => {
@@ -16,6 +22,12 @@ function processVersion(version) {
     return versionParts
 }
 
+/**
+ * Verifies if version2 is bigger than version1
+ * @param {string} version1 
+ * @param {string} version2 
+ * @returns {boolean}
+ */
 function compareVersions(version1, version2) {
     const v1Parts = processVersion(version1)
     const v2Parts = processVersion(version2)
@@ -36,6 +48,10 @@ let downloadLink
 let latestReleaseAvailable
 let downloadUrl
 
+/**
+ * Update the data from GitHub's API
+ * @param {boolean} preRelease If versions on the format "x.y.zprew" should be considered
+ */
 export function updateGithubData(preRelease = false) {
     let releases
     let assets
@@ -71,22 +87,42 @@ export function updateGithubData(preRelease = false) {
     
 }
 
+/**
+ * Verifies wether there's an update or not
+ * @returns {boolean} Update
+ */
 export function checkIfUpdate() {
     return latestReleaseAvailable??false
 }
 
+/**
+ * Get Github's release URL
+ * @returns {string} Github's release URL
+ */
 export function getDownloadLink() {
     return downloadLink
 }
 
+/**
+ * Self explanatory
+ * @returns {string} Direct download URL
+ */
 export function getDirectDownloadLink() {
     return downloadUrl
 }
 
+/**
+ * Self explanatory
+ * @returns {string} version number.
+ */
 export function getRFUVersion() {
     return version
 }
 
+/**
+ * Checks if there's an update and sends an according chat message.
+ * @param {boolean} announceUpToDate 
+ */
 export function checkIfUpdateText(announceUpToDate = false) {
     //Verify if ctjs is in version 2.2.1 or later
     if(!compareVersions(com.chattriggers.ctjs.Reference.MODVERSION, "2.2.1")) { 
@@ -120,6 +156,9 @@ export function checkIfUpdateText(announceUpToDate = false) {
 
 const tempZip = Config.modulesFolder + "/RiccioFishingUtils/RiccioFishingUtils.zip"
 
+/**
+ * Updates RFU if there's a downloadURL found, make sure this only runs while inside a world.
+ */
 export function updateModule() {
     if(downloadUrl) {
         downloadFile(downloadUrl, tempZip)
@@ -135,6 +174,11 @@ const File = Java.type("java.io.File")
 const Channels = Java.type("java.nio.channels.Channels")
 const Long = Java.type("java.lang.Long")
 
+/**
+ * Downloads a file from an URL in a set destination
+ * @param {String} url URL of the download
+ * @param {String} destination Path to the destination
+ */
 function downloadFile(url, destination) {
     destination = new File(destination);
     destination.getParentFile().mkdirs();
