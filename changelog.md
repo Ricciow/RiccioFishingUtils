@@ -4,6 +4,7 @@
 - Actually fixed data not saving this time
 - /p list now checks if ur leader. (internal)
 - Added hardcore gamer mode on the Crimson Isle Tab
+
 **pre2:**
 - Fixed hardcore gamer mode not triggering
 - Attribute rendering now renders on Magma Lord Gauntlets
@@ -12,6 +13,7 @@
 - Added !invite name name2 name3 name4 dm command, which prompts the other player to accept and invite all those people.
 - Added a 100ms delay before sending the [Click to party] message so it always appears after the message
 - Added a !merge username command, which should attempt to merge the party.
+
 **pre3**
 - Removed check for the OK! thingy from merging (nerdy stuff)
 - Made !merge command require leader to trigger
