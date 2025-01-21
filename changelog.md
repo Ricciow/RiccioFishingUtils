@@ -1,22 +1,14 @@
 # v0.3.3
-**pre1:**
 - Changed autoupdate to trigger when joining a world.
 - Actually fixed data not saving this time
-- /p list now checks if ur leader. (internal)
 - Added hardcore gamer mode on the Crimson Isle Tab
-
-**pre2:**
-- Fixed hardcore gamer mode not triggering
 - Attribute rendering now renders on Magma Lord Gauntlets
 - Mithril grubber is now accounted for on the trackers.
-- Added more checks for if a person is in a party or not (internal)
 - Added !invite name name2 name3 name4 dm command, which prompts the other player to accept and invite all those people.
 - Added a 100ms delay before sending the [Click to party] message so it always appears after the message
 - Added a !merge username command, which should attempt to merge the party.
-
-**pre3**
-- Removed check for the OK! thingy from merging (nerdy stuff)
-- Made !merge command require leader to trigger
+- /p list now checks if ur leader. (internal)
+- Added more checks for if a person is in a party or not (internal)
 # v0.3.2
 - Added saving before the update happens so you don't loose any data
 - Disabling party commands or party warp now also disables custom warp as it can break other mods.

@@ -332,9 +332,11 @@ commandManager.addCommand({
         }
         if(!checkIfUser(name)) {
             sendPartyMessage("Waiting for party leader approval.")
-            ChatLib.chat(new TextComponent(`&a&l[Click to confirm Merge]`)
-            .setClick('run_command', `/rfupartyapprovemerge ${param}`)
-            .setHover("show_text", `/rfupartyapprovemerge ${param}`));
+            setTimeout(() => {
+                ChatLib.chat(new TextComponent(`&a&l[Click to confirm Merge]`)
+                .setClick('run_command', `/rfupartyapprovemerge ${param}`)
+                .setHover("show_text", `/rfupartyapprovemerge ${param}`));
+            }, 100);
         }
         else {
             mergeParty(param)
