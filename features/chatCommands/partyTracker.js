@@ -36,14 +36,17 @@ class partyTracker {
         }).setCriteria("Party > ${*}: ${*}");
         
         register("chat", (user) => {
+            this.inParty = true;
             this.members = [removeRankTag(user)]
         }).setCriteria("You have joined ${user}'s party!");
         
         register("chat", (user) => {
+            this.inParty = true;
             this.members = [removeRankTag(user)]
         }).setCriteria("You have joined ${user}' party!");
         
         register("chat", (people) => {
+            this.inParty = true;
             if(people.includes(", ")) people = people.split(", ").map((name) => {return removeRankTag(name)})
             else people = [removeRankTag(people)]
             people.forEach((person) => {
@@ -52,11 +55,13 @@ class partyTracker {
         }).setCriteria("You'll be partying with: ${people}");
         
         register("chat", (user) => {
+            this.inParty = true;
             if(!checkIfUser(user)) this.members = [removeRankTag(user)]
             else this.isLeader = true
         }).setCriteria("Party Leader: ${user} ●");
         
         register("chat", (people) => {
+            this.inParty = true;
             people = people.split(" ● ").map((name) => {return removeRankTag(name)})
             people.forEach((person) => {
                 if(person != "" && person != playerName)this.members.push(person)    
@@ -64,6 +69,7 @@ class partyTracker {
         }).setCriteria("Party Moderators: ${people}");
         
         register("chat", (people) => {
+            this.inParty = true;
             people = people.split(" ● ").map((name) => {return removeRankTag(name)})
             people.forEach((person) => {
                 if(person != "" && person != playerName)this.members.push(person)  
