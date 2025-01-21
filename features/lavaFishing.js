@@ -1,5 +1,5 @@
 import settings from "../settings/settings";
-import { seaCreatureData, playerData} from "../data/data";
+import { seaCreatureData, playerData } from "../data/data";
 import { CrimsonCreatures, CrimsonMessages, Chats, MythicDetectSound, colorsRegex, VialRegex} from "../data/constants";
 import { makeRegexFromList ,getAverageFromList, funniFaces, readableTime, getRandomInt, getVialAverage, registerWhen} from "../utils/functions";
 import RenderLib from "../../RenderLib";
@@ -774,6 +774,8 @@ register("entityDeath", (entity) => {
 const RuntimeException = Java.type("java.lang.RuntimeException");
 const CrashReport = Java.type("net.minecraft.crash.CrashReport");
 registerWhen('chat', () => {
-    Client.getMinecraft().func_71377_b(CrashReport.func_85055_a(new RuntimeException("☠ You were killed by Lord Jawbus."), "☠ You were killed by Lord Jawbus."));
+    playerData.save()
+    seaCreatureData.save()
+    Client.getMinecraft().func_71377_b(CrashReport.func_85055_a(new RuntimeException("☠ You were killed by Lord Jawbus."), "hardcore gamer mode"));
 },
 () => settings().crimsonHardcoreGamer).setCriteria('☠ You were killed by Lord Jawbus.')
