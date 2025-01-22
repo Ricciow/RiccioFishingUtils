@@ -9,6 +9,7 @@
 - Added an option to disable the Click to party
 - Improved the Click to party check to hopefully have less false positives
 - Added a !merge username command, which should attempt to merge the party.
+- Fixed Witherborn spawns to have the Invulnerability timer
 - /p list now checks if ur leader. (internal)
 - Added more checks for if a person is in a party or not (internal)
 # v0.3.2

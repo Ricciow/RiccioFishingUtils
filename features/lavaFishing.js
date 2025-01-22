@@ -650,22 +650,19 @@ register('command', (count) => {
 }).setName('rfusetvialcount');
 
 register("renderEntity", (entity, pos, partialTick, event) => {
-    if(entity != null) {
-        if(entity.getClassName() != "GUIClientPlayer") {
-            if(entity.name != null && Player != null) {
-                if(Player.asPlayerMP() != null){
-                    if(Player.asPlayerMP().getDimension() == -1){
-                        if(entity.name == "Wither" || (entity.name == 'Guardian' && entity.getWidth() > 1.5)) {
-                            TimeAlive = entity.getTicksExisted()
-                            if(TimeAlive < 110) {
-                                Tessellator.drawString(`Invulnerable ${readableTime(5500-TimeAlive/20*1000, true)}`,  Player.getX() + pos.x, Player.getY() + pos.y + 3.5, Player.getZ() + pos.z, 9373197, true, 0.05, false);
-                            }
-                            else {
-                                Tessellator.drawString(`Vulnerable`, Player.getX() + pos.x, Player.getY() + pos.y + 3.5, Player.getZ() + pos.z, 57381, true, 0.05, false);
-                            }
-                        }
-                    }
-                }
+    //Filter NEU's entity display thingy
+    if(entity?.getClassName() == "GUIClientPlayer") return
+
+    if(!entity.name) return
+
+    if(Player?.asPlayerMP()?.getDimension() == -1){
+        if((entity.name == "Wither" && entity.entity.func_82212_n() == 250) || (entity.name == 'Guardian' && entity.getWidth() > 1.5)) {
+            TimeAlive = entity.getTicksExisted()
+            if(TimeAlive < 110) {
+                Tessellator.drawString(`Invulnerable ${readableTime(5500-TimeAlive/20*1000, true)}`,  Player.getX() + pos.x, Player.getY() + pos.y + 3.5, Player.getZ() + pos.z, 9373197, true, 0.05, false);
+            }
+            else {
+                Tessellator.drawString(`Vulnerable`, Player.getX() + pos.x, Player.getY() + pos.y + 3.5, Player.getZ() + pos.z, 57381, true, 0.05, false);
             }
         }
     }
@@ -776,6 +773,6 @@ const CrashReport = Java.type("net.minecraft.crash.CrashReport");
 registerWhen('chat', () => {
     playerData.save()
     seaCreatureData.save()
-    Client.getMinecraft().func_71377_b(CrashReport.func_85055_a(new RuntimeException("☠ You were killed by Lord Jawbus."), "hardcore gamer mode"));
+    Client.getMinecraft().func_71377_b(CrashReport.func_85055_a(new RuntimeException("[RFU] You were killed by Lord Jawbus."), "Hardcore Gamer mode"));
 },
 () => settings().crimsonHardcoreGamer).setCriteria(' ☠ You were killed by Lord Jawbus.')
