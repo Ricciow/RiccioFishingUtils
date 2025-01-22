@@ -14,7 +14,7 @@
 
 ## What it does
 
-RiccioFishingUtils is a Chattriggers module for Minecraft 1.8.9 that adds many useful features to [Hypixel SkyBlock](https://wiki.hypixel.net/Main_Page) focused on fishing.
+RiccioFishingUtils is a Chattriggers module for Minecraft 1.8.9 that adds many useful features to [Hypixel SkyBlock](https://wiki.hypixel.net/Fishing) focused on fishing.
 
 * **Helpful Overlays:** View important information on your screen.
 * **Inventory Highlighter:** Focus on important items in inventories.
