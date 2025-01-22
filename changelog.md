@@ -6,6 +6,8 @@
 - Mithril grubber is now accounted for on the trackers.
 - Added !invite name name2 name3 name4 dm command, which prompts the other player to accept and invite all those people.
 - Added a 100ms delay before sending the [Click to party] message so it always appears after the message
+- Added an option to disable the Click to party
+- Improved the Click to party check to hopefully have less false positives
 - Added a !merge username command, which should attempt to merge the party.
 - /p list now checks if ur leader. (internal)
 - Added more checks for if a person is in a party or not (internal)

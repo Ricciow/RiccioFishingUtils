@@ -1,7 +1,7 @@
 import { help, warp } from "./commands"
 import settings from "../../settings/settings"
 import partyTracker from "./partyTracker"
-import { checkIfUser, removeRankTag } from "../../utils/functions"
+import { checkIfUser, registerWhen, removeRankTag } from "../../utils/functions"
 import commandManager from "./commandManager"
 
 let lastkick
@@ -72,15 +72,20 @@ register("chat", (user) => {
 }).setCriteria("${user} joined the party.");
 
 
-const partyRegex = /(((lf|any(one)?|who)\s(cish(ing)?|fish|p((art)(y|ies))?|crimson p((art)(y|ies))?|ci p((art)(y|ies))?|inv(ite)?)(ing)?)|(^p(arty)?$)|((\s|^)inv(ite)?)|((\s|^)p(arty)? me)|(\s|^)(parties)(\s|$)|^me+($|(\sme+($|(\sme+)))))/ig;
-register("chat", (user, message) => {
+const partyRegex = /(((lf|any(one)?|who)\s(cish(ing)?|fish|p((art)(y|ies))?|crimson p((art)(y|ies))?|ci p((art)(y|ies))?|inv(ite)?(\s|$))(ing)?)|(^p(arty)?$)|((\s|^)inv(ite)?)(\s|$)|((\s|^)p(arty)? me)|(\s|^)(parties)(\s|$)|^me+($|(\sme+($|(\sme+)))))/ig;
+registerWhen("chat", (user, message) => {
     user = removeRankTag(user);
     if(user.includes(" ")) user = user.split(" ")[0];
     partyRegex.lastIndex = 0;
     if(partyRegex.test(message) && !checkIfUser(user)) {
-        Msg = new TextComponent(`&a&l[Click to party ${user}]`).setClickAction('run_command').setClickValue(`/p ${user}`).setHoverAction("show_text").setHoverValue(`/p ${user}`);
-        ChatLib.chat(Msg);
+        setTimeout(() => {
+            Msg = new TextComponent(`&a&l[Click to party ${user}]`)
+            .setClick('run_command', `/p ${user}`)
+            .setHover("show_text", `/p ${user}`);
+            ChatLib.chat(Msg);
+        }, 100)
     }
-}).setCriteria("Guild > ${user}: ${message}")
+},
+() => settings().clickToParty).setCriteria("Guild > ${user}: ${message}")
 
 // From [MVP++] Jenyk: Hey! I'm currently muted and am unable to message right now.

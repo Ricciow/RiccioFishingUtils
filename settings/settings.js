@@ -1003,11 +1003,19 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     subcategory: "Party Commands",
     value: false
 })
+.addSwitch({
+    category: "Chat Commands",
+    configName: "clickToParty",
+    title: "Click to party",
+    description: "Sends a [Click to party user] message whenever the mod finds it relevant in the guild chat.",
+    subcategory: "Party Commands",
+    value: true
+})
 .addTextInput({
     category: "Chat Commands",
     configName: "partyInviteKeyword",
     title: "Invite Keyword",
-    description: "The keyword that will trigger the autoinvite or show a click to invite message, Default: Boop!",
+    description: "The keyword that will trigger the autoinvite when DM'ed or show a click to invite message, Default: Boop!",
     value: "Boop!",
     placeHolder: "",
     subcategory: "Party Commands"
