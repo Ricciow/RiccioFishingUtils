@@ -79,18 +79,20 @@ class partyTracker {
         }).setCriteria("Party Members: ${people}");
         
         register("chat", (user) => {
+            if(user.includes(">")) return
             if(!this.inParty) {
                 if(checkIfUser(removeRankTag(user))) {
                     this.isLeader = true;
                 }
             }
             this.inParty = true;
-        }).setCriteria(/^([^\s]+) invited [^\s]+ to the party! They have 60 seconds to accept.$/);
+        }).setCriteria("${user} invited ${*} to the party! They have 60 seconds to accept.");
         
         register("chat", (user) => {
+            if(user.includes(">")) return
             this.inParty = true;
             this.members.push(removeRankTag(user))
-        }).setCriteria(/^([^\s]+) joined the party.$/);
+        }).setCriteria("${user} joined the party.");
         
         register("chat", (user) => {
             this.inParty = true;
@@ -130,12 +132,13 @@ class partyTracker {
             this.warpExcluded = [];
         }).setCriteria("The party was disbanded because the party leader disconnected.");
         
-        register("chat", () => {
+        register("chat", (user) => {
+            if(user.includes(">")) return
             this.inParty = false;
             this.isLeader = false;
             this.members = [];
             this.warpExcluded = [];
-        }).setCriteria(/^[^\s]+ has disbanded the party!$/);
+        }).setCriteria("${user} has disbanded the party!");
         
         register("chat", () => {
             this.inParty = false;
@@ -170,18 +173,21 @@ class partyTracker {
         }).setCriteria("The party was transferred to ${user} because ${user2} left");
         
         register("chat", (user) => {
+            if(user.includes(">")) return
             removeFromArray(this.members, removeRankTag(user))
             if(this.warpExcluded.includes(removeRankTag(user))) removeFromArray(this.warpExcluded, removeRankTag(user));
-        }).setCriteria(/^([^\s]) has left the party.$/);
+        }).setCriteria("${user} has left the party.");
         
         register("chat", (user) => {
+            if(user.includes(">")) return
             removeFromArray(this.members, removeRankTag(user))
             if(this.warpExcluded.includes(removeRankTag(user))) removeFromArray(this.warpExcluded, removeRankTag(user));
-        }).setCriteria(/^([^\s]) was removed from your party because they disconnected.$/);
+        }).setCriteria("${user} was removed from your party because they disconnected.");
         
         register("chat", (user) => {
+            if(user.includes(">")) return
             removeFromArray(this.members, removeRankTag(user))
-        }).setCriteria(/^([^\s]) has been removed from the party.$/);
+        }).setCriteria("${user} has been removed from the party.");
         
         register("messageSent", (message) => {
             const result = /\/^p kick (.+)$/.exec(message)

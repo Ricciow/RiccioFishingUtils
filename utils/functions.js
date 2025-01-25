@@ -3,7 +3,7 @@ import { playerName } from "../data/constants";
 import { seaCreatureData } from "../data/data";
 
 export function removeRankTag(ign){
-    if(!ign) return
+    if(!ign) return ""
     ign = ign.replace("[VIP] ", "");
     ign = ign.replace("[VIP+] ", "");
     ign = ign.replace("[MVP] ", "");
