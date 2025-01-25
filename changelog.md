@@ -1,3 +1,6 @@
+# v0.3.4
+**Pre1**
+- Fixed guild messages being tracked as party actions
 # v0.3.3
 - Changed autoupdate to trigger when joining a world.
 - Actually fixed data not saving this time
