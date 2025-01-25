@@ -300,8 +300,7 @@ commandManager.addCommand({
 
 //? Merge Party
 function mergeParty(username) {
-    const members = [...new Set(partyTracker.members)];
-    ChatLib.command(`w ${username} !invite ${members.join(" ")}`)
+    ChatLib.command(`w ${username} !invite ${partyTracker.members.join(" ")}`)
 }
 
 registerWhen("command", (username) => {

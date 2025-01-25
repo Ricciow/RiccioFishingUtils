@@ -12,7 +12,7 @@ class partyTracker {
         this.logOff = playerData.PARTY.logOff??564004800000
         this.inParty = playerData.PARTY.inParty??false
         this.isLeader = playerData.PARTY.isLeader??false
-        this.membersSet = new Set()
+        this.membersSet = new Set(playerData.PARTY.members??[])
         this.warpExcluded = playerData.PARTY.warpExcluded??[]
 
         var lastValues = { 
@@ -245,7 +245,7 @@ class partyTracker {
     }
 
     get members() {
-        return [this.membersSet]
+        return [...this.membersSet]
     }
 
     save() {
