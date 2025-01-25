@@ -12,7 +12,7 @@ class partyTracker {
         this.logOff = playerData.PARTY.logOff??564004800000
         this.inParty = playerData.PARTY.inParty??false
         this.isLeader = playerData.PARTY.isLeader??false
-        this.members = playerData.PARTY.members??[]
+        this.membersSet = new Set()
         this.warpExcluded = playerData.PARTY.warpExcluded??[]
 
         var lastValues = { 
@@ -37,12 +37,14 @@ class partyTracker {
         
         register("chat", (user) => {
             this.inParty = true;
-            this.members = [removeRankTag(user)]
+            this.membersSet.clear()
+            this.membersSet.add(removeRankTag(user))
         }).setCriteria("You have joined ${user}'s party!");
         
         register("chat", (user) => {
             this.inParty = true;
-            this.members = [removeRankTag(user)]
+            this.membersSet.clear()
+            this.membersSet.add(removeRankTag(user))
         }).setCriteria("You have joined ${user}' party!");
         
         register("chat", (people) => {
@@ -50,14 +52,17 @@ class partyTracker {
             if(people.includes(", ")) people = people.split(", ").map((name) => {return removeRankTag(name)})
             else people = [removeRankTag(people)]
             people.forEach((person) => {
-                this.members.push(person)  
+                this.membersSet.add(person)  
             })
         }).setCriteria("You'll be partying with: ${people}");
         
         register("chat", (user) => {
             this.inParty = true;
             console.log(user)
-            if(!checkIfUser(user)) this.members = [removeRankTag(user)]
+            if(!checkIfUser(user)) {
+                this.membersSet.clear()
+                this.membersSet.add(removeRankTag(user))
+            }
             else this.isLeader = true
         }).setCriteria("Party Leader: ${user} ●");
         
@@ -65,7 +70,7 @@ class partyTracker {
             this.inParty = true;
             people = people.split(" ● ").filter(name => name).map((name) => {return removeRankTag(name)})
             people.forEach((person) => {
-                if(person != "" && person != playerName)this.members.push(person)    
+                if(person != "" && person != playerName) this.membersSet.add(person)    
             })
         }).setCriteria("Party Moderators: ${people}");
         
@@ -74,7 +79,7 @@ class partyTracker {
             people = people.split(" ● ").filter(name => name).map((name) => {return removeRankTag(name)})
             console.log(people)
             people.forEach((person) => {
-                if(person != "" && person != playerName)this.members.push(person)  
+                if(person != "" && person != playerName) this.membersSet.add(person)  
             })
         }).setCriteria("Party Members: ${people}");
         
@@ -91,7 +96,7 @@ class partyTracker {
         register("chat", (user) => {
             if(user.includes(">")) return
             this.inParty = true;
-            this.members.push(removeRankTag(user))
+            this.membersSet.add(removeRankTag(user))
         }).setCriteria("${user} joined the party.");
         
         register("chat", (user) => {
@@ -107,28 +112,28 @@ class partyTracker {
         register("chat", () => {
             this.inParty = false;
             this.isLeader = false;
-            this.members = [];
+            this.membersSet.clear()
             this.warpExcluded = [];
         }).setCriteria("You left the party.");
         
         register("chat", () => {
             this.inParty = false;
             this.isLeader = false;
-            this.members = [];
+            this.membersSet.clear()
             this.warpExcluded = [];
         }).setCriteria("You have been kicked from the party by ${*}");
         
         register("chat", () => {
             this.inParty = false;
             this.isLeader = false;
-            this.members = [];
+            this.membersSet.clear()
             this.warpExcluded = [];
         }).setCriteria("The party was disbanded because all invites expired and the party was empty.");
         
         register("chat", () => {
             this.inParty = false;
             this.isLeader = false;
-            this.members = [];
+            this.membersSet.clear()
             this.warpExcluded = [];
         }).setCriteria("The party was disbanded because the party leader disconnected.");
         
@@ -136,14 +141,14 @@ class partyTracker {
             if(user.includes(">")) return
             this.inParty = false;
             this.isLeader = false;
-            this.members = [];
+            this.membersSet.clear()
             this.warpExcluded = [];
         }).setCriteria("${user} has disbanded the party!");
         
         register("chat", () => {
             this.inParty = false;
             this.isLeader = false;
-            this.members = [];
+            this.membersSet.clear()
             this.warpExcluded = [];
         }).setCriteria("You are not in a party right now.");
         
@@ -165,28 +170,28 @@ class partyTracker {
             else if (checkIfUser(removeRankTag(user2))) {
                 this.isLeader = false;
                 this.inParty = false;
-                this.members = [];
+                this.membersSet.clear()
                 this.warpExcluded = [];
                 return
             }
-            removeFromArray(this.members, removeRankTag(user2))
+            this.membersSet.delete(removeRankTag(user2))
         }).setCriteria("The party was transferred to ${user} because ${user2} left");
         
         register("chat", (user) => {
             if(user.includes(">")) return
-            removeFromArray(this.members, removeRankTag(user))
+            this.membersSet.delete(removeRankTag(user))
             if(this.warpExcluded.includes(removeRankTag(user))) removeFromArray(this.warpExcluded, removeRankTag(user));
         }).setCriteria("${user} has left the party.");
         
         register("chat", (user) => {
             if(user.includes(">")) return
-            removeFromArray(this.members, removeRankTag(user))
+            this.membersSet.delete(removeRankTag(user))
             if(this.warpExcluded.includes(removeRankTag(user))) removeFromArray(this.warpExcluded, removeRankTag(user));
         }).setCriteria("${user} was removed from your party because they disconnected.");
         
         register("chat", (user) => {
             if(user.includes(">")) return
-            removeFromArray(this.members, removeRankTag(user))
+            this.membersSet.delete(removeRankTag(user))
         }).setCriteria("${user} has been removed from the party.");
         
         register("messageSent", (message) => {
@@ -210,7 +215,7 @@ class partyTracker {
                 if (this.logOff + 300000 < Date.now()){
                     this.inParty = false;
                     this.isLeader = false;
-                    this.members = [];
+                    this.membersSet.clear()
                     this.warpExcluded = [];
                 }
             }
@@ -239,6 +244,9 @@ class partyTracker {
         }).setName("rfutogglelogger")
     }
 
+    get members() {
+        return [this.membersSet]
+    }
 
     save() {
         playerData.PARTY = {
