@@ -1,4 +1,7 @@
 # v0.3.4
+**Pre2**
+- Fixed /rfutogglelogger spam
+
 **Pre1**
 - Hopefuly fixed party commands (again)
 - Fixed guild messages being tracked as party actions (internal)

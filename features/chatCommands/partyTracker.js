@@ -24,7 +24,14 @@ class partyTracker {
         }
         const logger = register('step', () => {
             Object.keys(lastValues).forEach((value) => {
-                if(lastValues[value] !== this[value]) {
+                if(lastValues[value] != this[value]) {
+                    if(value === 'members') {
+                        let equal = true
+                        lastValues[value].forEach((value, index) => {
+                            if(this.members[index] != value) equal = false
+                        })
+                        if(equal) return
+                    }
                     ChatLib.chat(`${value}: ${lastValues[value]} -> ${this[value]}`)
                     lastValues[value] = this[value]
                 }
@@ -58,7 +65,6 @@ class partyTracker {
         
         register("chat", (user) => {
             this.inParty = true;
-            console.log(user)
             if(!checkIfUser(user)) {
                 this.membersSet.clear()
                 this.membersSet.add(removeRankTag(user))
@@ -77,7 +83,6 @@ class partyTracker {
         register("chat", (people) => {
             this.inParty = true;
             people = people.split(" ● ").filter(name => name).map((name) => {return removeRankTag(name)})
-            console.log(people)
             people.forEach((person) => {
                 if(person != "" && person != playerName) this.membersSet.add(person)  
             })
