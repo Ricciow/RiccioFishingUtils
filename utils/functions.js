@@ -18,7 +18,7 @@ export function removeRankTag(ign){
  * @returns {string} Found username
  */
 export function clearUsername(ign) {
-    ign = ign.split(" ").find((name) => /^[a-z_]{3,16}$/ig.test(name))
+    ign = ign.split(" ").find((name) => /^[a-z_0-9]{3,16}$/ig.test(name))
     return ign??""
 }
 

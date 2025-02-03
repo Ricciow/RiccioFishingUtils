@@ -1,6 +1,7 @@
 # v0.3.4
 **Pre2**
 - Fixed /rfutogglelogger spam
+- Fixed isLeader Check if your username has Numbers on it (I'm sorry for that)
 
 **Pre1**
 - Hopefuly fixed party commands (again)
