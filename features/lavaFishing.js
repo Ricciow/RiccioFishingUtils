@@ -4,7 +4,7 @@ import { CrimsonCreatures, CrimsonMessages, Chats, MythicDetectSound, colorsRege
 import { makeRegexFromList ,getAverageFromList, funniFaces, readableTime, getRandomInt, getVialAverage, registerWhen} from "../utils/functions";
 import RenderLib from "../../RenderLib";
 import guiManager from "../gui/guiManager";
-import ChatUtils from "../utils/chatUtils";
+import ChatUtils from "../utils/ChatUtils";
 
 const BasePlhegblast = {
     "Name":"§lPlhlegblast",

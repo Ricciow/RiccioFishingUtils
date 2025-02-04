@@ -1,7 +1,7 @@
 import settings from "../settings/settings";
 import RenderLib from "../../RenderLib"
 import guiManager from "../gui/guiManager";
-import ChatUtils from "../utils/chatUtils";
+import ChatUtils from "../utils/ChatUtils";
 
 let x = 0;
 let y = 0;

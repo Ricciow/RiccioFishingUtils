@@ -2,7 +2,7 @@ import settings from "../settings/settings";
 import { playerData } from "../data/data";
 import { readableTime, funniFaces } from "../utils/functions";
 import guiManager from "../gui/guiManager";
-import ChatUtils from "../utils/chatUtils";
+import ChatUtils from "../utils/ChatUtils";
 
 //CRYSTAL HOLLOWS
 

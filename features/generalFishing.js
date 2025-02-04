@@ -4,7 +4,7 @@ import { readableTime, funniFaces, makeRegexFromList, readableTime, getRandomInt
 import { seaCreatures, seaCreaturesNW, Bobber, seaCreatureMessages, colorsRegex, ArmorStand, Firework} from "../data/constants";
 import guiManager from "../gui/guiManager";
 import settings from "../settings/settings";
-import ChatUtils from "../utils/chatUtils";
+import ChatUtils from "../utils/ChatUtils";
 
 let SeaCreatures = 0;
 let SeaCreaturesNW = 0;

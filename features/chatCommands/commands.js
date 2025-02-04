@@ -5,7 +5,7 @@ import { checkIfUser, getAverageFromList, getVialAverage, readableTime, register
 import { playerName } from "../../data/constants";
 import skyblock from "../../utils/skyblock";
 import { seaCreatureData } from "../../data/data";
-import ChatUtils from "../../utils/chatUtils";
+import ChatUtils from "../../utils/ChatUtils";
 
 // function test(name, params) {
 //     ChatLib.chat(`I'm a command! ${params}`)
