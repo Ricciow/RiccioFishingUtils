@@ -182,24 +182,6 @@ export function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
-export function TransferMixendData(List) {
-    seaCreatureData.DROPS["RadioactiveVial"] = List[0];
-    seaCreatureData.DROPS["RadioactiveVialTime"] = List[1];
-    List[2].forEach(vial => {
-        seaCreatureData.DROPS["VialHistory"].push([vial, 0]);
-    });
-    seaCreatureData.CRIMSON["PlhlegblastCount"] = List[3];
-    seaCreatureData.CRIMSON["PlhlegblastTime"] = List[4];
-    seaCreatureData.CRIMSON["PlhegblastAllCount"] = [];
-    seaCreatureData.CRIMSON["JawbusCount"] = List[5];
-    seaCreatureData.CRIMSON["JawbusTime"] = List[6];
-    seaCreatureData.CRIMSON["JawbusAllCount"] = List[7];
-    seaCreatureData.CRIMSON["ThunderCount"] = List[8];
-    seaCreatureData.CRIMSON["ThunderTime"] = List[9];
-    seaCreatureData.CRIMSON["ThunderAllCount"] = List[10];
-    seaCreatureData.save();
-}
-
 export function getVialAverage() {
     let drops = seaCreatureData.DROPS["VialHistory"]
     let sum = drops.reduce((accumulator, current) => accumulator + current[0], 0)
@@ -225,26 +207,6 @@ register("tick", () => {
         }
     })
 })
-
-export function splitMsg(msg, size) {
-    const split = msg?.match(new RegExp(`.{1,${size}}`, "g"));
-
-    if (!split) return [];
-    if (split.length === 1) return split;
-
-    return split;
-}
-
-export function sendPartyMessage(message) {
-    let splitted = splitMsg(message, 97)
-    let timeout = 0
-    splitted.forEach((message) => {
-        setTimeout(() => {
-            ChatLib.command(`pc ${message}`);
-        }, timeout);
-        timeout += 250
-    })
-}
 
 /**
  * Gets the lore of an item without messing up skyhanni.
