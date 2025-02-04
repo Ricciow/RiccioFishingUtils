@@ -1,4 +1,6 @@
-const version = JSON.parse(FileLib.read("RiccioFishingUtils", "metadata.json")).version
+import ModuleUtils from "../ModuleUtils";
+
+const version = ModuleUtils.version
 
 /**
  * Processes a version number in a way where "x.y.z" => [x, y, z, 1000]

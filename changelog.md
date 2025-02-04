@@ -2,6 +2,7 @@
 **Pre3**
 - Added Officer chat selection for chat messages
 - Revamped Message Sending (Internal)
+- Added rfuversion party command
 
 **Pre2**
 - Fixed /rfutogglelogger spam

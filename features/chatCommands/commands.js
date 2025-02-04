@@ -6,6 +6,7 @@ import { playerName } from "../../data/constants";
 import skyblock from "../../utils/skyblock";
 import { seaCreatureData } from "../../data/data";
 import ChatUtils from "../../utils/ChatUtils";
+import ModuleUtils from "../../utils/ModuleUtils";
 
 // function test(name, params) {
 //     ChatLib.chat(`I'm a command! ${params}`)
@@ -402,5 +403,20 @@ commandManager.addCommand({
     func(manager, name, param) {
         if(param) if(!playerName.toLowerCase().includes(param.toLowerCase())) return
         ChatUtils.sendPartyMessage(`Own jawbusses since last Vial: ${seaCreatureData.DROPS.RadioactiveVial}, Last: ${readableTime(Date.now() - seaCreatureData.DROPS.RadioactiveVialTime)}, avg: ${getVialAverage()}`);
+    }
+})
+
+//? rfuversion
+commandManager.addCommand({
+    triggers: ["rfuversion", "rfuver", "version", "rv"],
+    parameters: 1,
+    leaderOnly: false,
+    memberOnly: false,
+    selfTrigger: true,
+    description: "Sends my rfu version",
+    checkFunc: () => true,
+    func(manager, name, param) {
+        if(param) if(!playerName.toLowerCase().includes(param.toLowerCase())) return
+        ChatUtils.sendPartyMessage(`RFU version: ${ModuleUtils.version}`)
     }
 })
