@@ -1,4 +1,8 @@
 # v0.3.4
+**Pre3**
+- Added Officer chat selection for chat messages
+- Revamped Message Sending (Internal)
+
 **Pre2**
 - Fixed /rfutogglelogger spam
 - Fixed isLeader Check if your username has Numbers on it (I'm sorry for that)

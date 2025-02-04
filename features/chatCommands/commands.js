@@ -1,10 +1,11 @@
 import commandManager from "./commandManager";
 import settings from "../../settings/settings";
 import partyTracker from "./partyTracker";
-import { checkIfUser, getAverageFromList, getVialAverage, readableTime, registerWhen, removeFromArray, removeRankTag, sendPartyMessage, splitMsg } from "../../utils/functions";
+import { checkIfUser, getAverageFromList, getVialAverage, readableTime, registerWhen, removeFromArray, removeRankTag } from "../../utils/functions";
 import { playerName } from "../../data/constants";
 import skyblock from "../../utils/skyblock";
 import { seaCreatureData } from "../../data/data";
+import ChatUtils from "../../utils/chatUtils";
 
 // function test(name, params) {
 //     ChatLib.chat(`I'm a command! ${params}`)
@@ -24,21 +25,20 @@ import { seaCreatureData } from "../../data/data";
 // commandManager.addCommand(exampleCommand);
 
 //? Help
-
 export function help(manager, name, parameter = undefined) {
     if(!parameter && partyTracker.isLeader || checkIfUser(parameter)) {
         //General Help
         let commands = manager.commands.filter(({ leaderOnly, memberOnly, checkFunc }) => (leaderOnly && partyTracker.isLeader || !leaderOnly && !memberOnly || memberOnly && !partyTracker.isLeader) && checkFunc()).map(({ triggers }) => triggers[0]);
         let message = `Enabled Commands: ${commands.join(", ")}`;
-        sendPartyMessage(message)
+        ChatUtils.sendPartyMessage(message)
     }
     else if(!partyTracker.members.includes(parameter) && parameter){
         let command = manager.commands.find(({ triggers }) => triggers?.some(trigger => trigger === parameter));
         if(command) {
-            sendPartyMessage(`(${parameter}) ${command.description} Triggers: ${command.triggers.join(", ")}`);
+            ChatUtils.sendPartyMessage(`(${parameter}) ${command.description} Triggers: ${command.triggers.join(", ")}`);
         }
         else {
-            sendPartyMessage(`(${parameter}) Invalid command!`);
+            ChatUtils.sendPartyMessage(`(${parameter}) Invalid command!`);
         }
     }
 }
@@ -70,11 +70,11 @@ commandManager.addCommand({
                 ChatLib.command(`p invite ${parameter}`);
             }   
             else {
-                sendPartyMessage(`${parameter} is already in the party!`);
+                ChatUtils.sendPartyMessage(`${parameter} is already in the party!`);
             }
         }
         else {
-            sendPartyMessage(`Usage: invite/inv/party/p <username>`);
+            ChatUtils.sendPartyMessage(`Usage: invite/inv/party/p <username>`);
         }
     }                
 })
@@ -96,33 +96,33 @@ commandManager.addCommand({
                 if(partyTracker.PARTY["members"].map((player) => player.toLowerCase()).includes(param.toLowerCase())) {
                     if(partyTracker.warpExcluded.includes(param)) {
                         removeFromArray(partyTracker.warpExcluded, param)
-                        sendPartyMessage(`${param} can now be warped.`)
+                        ChatUtils.sendPartyMessage(`${param} can now be warped.`)
                     }
                     else {
                         partyTracker.warpExcluded.push(param)
-                        sendPartyMessage(`${param} can not be warped until you leave or the party is disbanded.`)
+                        ChatUtils.sendPartyMessage(`${param} can not be warped until you leave or the party is disbanded.`)
                     }
                 }
                 else {
-                    sendPartyMessage(`${param} is not in the party!`)
+                    ChatUtils.sendPartyMessage(`${param} is not in the party!`)
                 }   
             }
             else {
-                sendPartyMessage('Usage: !togglewarp username')
+                ChatUtils.sendPartyMessage('Usage: !togglewarp username')
             }
         }
         else {
             if(param) {
-                sendPartyMessage("Only party leader can enable togglewarp for others.")
+                ChatUtils.sendPartyMessage("Only party leader can enable togglewarp for others.")
             }
             else {
                 if(partyTracker.warpExcluded.includes(name)) {
                     removeFromArray(partyTracker.warpExcluded, name)
-                    sendPartyMessage("You can now be warped.")
+                    ChatUtils.sendPartyMessage("You can now be warped.")
                 }
                 else {
                     partyTracker.warpExcluded.push(name)
-                    sendPartyMessage("You can not be warped until you leave or the party is disbanded.")
+                    ChatUtils.sendPartyMessage("You can not be warped until you leave or the party is disbanded.")
                 }
             }
         }
@@ -181,10 +181,10 @@ export function warp(manager, name, ignoreConditions = false) {
     }
     else {
         if(skyblock.map != 'Private Island') {
-            sendPartyMessage("Lobby has a player count below 8! (Not Warping)")
+            ChatUtils.sendPartyMessage("Lobby has a player count below 8! (Not Warping)")
         }
         else {
-            sendPartyMessage("I'm currently on a private island! (Not Warping)")
+            ChatUtils.sendPartyMessage("I'm currently on a private island! (Not Warping)")
         }
     }
 }
@@ -245,7 +245,7 @@ commandManager.addCommand({
                     ChatLib.command(`p transfer ${parameter}`);
                 }   
                 else {
-                    sendPartyMessage(`${parameter} is not in the party!`);
+                    ChatUtils.sendPartyMessage(`${parameter} is not in the party!`);
                 }
             }
         }
@@ -280,7 +280,7 @@ commandManager.addCommand({
     checkFunc: () => settings().partyCoords,
     func(manager, name, parameter) {
         if(parameter) if(!playerName.toLowerCase().includes(parameter.toLowerCase())) return
-        sendPartyMessage(`x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`)
+        ChatUtils.sendPartyMessage(`x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`)
     }
 })
 
@@ -294,7 +294,7 @@ commandManager.addCommand({
     description: `Pick between one of the options!`,          
     checkFunc: () => settings().partyPick,
     func(manager, name, ...options) {
-        sendPartyMessage(`${options[Math.floor(Math.random() * options.length)] ?? "You must tell me what to choose from!"}`);
+        ChatUtils.sendPartyMessage(`${options[Math.floor(Math.random() * options.length)] ?? "You must tell me what to choose from!"}`);
     }
 })
 
@@ -305,7 +305,7 @@ function mergeParty(username) {
 
 registerWhen("command", (username) => {
     if(!partyTracker.isLeader && !partyTracker.inParty) return
-    sendPartyMessage("Party merge approved!")
+    ChatUtils.sendPartyMessage("Party merge approved!")
     setTimeout(() => {
         mergeParty(username)
     }, 250);
@@ -322,15 +322,15 @@ commandManager.addCommand({
     checkFunc: () => settings().partyMerge,
     func(manager, name, param) {
         if(!param) {
-            sendPartyMessage("You need to inform me who to merge to!")
+            ChatUtils.sendPartyMessage("You need to inform me who to merge to!")
             return
         }
         if(partyTracker.members.map((member) => member.toLowerCase()).includes(param.toLowerCase())) {
-            sendPartyMessage("This person is in your party already!")
+            ChatUtils.sendPartyMessage("This person is in your party already!")
             return
         }
         if(!checkIfUser(name)) {
-            sendPartyMessage("Waiting for party leader approval.")
+            ChatUtils.sendPartyMessage("Waiting for party leader approval.")
             setTimeout(() => {
                 ChatLib.chat(new TextComponent(`&a&l[Click to confirm Merge]`)
                 .setClick('run_command', `/rfupartyapprovemerge ${param}`)
@@ -340,7 +340,7 @@ commandManager.addCommand({
         else {
             mergeParty(param)
         }
-        sendPartyMessage()
+        ChatUtils.sendPartyMessage()
     }
 })
 
@@ -356,7 +356,7 @@ commandManager.addCommand({
     checkFunc: () => settings().infoPlhleg,
     func(manager, name, param) {
         if(param) if(!playerName.toLowerCase().includes(param.toLowerCase())) return
-        sendPartyMessage(`Catches since last Plhleg: ${seaCreatureData.CRIMSON.PlhlegblastCount-1}, Last: ${readableTime(Date.now() - seaCreatureData.CRIMSON.PlhlegblastTime)}, avg: ${getAverageFromList(seaCreatureData.CRIMSON.PlhlegblastAllCount)}`);
+        ChatUtils.sendPartyMessage(`Catches since last Plhleg: ${seaCreatureData.CRIMSON.PlhlegblastCount-1}, Last: ${readableTime(Date.now() - seaCreatureData.CRIMSON.PlhlegblastTime)}, avg: ${getAverageFromList(seaCreatureData.CRIMSON.PlhlegblastAllCount)}`);
     }
 })
 
@@ -371,7 +371,7 @@ commandManager.addCommand({
     checkFunc: () => settings().infoJawbus,
     func(manager, name, param) {
         if(param) if(!playerName.toLowerCase().includes(param.toLowerCase())) return
-        sendPartyMessage(`Catches since last Jawbus: ${seaCreatureData.CRIMSON.JawbusCount-1}, Last: ${readableTime(Date.now() - seaCreatureData.CRIMSON.JawbusTime)}, avg: ${getAverageFromList(seaCreatureData.CRIMSON.JawbusAllCount)}`);
+        ChatUtils.sendPartyMessage(`Catches since last Jawbus: ${seaCreatureData.CRIMSON.JawbusCount-1}, Last: ${readableTime(Date.now() - seaCreatureData.CRIMSON.JawbusTime)}, avg: ${getAverageFromList(seaCreatureData.CRIMSON.JawbusAllCount)}`);
     }
 })
 
@@ -386,7 +386,7 @@ commandManager.addCommand({
     checkFunc: () => settings().infoThunder,
     func(manager, name, param) {
         if(param) if(!playerName.toLowerCase().includes(param.toLowerCase())) return
-        sendPartyMessage(`Catches since last Thunder: ${seaCreatureData.CRIMSON.ThunderCount-1}, Last: ${readableTime(Date.now() - seaCreatureData.CRIMSON.ThunderTime)}, avg: ${getAverageFromList(seaCreatureData.CRIMSON.ThunderAllCount)}`);
+        ChatUtils.sendPartyMessage(`Catches since last Thunder: ${seaCreatureData.CRIMSON.ThunderCount-1}, Last: ${readableTime(Date.now() - seaCreatureData.CRIMSON.ThunderTime)}, avg: ${getAverageFromList(seaCreatureData.CRIMSON.ThunderAllCount)}`);
     }
 })
 
@@ -401,6 +401,6 @@ commandManager.addCommand({
     checkFunc: () => settings().infoVial,
     func(manager, name, param) {
         if(param) if(!playerName.toLowerCase().includes(param.toLowerCase())) return
-        sendPartyMessage(`Own jawbusses since last Vial: ${seaCreatureData.DROPS.RadioactiveVial}, Last: ${readableTime(Date.now() - seaCreatureData.DROPS.RadioactiveVialTime)}, avg: ${getVialAverage()}`);
+        ChatUtils.sendPartyMessage(`Own jawbusses since last Vial: ${seaCreatureData.DROPS.RadioactiveVial}, Last: ${readableTime(Date.now() - seaCreatureData.DROPS.RadioactiveVialTime)}, avg: ${getVialAverage()}`);
     }
 })

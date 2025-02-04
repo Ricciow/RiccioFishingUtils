@@ -1505,6 +1505,14 @@ const config = new DefaultConfig("RiccioFishingUtils", "settings/settings.json")
     value: 3,
     subcategory: "Chat"
 })
+.addSwitch({
+    category: "Other",
+    configName: "chatSlice",
+    title: "Use 1.11 slice size",
+    description: "If RFU messages will be sliced to 253 or not, set to ON if you have patcher with the 1.11 chat length feature on.",
+    value: false,
+    subcategory: "Chat"
+})
 .addSlider({
     category: "Other",
     configName: "renderDuration",
