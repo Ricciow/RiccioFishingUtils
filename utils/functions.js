@@ -132,16 +132,6 @@ export function funniFaces(text){
     return text;
 }
 
-export function generateRandomString() {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charactersLength = characters.length;
-    for (let i = 0; i < 10; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return "<"+result+">";
-  }
-
 export function makeRegexFromList(list, exact = false) {
     list = list.join('|').toString();
     if (exact){
