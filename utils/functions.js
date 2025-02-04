@@ -35,17 +35,6 @@ export function removeFromArray(array, item) {
     array.splice(array.indexOf(item), 1)
 }
 
-export function checkBlacklist(ign){
-    let Blacklisted = false;
-    ign = removeRankTag(ign);
-    settings().partyBlacklist.replace(" ", "").split(",").forEach(name => {
-        if (ign.toLowerCase() == name.toLowerCase() || checkIfUser(ign)){
-            Blacklisted = true;
-        }
-    });
-    return Blacklisted;
-}
-
 export function readableQuantity(quantity) {
     if (quantity < 1000){
         return `${quantity}`;
