@@ -14,7 +14,7 @@ export default class StringUtils {
 
     /**
      * Generates a random string of 13 characters
-     * @returns {string} <@??????????>
+     * @returns {string} "<@characters>"
      */
     static generateRandomString() {
         let result = '';
