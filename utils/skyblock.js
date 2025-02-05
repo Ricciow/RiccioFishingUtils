@@ -1,3 +1,5 @@
+import ChatUtils from "./ChatUtils";
+
 //Class that has sb data from locraw
 class Skyblock {
 
@@ -8,7 +10,7 @@ class Skyblock {
         register('worldLoad', () => {
             this.lobbyData = undefined;
             this.deleteLocraw = true
-            ChatLib.command('locraw');
+            ChatUtils.sendCommand('locraw');
         })
         
         register("chat", (event) => {

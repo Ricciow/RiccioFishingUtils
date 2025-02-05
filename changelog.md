@@ -1,7 +1,7 @@
 # v0.3.4
 **Pre3**
 - Added Officer chat selection for chat messages
-- Revamped Message Sending (Internal)
+- Revamped Message/Command sending system (Internal)
 - Added rfuversion party command
 
 **Pre2**

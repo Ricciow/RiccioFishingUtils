@@ -3,6 +3,7 @@ import settings from "../../settings/settings"
 import partyTracker from "./partyTracker"
 import { checkIfUser, registerWhen, removeRankTag } from "../../utils/functions"
 import commandManager from "./commandManager"
+import ChatUtils from "../../utils/ChatUtils"
 
 let lastkick
 register('chat', (user) => {
@@ -15,7 +16,7 @@ register('chat', (user) => {
 register('chat', (user) => {
     if(settings().partyAutoRejoin) {
         user = removeRankTag(user)
-        if((Date.now() - lastkick??0) < 10000) ChatLib.command(`p join ${user}`)
+        if((Date.now() - lastkick??0) < 10000) ChatUtils.sendCommand(`p join ${user}`)
     }
 }).setCriteria("-----------------------------------------------------\n${user} has invited you to join their party!\nYou have 60 seconds to accept. Click here to join!\n-----------------------------------------------------")
 
@@ -29,12 +30,12 @@ register("chat", (user, message) => {
 
     if(message == "Hey! I'm currently muted and am unable to message right now." && settings().partyWarpMuted && partyTracker.PARTY.isLeader && settings().partyCommands) {
         if(partyTracker.PARTY.members.includes(user)) warp(commandManager, user)
-        else ChatLib.command("r You're not on the party smh.")
+        else ChatUtils.sendCommand("r You're not on the party smh.")
     }
 
     if(message == settings().partyInviteKeyword) {
         if(settings().partyAutoInviteToggle) {
-            ChatLib.command(`p ${user}`)
+            ChatUtils.sendCommand(`p ${user}`)
         }
         else {
             setTimeout(() => {
@@ -56,13 +57,9 @@ register("chat", (user, message) => {
 }).setCriteria("From ${user}: ${message}")
 
 register("command", (...members) => {
-    ChatLib.command(`w ${members[0]} OK!`)
-    let timeout = 500
+    ChatUtils.sendCommand(`w ${members[0]} OK!`)
     members.forEach((member) => {
-        setTimeout(() => {
-            ChatLib.command(`p ${member}`)
-        }, timeout);
-        timeout += 500
+            ChatUtils.sendCommand(`p ${member}`)
     })
 }).setName("rfuinvitepeople")
 

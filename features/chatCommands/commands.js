@@ -68,7 +68,7 @@ commandManager.addCommand({
     func(manager, name, parameter) {
         if(parameter) {
             if(!partyTracker.PARTY["members"].map((player) => player.toLowerCase()).includes(parameter.toLowerCase())) {
-                ChatLib.command(`p invite ${parameter}`);
+                ChatUtils.sendCommand(`p invite ${parameter}`);
             }   
             else {
                 ChatUtils.sendPartyMessage(`${parameter} is already in the party!`);
@@ -94,7 +94,7 @@ commandManager.addCommand({
         name = name.toLowerCase();
         if(checkIfUser(name)) {
             if(param) {
-                if(partyTracker.PARTY["members"].map((player) => player.toLowerCase()).includes(param.toLowerCase())) {
+                if(partyTracker.members.map((player) => player.toLowerCase()).includes(param.toLowerCase())) {
                     if(partyTracker.warpExcluded.includes(param)) {
                         removeFromArray(partyTracker.warpExcluded, param)
                         ChatUtils.sendPartyMessage(`${param} can now be warped.`)
@@ -139,7 +139,7 @@ const checkPlayerCountIslands = ["Crimson Isle"]
 
 function warpParty() {
     ignoreNext = true;
-    ChatLib.command('p warp')
+    ChatUtils.sendCommand('p warp')
 }
 
 
@@ -159,24 +159,14 @@ export function warp(manager, name, ignoreConditions = false) {
             warpParty()
         }
         else {
-            timeout = 0
             partyTracker.warpExcluded.forEach(person => {
                 needJoin.push(person)
-                setTimeout(() => {
-                    ChatLib.command(`p kick ${person}`)
-                }, timeout);
-                timeout += 500;
+                ChatUtils.sendCommand(`p kick ${person}`)
             });
             partyTracker.warpExcluded = []
-            setTimeout(() => {
-                warpParty()
-            }, timeout);
-            timeout += 500
+            warpParty()
             needJoin.forEach(person => {
-                setTimeout(() => {
-                    ChatLib.command(`p ${person}`)
-                }, timeout);
-                timeout += 500;
+                ChatUtils.sendCommand(`p ${person}`)
             });
         }
     }
@@ -213,9 +203,9 @@ registerWhen('messageSent', (message, event) => {
     if((message.startsWith("/p warp") || message.startsWith("/party warp")) && !ignoreNext) {
         cancel(event)
         warp(undefined, playerName, true);
+        ignoreNext = false;
         return
     }
-    ignoreNext = false;
 },
 () => settings().partyCommands && settings().partyWarp)
 
@@ -243,7 +233,7 @@ commandManager.addCommand({
         if(parameter) {
             if(parameter != playerName) {
                 if(partyTracker.members.map((player) => player.toLowerCase()).includes(parameter.toLowerCase())) {
-                    ChatLib.command(`p transfer ${parameter}`);
+                    ChatUtils.sendCommand(`p transfer ${parameter}`);
                 }   
                 else {
                     ChatUtils.sendPartyMessage(`${parameter} is not in the party!`);
@@ -251,7 +241,7 @@ commandManager.addCommand({
             }
         }
         else if(name != playerName) {
-            ChatLib.command(`p transfer ${name}`)
+            ChatUtils.sendCommand(`p transfer ${name}`)
         }
     }
 })
@@ -266,7 +256,7 @@ commandManager.addCommand({
     description: `Toggles AllInvite.`,          
     checkFunc: () => settings().partyAllinvite,
     func(manager, name, parameter) {
-        ChatLib.command('p settings allinvite')
+        ChatUtils.sendCommand('p settings allinvite')
     }
 })
 
@@ -301,15 +291,13 @@ commandManager.addCommand({
 
 //? Merge Party
 function mergeParty(username) {
-    ChatLib.command(`w ${username} !invite ${partyTracker.members.join(" ")}`)
+    ChatUtils.sendCommand(`w ${username} !invite ${partyTracker.members.join(" ")}`)
 }
 
 registerWhen("command", (username) => {
     if(!partyTracker.isLeader && !partyTracker.inParty) return
     ChatUtils.sendPartyMessage("Party merge approved!")
-    setTimeout(() => {
-        mergeParty(username)
-    }, 250);
+    mergeParty(username)
 },
 () => settings().partyMerge).setName("rfupartyapprovemerge")
 

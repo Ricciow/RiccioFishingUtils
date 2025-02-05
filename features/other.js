@@ -3,6 +3,7 @@ import settings from "../settings/settings";
 import { playerData } from "../data/data";
 import { colorsRegex } from "../data/constants";
 import guiManager from "../gui/guiManager";
+import ChatUtils from "../utils/ChatUtils";
 
 register('command', () => {
     text = '\n';
@@ -61,7 +62,7 @@ register("command", (chat) =>{
         chattype = `w ${chat} `
     }
     if (lastMessage != '')
-        ChatLib.command(chattype+lastMessage);
+        ChatUtils.sendCommand(chattype+lastMessage);
     else{
         ChatLib.chat("You dont have a last message!");
     }

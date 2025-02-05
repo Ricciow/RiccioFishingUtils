@@ -505,7 +505,7 @@ register("chat", (message, event) => {
             }
         }
         ChatLib.chat("&5[&b&lRFU&5] &f&lVial drop message copied to clipboard.");
-        ChatLib.command(`ct copy ${funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(Date.now()-seaCreatureData.DROPS["RadioactiveVialTime"])).replace("([mf])", Magicfind)}`, true);
+        ChatUtils.copyString(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(Date.now()-seaCreatureData.DROPS["RadioactiveVialTime"])).replace("([mf])", Magicfind))
         seaCreatureData.DROPS["RadioactiveVial"] = 0;
         seaCreatureData.DROPS["RadioactiveVialTime"] = thisTime;
     }

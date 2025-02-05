@@ -7,7 +7,7 @@ export default class ChatUtils {
     static messageQueue = []        //Queue for messages
     static sendingMessages = false  //Message Sender state
     static lastMessage = 0          //Time last message was sent
-    static messageCooldown = 250    //Minimum cooldown in ms for messages to be sent
+    static messageCooldown = 500    //Minimum cooldown in ms for messages to be sent
 
     static chats = {
         partychat: "pc",
@@ -18,6 +18,7 @@ export default class ChatUtils {
         coopchat: "cc",
         officerchat: "oc",
         defaultchat: "df",      //No chat selected, use the one already selected
+        command: "cmd",
         
         //For the settings().chatSelected
         0: "pc",
@@ -49,6 +50,10 @@ export default class ChatUtils {
         });
     }
 
+    static sendCommand(command) {
+        this.addMessageToQueue(command, ChatUtils.chats.command)
+    }
+
     /**
      * Sends a message in party chat.
      * @param {str} message 
@@ -64,7 +69,9 @@ export default class ChatUtils {
      */
     static addMessageToQueue(message, chat) {
         ChatUtils.messageQueue.push([message, chat])
+        console.log("Added message to queue", message)
         if(!ChatUtils.sendingMessages) {
+            console.log("Started Sending Messages", ChatUtils.messageQueue)
             ChatUtils.sendingMessages = true
             ChatUtils._sendMessages()
         }
@@ -85,14 +92,15 @@ export default class ChatUtils {
             timeout = ChatUtils.messageCooldown - (Date.now() - this.lastMessage)
         }
 
-        if(ChatUtils.messageQueue.length > 0) {
-            setTimeout(() => {
+        setTimeout(() => {
+            console.log(ChatUtils.messageQueue)
+            if(ChatUtils.messageQueue.length > 0) {
                 ChatUtils._sendMessages()
-            }, timeout);
-            return
-        }
-
-        ChatUtils.sendingMessages = false
+            }
+            else {
+                ChatUtils.sendingMessages = false
+            }
+        }, ChatUtils.messageCooldown);
     }
 
     /**
@@ -121,13 +129,27 @@ export default class ChatUtils {
                 ChatLib.say(message)
                 return
             }
+            if(chat == ChatUtils.chats.command) {
+                ChatLib.command(message)
+                return
+            }
+
             ChatLib.command(chat + " " + message)
             return
         }
     }
+
+    
+    
+    /**
+     * Places a string into the player's clipboard
+     * @param {String} string 
+     */
+    static copyString(string) {
+        ChatLib.command(`ct copy ${string}`, true)
+    }
 }
 
 register("messageSent", (message, event) => {
-    if(message.startsWith("/") && !Object.values(ChatUtils.chats).includes(message.slice(1,3))) return
     ChatUtils.lastMessage = Date.now()
 })
