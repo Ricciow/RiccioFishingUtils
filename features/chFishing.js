@@ -82,9 +82,7 @@ register('step', () =>{
                 CapMessage = `${funniFaces(settings().wormMessage)}`;
                 CapMessage = CapMessage.replace("([number])", `${aliveWorms}`);
                 CapMessage = CapMessage.replace("([time])", `${readableTime(now - playerData.WORM["Timer"])}`);
-                setTimeout(() => {
-                    ChatUtils.sendMsg(CapMessage);
-                }, 100);
+                ChatUtils.sendMsg(CapMessage);
                 MsgSent = true;
             }
             else if (aliveWorms <= Math.floor(settings().wormLimit/2) && MsgSent){

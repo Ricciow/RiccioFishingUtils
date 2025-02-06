@@ -17,7 +17,7 @@ const latestwarn = register('worldLoad', () => {
             checkIfUpdateText()
         }
         settings().getConfig().apply()
-    }, 1000);
+    }, 5000);
     latestwarn.unregister()
 })
 
