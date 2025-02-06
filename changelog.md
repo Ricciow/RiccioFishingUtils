@@ -1,14 +1,17 @@
 # v0.3.4
-**Pre3**
+**v0.3.4Pre4**
+- Fixed vial dropped messages?
+
+**v0.3.4Pre3**
 - Added Officer chat selection for chat messages
 - Revamped Message/Command sending system (Internal)
 - Added rfuversion party command
 
-**Pre2**
+**v0.3.4Pre2**
 - Fixed /rfutogglelogger spam
 - Fixed isLeader Check if your username has Numbers on it (I'm sorry for that)
 
-**Pre1**
+**v0.3.4Pre1**
 - Hopefuly fixed party commands (again)
 - Fixed guild messages being tracked as party actions (internal)
 - Modified party list to use a Set on the backend (internal)

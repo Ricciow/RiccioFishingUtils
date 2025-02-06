@@ -375,9 +375,7 @@ register("chat", (message, event) => {
                     mythicmsg = mythicmsg.replace("([number])", `${seaCreatureData.CRIMSON['PlhlegblastCount']}`).replace("([time])", `${readableTime(Date.now()-seaCreatureData.CRIMSON['PlhlegblastTime'])}`).replace("([coords])", `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
                     if(doubleHook){
                         mythicmsg = mythicmsg.replace("([double])", "Double ")
-                        setTimeout(() => {
-                            ChatUtils.sendMsg(mythicmsg);
-                        }, 250);
+                        ChatUtils.sendMsg(mythicmsg);
                     }
                     else {
                         mythicmsg = mythicmsg.replace("([double])", "")   
@@ -401,9 +399,7 @@ register("chat", (message, event) => {
                     mythicmsg = mythicmsg.replace("([number])", `${seaCreatureData.CRIMSON['JawbusCount']}`).replace("([time])", `${readableTime(Date.now()-seaCreatureData.CRIMSON['JawbusTime'])}`).replace("([coords])", `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
                     if(doubleHook){
                         mythicmsg = mythicmsg.replace("([double])", "Double ")
-                        setTimeout(() => {
-                            ChatUtils.sendMsg(mythicmsg);
-                        }, 250);
+                        ChatUtils.sendMsg(mythicmsg);
                     }
                     else {
                         mythicmsg = mythicmsg.replace("([double])", "")   
@@ -431,9 +427,7 @@ register("chat", (message, event) => {
                     mythicmsg = mythicmsg.replace("([number])", `${seaCreatureData.CRIMSON['ThunderCount']}`).replace("([time])", `${readableTime(Date.now()-seaCreatureData.CRIMSON['ThunderTime'])}`).replace("([coords])", `x: ${Math.round(Player.getX())}, y: ${Math.round(Player.getY())}, z: ${Math.round(Player.getZ())}`);
                     if(doubleHook){
                         mythicmsg = mythicmsg.replace("([double])", "Double ")
-                        setTimeout(() => {
-                            ChatUtils.sendMsg(mythicmsg);
-                        }, 400);
+                        ChatUtils.sendMsg(mythicmsg);
                     }
                     else {
                         mythicmsg = mythicmsg.replace("([double])", "")   
@@ -480,28 +474,16 @@ register("chat", (message, event) => {
         seaCreatureData.DROPS["VialHistory"].push([seaCreatureData.DROPS["RadioactiveVial"], thisTime]);
         if(settings().vialMessageToggle){
             if(settings().vialPartyChatToggle) {
-                setTimeout(() => {
-                    ChatUtils.sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(thisTime-thisTimeLast)).replace("([mf])", Magicfind), 0);
-                }, delay);
-                delay += 500;
+                ChatUtils.sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(thisTime-thisTimeLast)).replace("([mf])", Magicfind), ChatUtils.chats.partychat);
             }
             if(settings().vialGuildChatToggle) {
-                setTimeout(() => {
-                    ChatUtils.sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(thisTime-thisTimeLast)).replace("([mf])", Magicfind), 1);
-                }, delay);
-                delay += 500;
+                ChatUtils.sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(thisTime-thisTimeLast)).replace("([mf])", Magicfind), ChatUtils.chats.guildchat);
             }
             if(settings().vialAllChatToggle) {
-                setTimeout(() => {
-                    ChatUtils.sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(thisTime-thisTimeLast)).replace("([mf])", Magicfind), 2);
-                }, delay);
-                delay += 500;
+                ChatUtils.sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(thisTime-thisTimeLast)).replace("([mf])", Magicfind), ChatUtils.chats.allchat);
             }
             if(settings().vialCoopChatToggle) {
-                setTimeout(() => {
-                    ChatUtils.sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(Date.now()-seaCreatureData.DROPS["RadioactiveVialTime"])).replace("([mf])", Magicfind), 5);
-                }, delay);
-                delay += 500;
+                ChatUtils.sendMsg(funniFaces(settings().vialMessage).replace("([number])", thisVial).replace("([time])", readableTime(Date.now()-seaCreatureData.DROPS["RadioactiveVialTime"])).replace("([mf])", Magicfind), ChatUtils.chats.coopchat);
             }
         }
         ChatLib.chat("&5[&b&lRFU&5] &f&lVial drop message copied to clipboard.");
