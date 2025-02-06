@@ -7,7 +7,7 @@ export default class ChatUtils {
     static messageQueue = []        //Queue for messages
     static sendingMessages = false  //Message Sender state
     static lastMessage = 0          //Time last message was sent
-    static messageCooldown = 500    //Minimum cooldown in ms for messages to be sent
+    static messageCooldown = 250    //Minimum cooldown in ms for messages to be sent
 
     static chats = {
         partychat: "pc",
