@@ -1,6 +1,6 @@
 # v0.3.4
 **v0.3.4Pre4**
-- Fixed vial dropped messages (i think)
+- Fixed vial dropped messages
 
 **v0.3.4Pre3**
 - Added Officer chat selection for chat messages
