@@ -1,5 +1,6 @@
 # v0.3.4
 **v0.3.4Pre4**
+- Fixed /p warp command
 - Fixed vial dropped messages
 
 **v0.3.4Pre3**

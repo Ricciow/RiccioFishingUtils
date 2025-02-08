@@ -200,10 +200,14 @@ register('command', () => {
 }).setName("rfuconfirmwarp")
 
 registerWhen('messageSent', (message, event) => {
-    if((message.startsWith("/p warp") || message.startsWith("/party warp")) && !ignoreNext) {
+    if(ignoreNext) {
+        ignoreNext = false
+        return
+    }
+
+    if((message.startsWith("/p warp") || message.startsWith("/party warp"))) {
         cancel(event)
         warp(undefined, playerName, true);
-        ignoreNext = false;
         return
     }
 },

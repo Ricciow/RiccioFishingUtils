@@ -69,9 +69,7 @@ export default class ChatUtils {
      */
     static addMessageToQueue(message, chat) {
         ChatUtils.messageQueue.push([message, chat])
-        console.log("Added message to queue", message)
         if(!ChatUtils.sendingMessages) {
-            console.log("Started Sending Messages", ChatUtils.messageQueue)
             ChatUtils.sendingMessages = true
             ChatUtils._sendMessages()
         }
@@ -93,14 +91,13 @@ export default class ChatUtils {
         }
 
         setTimeout(() => {
-            console.log(ChatUtils.messageQueue)
             if(ChatUtils.messageQueue.length > 0) {
                 ChatUtils._sendMessages()
             }
             else {
                 ChatUtils.sendingMessages = false
             }
-        }, ChatUtils.messageCooldown);
+        }, timeout);
     }
 
     /**
