@@ -204,7 +204,8 @@
             "disabled": "",
             "size": 0.8,
             "xOffset": 3,
-            "yOffset": 0
+            "yOffset": 0,
+            "scale": 1
         },
         "mouseClickAnimation": {
             "type": "OUT_EXP",
@@ -816,6 +817,31 @@
                 255
             ],
             "scale": 1
+        },
+        "selectedoptionbackground": {
+            "color": [
+                0,
+                0,
+                0,
+                150
+            ],
+            "outlineColor": [
+                255,
+                255,
+                255,
+                255
+            ],
+            "outlineSize": 0,
+            "roundness": 5
+        },
+        "selectedoptiontext": {
+            "color": [
+                255,
+                255,
+                255,
+                255
+            ],
+            "scale": 1
         }
     },
     "MultiCheckBox": {
@@ -1099,7 +1125,8 @@
                     255,
                     255
                 ],
-                "scale": 1
+                "scale": 1,
+                "scaleType": "pixel"
             }
         },
         "redirect": {

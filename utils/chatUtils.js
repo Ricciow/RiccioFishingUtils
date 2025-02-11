@@ -44,7 +44,7 @@ export default class ChatUtils {
             message += StringUtils.generateRandomString()
         }
 
-        let splitted = StringUtils.splitString(message, settings().chatSlice ? 253 : 97)
+        let splitted = StringUtils.splitString(message, settings().chatSlice ? 252 : 96)
         splitted.forEach(message => {
             ChatUtils.addMessageToQueue(message, chat)
         });
