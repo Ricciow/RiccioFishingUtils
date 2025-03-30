@@ -196,7 +196,8 @@ register("step", () => {
 }).setFps(3)
 
 const Contributors = {
-    'ricciow': "§3><((^>"
+    'ricciow': "§3><((^>",
+    'appable': "§b✈"
 }
 
 const players = new (Java.type('java.util.WeakHashMap'))();
