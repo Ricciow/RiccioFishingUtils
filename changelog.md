@@ -6,6 +6,8 @@
 - Fixed isLeader Check if your username has Numbers on it (I'm sorry for that)
 - Fixed guild messages being tracked as party actions (internal)
 - Modified party list to use a Set on the backend (internal)
+- Added backwater bayou update sea creatures - Appable
+- Refactored sc messages (internal) - Appable
 
 **v0.3.4Pre4**
 - Fixed /p warp command
