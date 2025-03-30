@@ -107,7 +107,6 @@ register("step", () => {
             else {
                 goldenFishUI.Times["(2)"] = ["&c&lCast NOW!"]
             }
-            
         }
         
         if(goldenFishData.golding) {
@@ -142,11 +141,6 @@ register("chat", () => {
 }).setCriteria("You spot a Golden Fish surface from beneath the lava!")
 
 register("chat", (rarity) => {
-    goldenFishData.golding = false;
-    goldenFishData.cooking = false;
-}).setCriteria("TROPHY FISH! You caught a Golden Fish ${rarity}.")
-
-register("chat", (rarity) => {
     goldenFishData.golding = false
     goldenFishData.cooking = false;
 }).setCriteria("The Golden Fish swims back beneath the lava...")
@@ -177,8 +171,15 @@ const settingParam = {
     "Golden Fish": "goldenFishMessage"
 }
 
-register("chat", (tfish) => {
-    if(settings()[settingParam[tfish]] && settings().trophySendMessage) {
-        ChatUtils.sendMsg(`TROPHY FISH! You caught a ${tfish} DIAMOND.`)
+register("chat", (name, rarity) => {
+    if (name == "Golden Fish") {
+        goldenFishData.golding = false;
+        goldenFishData.cooking = false;
     }
-}).setCriteria("TROPHY FISH! You caught a ${tfish} DIAMOND.")
+
+    if (rarity == "DIAMOND") {
+        if(settings()[settingParam[name]] && settings().trophySendMessage) {
+            ChatUtils.sendMsg(`TROPHY FISH! You caught a ${name} ${rarity}.`);
+        }
+    }
+}).setCriteria("♔ TROPHY FISH! You caught a ${name} ${rarity}!");
