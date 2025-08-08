@@ -67,7 +67,7 @@ register("step", () => {
             if(mob_name != undefined){
                 if(settings().jawbusHealthBarToggle) {
                     if (mob_name.includes("Lord Jawbus")){
-                        let jawbusHealthStrTemp = mob_name.split("[Lv600] Lord Jawbus ")[1];
+                        let jawbusHealthStrTemp = mob_name.split("Lord Jawbus ")[1];
                         let jawbusHealthTemp = 0
                         if (jawbusHealthStrTemp.includes("M/")) {
                             jawbusHealthTemp = parseFloat(jawbusHealthStrTemp.replace(/k|❤/, "").split("/")[0]);
@@ -89,7 +89,7 @@ register("step", () => {
                 }
                 if(settings().thunderHealthBarToggle) {
                     if (mob_name.includes("Thunder ")){
-                        let thunderHealthStrTemp = mob_name.split("[Lv400] Thunder ")[1];
+                        let thunderHealthStrTemp = mob_name.split("Thunder ")[1];
                         let thunderHealthTemp = 0
                         if (thunderHealthStrTemp.includes("M/")) {
                             thunderHealthTemp = parseFloat(thunderHealthStrTemp.replace(/k|❤/, "").split("/")[0]);
@@ -111,7 +111,7 @@ register("step", () => {
                 }
                 if(settings().plhlegblastHealthBarToggle) {
                     if (mob_name.includes("Plhlegblast ")){
-                        let plhlegblastHealthStrTemp = mob_name.split("[Lv300] Plhlegblast ")[1];
+                        let plhlegblastHealthStrTemp = mob_name.split("Plhlegblast ")[1];
                         let plhlegblastHealthTemp = 0
                         if (plhlegblastHealthStrTemp.includes("M/")) {
                             plhlegblastHealthTemp = parseFloat(plhlegblastHealthStrTemp.replace(/k|❤/, "").split("/")[0]);
