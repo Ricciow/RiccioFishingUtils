@@ -1,3 +1,8 @@
+# v0.3.5
+- Fixed loothsare range highlighter
+
+- Note: I'm no longer working on RFU, i figured i'd fix this cause 2 people asked :shrug:
+
 # v0.3.4
 - Added Officer chat selection for chat messages
 - Revamped Message/Command sending system (Internal)
