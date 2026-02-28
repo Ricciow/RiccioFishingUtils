@@ -6,6 +6,9 @@
   ![rfu](https://raw.githubusercontent.com/Ricciow/RiccioFishingUtils/refs/heads/main/assets/rfulogo.png)
 </h1>
 
+> [!WARNING]
+> **This repository is no longer supported.** The new version has moved to [RiccioFishingUtils-Modern](https://github.com/Ricciow/RiccioFishingUtils-Modern). Please use that repository instead.
+
 <div align="center">
 
 [![Discord](https://img.shields.io/discord/1210734539186376774?label=discord&color=7289da&logo=discord&style=for-the-badge)](https://discord.gg/JfrXm6TqXz)
